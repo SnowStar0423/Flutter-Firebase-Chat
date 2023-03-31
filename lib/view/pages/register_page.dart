@@ -26,6 +26,15 @@ class _RegisterPageState extends State<RegisterPage> {
   final AuthViewModel _authViewModel = Get.find();
 
   @override
+  dispose() {
+    super.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    conPasswordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
@@ -48,19 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Center(
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                width: 150,
-                height: 150,
-                child: const CustomImage(
-                  AppConstant.logo,
-                  imageType: ImageType.network,
-                  bgColor: AppColor.white,
-                  radius: 5,
-                ),
-              ),
-            ),
+            _buildLogo(),
             const SizedBox(
               height: 10,
             ),
@@ -73,14 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 40,
             ),
-            CustomTextField(
-              controller: nameController,
-              leadingIcon: const Icon(
-                Icons.person_outline,
-                color: Colors.grey,
-              ),
-              hintText: "Name",
-            ),
+            _buildNameBlock(),
             const Divider(
               color: Colors.grey,
               height: 10,
@@ -88,15 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 10,
             ),
-            CustomTextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              leadingIcon: const Icon(
-                Icons.email_outlined,
-                color: Colors.grey,
-              ),
-              hintText: "Email",
-            ),
+            _buildEmailBlock(),
             const Divider(
               color: Colors.grey,
               height: 10,
@@ -104,27 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 10,
             ),
-            Obx(
-              () => CustomTextField(
-                controller: passwordController,
-                leadingIcon: const Icon(
-                  Icons.lock_outline,
-                  color: Colors.grey,
-                ),
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    _authViewModel.hideShowPassword();
-                  },
-                  child: Icon(
-                      _authViewModel.isObscurePassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      color: Colors.grey),
-                ),
-                obscureText: _authViewModel.isObscurePassword,
-                hintText: "Password",
-              ),
-            ),
+            _buildPassowrdBlcok(),
             const Divider(
               color: Colors.grey,
               height: 10,
@@ -132,27 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 10,
             ),
-            Obx(
-              () => CustomTextField(
-                controller: conPasswordController,
-                leadingIcon: const Icon(
-                  Icons.lock_outline,
-                  color: Colors.grey,
-                ),
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    _authViewModel.hideShowConfirmPassword();
-                  },
-                  child: Icon(
-                      _authViewModel.isObscureConPassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      color: Colors.grey),
-                ),
-                obscureText: _authViewModel.isObscureConPassword,
-                hintText: "Confirm Password",
-              ),
-            ),
+            _buildConPassowrdBlock(),
             const Divider(
               color: Colors.grey,
               height: 10,
@@ -162,6 +104,93 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             _buildRegisterButton()
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNameBlock() {
+    return CustomTextField(
+      controller: nameController,
+      leadingIcon: const Icon(
+        Icons.person_outline,
+        color: Colors.grey,
+      ),
+      hintText: "Name",
+    );
+  }
+
+  Widget _buildEmailBlock() {
+    return CustomTextField(
+      controller: emailController,
+      keyboardType: TextInputType.emailAddress,
+      leadingIcon: const Icon(
+        Icons.email_outlined,
+        color: Colors.grey,
+      ),
+      hintText: "Email",
+    );
+  }
+
+  Widget _buildConPassowrdBlock() {
+    return Obx(
+      () => CustomTextField(
+        controller: conPasswordController,
+        leadingIcon: const Icon(
+          Icons.lock_outline,
+          color: Colors.grey,
+        ),
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _authViewModel.hideShowConfirmPassword();
+          },
+          child: Icon(
+              _authViewModel.isObscureConPassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              color: Colors.grey),
+        ),
+        obscureText: _authViewModel.isObscureConPassword,
+        hintText: "Confirm Password",
+      ),
+    );
+  }
+
+  Widget _buildPassowrdBlcok() {
+    return Obx(
+      () => CustomTextField(
+        controller: passwordController,
+        leadingIcon: const Icon(
+          Icons.lock_outline,
+          color: Colors.grey,
+        ),
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _authViewModel.hideShowPassword();
+          },
+          child: Icon(
+              _authViewModel.isObscurePassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              color: Colors.grey),
+        ),
+        obscureText: _authViewModel.isObscurePassword,
+        hintText: "Password",
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: 150,
+        height: 150,
+        child: CustomImage(
+          AppConstant.logo,
+          imageType: ImageType.network,
+          bgColor: Theme.of(context).scaffoldBackgroundColor,
+          radius: 5,
         ),
       ),
     );
@@ -230,8 +259,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 BoxShadow(
                   color: Theme.of(context).shadowColor.withOpacity(0.1),
                   spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: const Offset(0, 2), // changes position of shadow
+                  blurRadius: 1,
+                  offset: const Offset(0, 1), // changes position of shadow
                 ),
               ],
             ),

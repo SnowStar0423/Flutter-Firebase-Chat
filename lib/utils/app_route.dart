@@ -8,4 +8,5 @@ class AppRoute {
   static const settingPage = '/setting';
   static const userPage = '/chat_user';
   static const changeThemePage = '/change_theme';
+  static const editProfilePage = '/edit_profile';
 }

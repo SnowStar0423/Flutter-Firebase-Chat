@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "237603014133",
+    "project_id": "mychatapp-32423",
+    "storage_bucket": "mychatapp-32423.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237603014133:android:4a876086f548c7d2e38cbc",
+        "android_client_info": {
+          "package_name": "com.sangvaleap.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237603014133-uu8c292qa2lkmkqjjgus0eu86u03bcqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVkaAFhRW4p_7V9tcQz2FVuUGZ31rQEeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237603014133-uu8c292qa2lkmkqjjgus0eu86u03bcqt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "237603014133-q0vn0pskc3t6fe8jh2mk95nlq13p2tne.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sangvaleap.chatapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

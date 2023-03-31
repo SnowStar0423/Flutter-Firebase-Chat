@@ -115,29 +115,24 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
             ),
           ),
           Obx(
-            () => AbsorbPointer(
-              absorbing:
-                  _chatRoomViewModel.sending || _messageController.text.isEmpty,
-              child: IconButton(
-                onPressed: () async {
-                  final res = await _chatRoomViewModel.sendChatMessage(
-                      content: _messageController.text,
-                      type: ChatMessageType.text,
-                      groupChatId: _groupChatId,
-                      currentUserId: FirebaseAuth.instance.currentUser!.uid,
-                      peerId: _peer.id);
-                  if (!res) {
-                    AppUtil.showSnackBar("failed to send a message");
-                  }
-                  _messageController.clear();
-                },
-                icon: Icon(
-                  Icons.send_rounded,
-                  color: _chatRoomViewModel.sending
-                      ? Colors.grey
-                      : AppColor.primary,
-                  size: 35,
-                ),
+            () => IconButton(
+              onPressed: () async {
+                final res = await _chatRoomViewModel.sendChatMessage(
+                    content: _messageController.text,
+                    type: ChatMessageType.text,
+                    groupChatId: _groupChatId,
+                    currentUserId: FirebaseAuth.instance.currentUser!.uid,
+                    peerId: _peer.id);
+                if (!res) {
+                  AppUtil.showSnackBar("failed to send a message");
+                }
+                _messageController.clear();
+              },
+              icon: Icon(
+                Icons.send_rounded,
+                color:
+                    _chatRoomViewModel.sending ? Colors.grey : AppColor.primary,
+                size: 35,
               ),
             ),
           )

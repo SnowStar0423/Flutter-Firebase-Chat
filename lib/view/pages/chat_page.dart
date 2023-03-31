@@ -17,7 +17,6 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _chatViewModel.loadRecentUserChats();
     return Scaffold(
       body: _buildBody(context),
     );
@@ -44,30 +43,37 @@ class ChatPage extends StatelessWidget {
             height: 10,
           ),
         ),
-        Obx(
-          () => SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                RecentUserChat recentUserChat =
-                    _chatViewModel.recentUserChats[index];
-                return ChatItem(
-                  recentUserChat: recentUserChat,
-                  onTap: () {
-                    Get.toNamed(AppRoute.chatRoomPage,
-                        arguments: {"peer": recentUserChat.chatUser});
-                  },
-                );
-              },
-              childCount: _chatViewModel.recentUserChats.length,
-            ),
-          ),
-        ),
+        _buildChatList(),
         const SliverToBoxAdapter(
           child: SizedBox(
             height: 20,
           ),
         ),
       ],
+    );
+  }
+
+  _buildChatList() {
+    return Obx(
+      () => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            RecentUserChat recentUserChat =
+                _chatViewModel.recentUserChats[index];
+            return Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: ChatItem(
+                recentUserChat: recentUserChat,
+                onTap: () {
+                  Get.toNamed(AppRoute.chatRoomPage,
+                      arguments: {"peer": recentUserChat.chatUser});
+                },
+              ),
+            );
+          },
+          childCount: _chatViewModel.recentUserChats.length,
+        ),
+      ),
     );
   }
 

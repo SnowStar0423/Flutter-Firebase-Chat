@@ -41,7 +41,9 @@ class ChatRoomViewModel extends GetxController {
       chatService.loadChatMessages(groupChatId: groupChatId).listen((event) {
         chatMessages.value =
             event.docs.map((e) => ChatMessage.fromJson(e.data())).toList();
-        assignLastDocument(event.docs[event.docs.length - 1]);
+        if (event.docs.isNotEmpty) {
+          assignLastDocument(event.docs[event.docs.length - 1]);
+        }
       });
     } else {
       AppUtil.debugPrint("loadMoreChatMessages");
@@ -86,6 +88,7 @@ class ChatRoomViewModel extends GetxController {
           peerId: peerId);
       chatService.addRecentChat(
           content: content, currentUserId: currentUserId, peerId: peerId);
+      sending = false;
       return true;
     } catch (e) {
       AppUtil.debugPrint(e.toString());

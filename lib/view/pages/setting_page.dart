@@ -7,6 +7,7 @@ import 'package:random_avatar/random_avatar.dart';
 import '../../utils/app_constant.dart';
 import '../../utils/app_util.dart';
 import '../../viewmodel/auth_view_model.dart';
+import '../../viewmodel/profile_view_model.dart';
 import '../theme/app_color.dart';
 import '../widgets/custom_image.dart';
 import '../widgets/settting_item.dart';
@@ -14,8 +15,8 @@ import '../widgets/settting_item.dart';
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
   final AuthViewModel _authViewModel = Get.find();
+  final ProfileViewModel _profileViewModel = Get.find();
 
-  final _firebaseInstance = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,47 +29,35 @@ class SettingPage extends StatelessWidget {
   }
 
   Widget _buildProfile() {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
-                ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                    trBackground: true, width: 70, height: 70)
-                : CustomImage(
-                    FirebaseAuth.instance.currentUser!.photoURL!,
-                    imageType: ImageType.network,
-                    width: 70,
-                    height: 70,
-                    radius: 100,
-                  )
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Text(
-          _firebaseInstance.currentUser?.displayName ?? "N/A",
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          _firebaseInstance.currentUser?.email ?? "N/A",
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-              fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-      ],
+    return GetBuilder<ProfileViewModel>(
+      builder: (controller) => Column(
+        children: [
+          const SizedBox(
+            height: 30,
+          ),
+          _buildProfileImage(),
+          const SizedBox(
+            height: 15,
+          ),
+          Text(
+            _profileViewModel.getUserDisplayName(),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            _profileViewModel.getUserEmail(),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+                fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+        ],
+      ),
     );
   }
 
@@ -81,11 +70,42 @@ class SettingPage extends StatelessWidget {
     );
   }
 
+  Widget _buildProfileImage() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
+            ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                trBackground: true, width: 70, height: 70)
+            : CustomImage(
+                FirebaseAuth.instance.currentUser!.photoURL!,
+                imageType: ImageType.network,
+                width: 70,
+                height: 70,
+                radius: 100,
+              )
+      ],
+    );
+  }
+
   Widget _buildSettingList(context) {
     return Padding(
       padding: const EdgeInsets.only(top: 15, right: 20, bottom: 10),
       child: Column(
         children: [
+          SettingItem(
+            title: "Edit Profile",
+            leadingIcon: Icons.person,
+            leadingIconColor: AppColor.green,
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            ),
+            onTap: () {
+              Get.toNamed(AppRoute.editProfilePage);
+            },
+          ),
+          const SizedBox(height: 10),
           SettingItem(
             title: "Theme Mode",
             leadingIcon: Icons.dark_mode_rounded,

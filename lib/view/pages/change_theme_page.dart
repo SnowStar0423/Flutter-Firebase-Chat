@@ -35,7 +35,7 @@ class ChangeThemePage extends StatelessWidget {
               const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
           child: Text(
             "Please choose theme mode",
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
         Padding(

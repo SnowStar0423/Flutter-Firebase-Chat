@@ -1,6 +1,7 @@
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
 import 'package:chat_app/service/chat_service.dart';
+import 'package:chat_app/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,19 @@ class ChatViewModel extends GetxController {
   ChatViewModel({required this.chatService});
   RxList<RecentUserChat> recentUserChats = <RecentUserChat>[].obs;
 
+  @override
+  onInit() {
+    super.onInit();
+    loadRecentUserChats();
+  }
+
   loadRecentUserChats() async {
     chatService
         .loadRecentChats(currentUserId: FirebaseAuth.instance.currentUser!.uid)
         .listen((event) async {
       clearRecentUserChats();
+      AppUtil.debugPrint("event: ${event.docs.length}");
+      AppUtil.debugPrint("recent1: ${recentUserChats.length}");
       List<String> listIdTo = [];
       List<RecentChat> recentChats = [];
       List<ChatUser> recentUsers = [];
@@ -32,6 +41,8 @@ class ChatViewModel extends GetxController {
         recentUserChats
             .add(RecentUserChat(recentChat: recentChats[i], chatUser: user));
       }
+
+      AppUtil.debugPrint("recent2: ${recentUserChats.length}");
     });
   }
 

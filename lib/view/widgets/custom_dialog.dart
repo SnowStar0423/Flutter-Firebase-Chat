@@ -41,7 +41,7 @@ class CustomDialogBox extends StatelessWidget {
           margin: const EdgeInsets.only(top: Constants.avatarRadius),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            color: Colors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(Constants.padding),
             boxShadow: const [
               BoxShadow(

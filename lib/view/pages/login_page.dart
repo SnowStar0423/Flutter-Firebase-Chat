@@ -63,19 +63,7 @@ class _LoginPageState extends State<LoginPage>
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Center(
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                width: 150,
-                height: 150,
-                child: const CustomImage(
-                  AppConstant.logo,
-                  imageType: ImageType.network,
-                  bgColor: AppColor.white,
-                  radius: 5,
-                ),
-              ),
-            ),
+            _buildLogo(),
             const SizedBox(
               height: 10,
             ),
@@ -88,15 +76,7 @@ class _LoginPageState extends State<LoginPage>
             const SizedBox(
               height: 80,
             ),
-            CustomTextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              leadingIcon: const Icon(
-                Icons.email_outlined,
-                color: Colors.grey,
-              ),
-              hintText: "Email",
-            ),
+            _buildEmailBlock(),
             const Divider(
               color: Colors.grey,
               height: 10,
@@ -104,27 +84,7 @@ class _LoginPageState extends State<LoginPage>
             const SizedBox(
               height: 10,
             ),
-            Obx(
-              () => CustomTextField(
-                controller: passwordController,
-                leadingIcon: const Icon(
-                  Icons.lock_outline,
-                  color: Colors.grey,
-                ),
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    _authViewModel.hideShowPassword();
-                  },
-                  child: Icon(
-                      _authViewModel.isObscurePassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      color: Colors.grey),
-                ),
-                obscureText: _authViewModel.isObscurePassword,
-                hintText: "Password",
-              ),
-            ),
+            _buildPasswordBlock(),
             const Divider(
               color: Colors.grey,
               height: 10,
@@ -132,25 +92,81 @@ class _LoginPageState extends State<LoginPage>
             const SizedBox(
               height: 15,
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                      color: AppColor.primary,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14),
-                ),
-              ),
-            ),
+            _buildForgotPasswordBlcok(),
             const SizedBox(
               height: 25,
             ),
             _buildLoginButton()
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildForgotPasswordBlcok() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () {},
+        child: const Text(
+          "Forgot Password?",
+          style: TextStyle(
+              color: AppColor.primary,
+              fontWeight: FontWeight.w400,
+              fontSize: 14),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: 150,
+        height: 150,
+        child: CustomImage(
+          AppConstant.logo,
+          imageType: ImageType.network,
+          bgColor: Theme.of(context).scaffoldBackgroundColor,
+          radius: 5,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmailBlock() {
+    return CustomTextField(
+      controller: emailController,
+      keyboardType: TextInputType.emailAddress,
+      leadingIcon: const Icon(
+        Icons.email_outlined,
+        color: Colors.grey,
+      ),
+      hintText: "Email",
+    );
+  }
+
+  Widget _buildPasswordBlock() {
+    return Obx(
+      () => CustomTextField(
+        controller: passwordController,
+        leadingIcon: const Icon(
+          Icons.lock_outline,
+          color: Colors.grey,
+        ),
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _authViewModel.hideShowPassword();
+          },
+          child: Icon(
+              _authViewModel.isObscurePassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              color: Colors.grey),
+        ),
+        obscureText: _authViewModel.isObscurePassword,
+        hintText: "Password",
       ),
     );
   }
@@ -217,8 +233,8 @@ class _LoginPageState extends State<LoginPage>
                 BoxShadow(
                   color: Theme.of(context).shadowColor.withOpacity(0.1),
                   spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: const Offset(0, 2), // changes position of shadow
+                  blurRadius: 1,
+                  offset: const Offset(0, 1), // changes position of shadow
                 ),
               ],
             ),
