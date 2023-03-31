@@ -19,7 +19,8 @@ class AppPage {
     GetPage(name: AppRoute.chatPage, page: () => ChatPage()),
     GetPage(name: AppRoute.chatRoomPage, page: () => const ChatRoomPage()),
     GetPage(name: AppRoute.changeThemePage, page: () => ChangeThemePage()),
-    GetPage(name: AppRoute.editProfilePage, page: () => EditProfilePage()),
+    GetPage(
+        name: AppRoute.editProfilePage, page: () => const EditProfilePage()),
     GetPage(
       name: AppRoute.settingPage,
       page: () => SettingPage(),

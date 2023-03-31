@@ -26,8 +26,13 @@ class _UserPageState extends State<UserPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _userViewModel.getUsers();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(),
     );

@@ -4,4 +4,5 @@ class FireStoreConstant {
   static const recentChatCollectionPath = 'recentchat';
   static const userCollectionPath = 'users';
   static const recentPeerCollectionPath = 'peer';
+  static const profileImagesPath = 'profileImages';
 }
