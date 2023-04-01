@@ -1,4 +1,6 @@
+import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/user_service.dart';
+import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -31,6 +33,7 @@ class AuthViewModel extends GetxController {
       final res = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       AppUtil.debugPrint(res.user);
+      userService.addUser(AppGlobal().firebaseUserToChatUser(res.user!));
       setMessage("successfully logged in");
       // _analyticsService.setUserProperties(
       //     userId: firebaseAuth.currentUser!.uid);
@@ -67,7 +70,9 @@ class AuthViewModel extends GetxController {
       AppUtil.debugPrint(res.user);
       if (res.user != null) {
         await res.user!.updateDisplayName(name);
-        userService.addUser(firebaseAuth.currentUser!);
+        await firebaseAuth.currentUser!.reload();
+        userService.addUser(
+            AppGlobal().firebaseUserToChatUser(firebaseAuth.currentUser!));
       }
       setMessage("successfully registered in");
       // _analyticsService.setUserProperties(
@@ -86,9 +91,17 @@ class AuthViewModel extends GetxController {
   }
 
   signOut() async {
+    var tempUser = _removeUserDeviceToken(firebaseAuth.currentUser!);
+    await userService.addUser(tempUser);
     await firebaseAuth.signOut();
     Get.delete<ChatViewModel>();
     AppUtil.debugPrint(firebaseAuth.currentUser);
     // _analyticsService.logEvent(eventName: "signOut");
+  }
+
+  ChatUser _removeUserDeviceToken(User user) {
+    ChatUser temp = AppGlobal().firebaseUserToChatUser(user);
+    temp.deviceToken = '';
+    return temp;
   }
 }

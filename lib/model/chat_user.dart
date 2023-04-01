@@ -1,35 +1,44 @@
+import 'package:chat_app/utils/firestore_constant.dart';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class ChatUser extends Equatable {
-  final String id;
-  final String displayName;
-  final String? photoUrl;
-  final String? phoneNumber;
+  late String id;
+  late String displayName;
+  String? photoUrl;
+  String? phoneNumber;
+  String? deviceToken;
 
-  const ChatUser({
-    required this.id,
-    required this.displayName,
-    this.photoUrl,
-    this.phoneNumber,
-  });
+  ChatUser(
+      {required this.id,
+      this.displayName = "",
+      this.photoUrl,
+      this.phoneNumber,
+      this.deviceToken});
 
   @override
-  List<Object?> get props => [id, photoUrl, displayName, phoneNumber];
+  List<Object?> get props =>
+      [id, photoUrl, displayName, phoneNumber, deviceToken];
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'id': id,
-      'photoUrl': photoUrl,
-      'displayName': displayName,
-      'phoneNumber': phoneNumber
+      ChatUserConstant.id: id,
+      ChatUserConstant.photoUrl: photoUrl,
+      ChatUserConstant.displayName: displayName,
+      ChatUserConstant.phoneNumber: phoneNumber,
+      ChatUserConstant.deviceToken: deviceToken
     };
   }
 
   factory ChatUser.fromJson(Map<String, dynamic> map) {
     return ChatUser(
-        id: (map['id']),
-        photoUrl: (map['photoUrl']),
-        displayName: (map['displayName']),
-        phoneNumber: (map['phoneNumber']));
+      id: (map[ChatUserConstant.id]),
+      photoUrl: (map[ChatUserConstant.photoUrl]),
+      displayName: (map[ChatUserConstant.displayName]),
+      phoneNumber: (map[ChatUserConstant.phoneNumber]),
+      deviceToken: (map.containsKey(ChatUserConstant.deviceToken)
+          ? map[ChatUserConstant.deviceToken]
+          : null),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/service/user_service.dart';
+import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/firestore_constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -53,7 +54,9 @@ class ProfileViewModel extends GetxController {
 
   _saveUserProfileToFirestore() async {
     if (firebaseAuth.currentUser == null) return;
-    userService.addUser(firebaseAuth.currentUser!);
+    userService.addUser(
+      AppGlobal().firebaseUserToChatUser(firebaseAuth.currentUser!),
+    );
   }
 
   String? getUserPhotoUrl() {

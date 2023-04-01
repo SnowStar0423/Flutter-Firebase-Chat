@@ -66,7 +66,7 @@ class ChatPage extends StatelessWidget {
                 recentUserChat: recentUserChat,
                 onTap: () {
                   Get.toNamed(AppRoute.chatRoomPage,
-                      arguments: {"peer": recentUserChat.chatUser});
+                      arguments: {"recentUserChat": recentUserChat});
                 },
               ),
             );

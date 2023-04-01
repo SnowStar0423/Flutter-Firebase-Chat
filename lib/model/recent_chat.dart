@@ -4,25 +4,29 @@ class RecentChat {
   late String idTo;
   late String timestamp;
   late String content;
-  RecentChat({
-    required this.idFrom,
-    required this.idTo,
-    required this.timestamp,
-    required this.content,
-  });
+  late bool isUnread;
+  RecentChat(
+      {required this.idFrom,
+      required this.idTo,
+      required this.timestamp,
+      required this.content,
+      this.isUnread = true});
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'idFrom': idFrom,
       'idTo': idTo,
       'timestamp': timestamp,
-      'content': content
+      'content': content,
+      'isUnread': isUnread,
     };
   }
 
   factory RecentChat.fromJson(Map<String, dynamic> map) => RecentChat(
-      idFrom: map['idFrom'],
-      idTo: map['idTo'],
-      timestamp: map['timestamp'],
-      content: map['content']);
+        idFrom: map['idFrom'],
+        idTo: map['idTo'],
+        timestamp: map['timestamp'],
+        content: map['content'],
+        isUnread: map['isUnread'],
+      );
 }

@@ -21,38 +21,46 @@ class ChatViewModel extends GetxController {
   }
 
   loadRecentUserChats() async {
-    chatService
-        .loadRecentChats(currentUserId: FirebaseAuth.instance.currentUser!.uid)
-        .listen((event) async {
-      clearRecentUserChats();
-      AppUtil.debugPrint("event: ${event.docs.length}");
-      AppUtil.debugPrint("recent1: ${recentUserChats.length}");
-      List<String> listIdTo = [];
-      List<RecentChat> recentChats = [];
-      List<ChatUser> recentUsers = [];
-      for (int i = 0; i < event.docs.length; i++) {
-        recentChats.add(RecentChat.fromJson(event.docs.elementAt(i).data()));
-        listIdTo.add(recentChats[i].idTo);
-      }
-      recentUsers = await _getRecentUsers(listIdTo);
-      for (int i = 0; i < recentChats.length; i++) {
-        var user = recentUsers
-            .firstWhere((element) => element.id == recentChats[i].idTo);
-        recentUserChats
-            .add(RecentUserChat(recentChat: recentChats[i], chatUser: user));
-      }
-
-      AppUtil.debugPrint("recent2: ${recentUserChats.length}");
-    });
+    try {
+      chatService
+          .loadRecentChats(
+              currentUserId: FirebaseAuth.instance.currentUser!.uid)
+          .listen((event) async {
+        clearRecentUserChats();
+        if (event.docs.isEmpty) return;
+        List<String> listIdTo = [];
+        List<RecentChat> recentChats = [];
+        List<ChatUser> recentUsers = [];
+        for (int i = 0; i < event.docs.length; i++) {
+          recentChats.add(RecentChat.fromJson(event.docs.elementAt(i).data()));
+          listIdTo.add(recentChats[i].idTo);
+        }
+        recentUsers = await _getRecentUsers(listIdTo);
+        AppUtil.debugPrint(recentUsers.length);
+        AppUtil.debugPrint(recentChats.length);
+        for (int i = 0; i < recentChats.length; i++) {
+          var user = recentUsers
+              .firstWhere((element) => element.id == recentChats[i].idTo);
+          recentUserChats
+              .add(RecentUserChat(recentChat: recentChats[i], chatUser: user));
+        }
+      });
+    } catch (e) {
+      AppUtil.debugPrint(e.toString());
+    }
   }
 
   Future<List<ChatUser>> _getRecentUsers(List<String> ids) async {
-    final userService =
-        UserService(firebaseFirestore: FirebaseFirestore.instance);
-    final querySnap = await userService.getUsersByIds(ids: ids);
-    List<ChatUser> users =
-        querySnap.docs.map((e) => ChatUser.fromJson(e.data())).toList();
-    return users;
+    try {
+      final userService =
+          UserService(firebaseFirestore: FirebaseFirestore.instance);
+      final querySnap = await userService.getUsersByIds(ids: ids);
+      List<ChatUser> users =
+          querySnap.docs.map((e) => ChatUser.fromJson(e.data())).toList();
+      return users;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   clearRecentUserChats() {

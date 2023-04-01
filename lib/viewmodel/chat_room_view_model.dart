@@ -1,4 +1,7 @@
+import 'package:chat_app/model/chat_user.dart';
+import 'package:chat_app/model/recent_chat.dart';
 import 'package:chat_app/service/chat_service.dart';
+import 'package:chat_app/service/push_notification_service.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -29,7 +32,16 @@ class ChatRoomViewModel extends GetxController {
     chatMessages.value = [];
   }
 
-  assignLastDocument(QueryDocumentSnapshot lastDocument) {
+  updateSeenRecentChat(
+      {required RecentChat recentChat,
+      required String currentUserId,
+      required String peerId}) async {
+    recentChat.isUnread = false;
+    chatService.updateSeenRecentChat(
+        recentChat: recentChat, currentUserId: currentUserId, peerId: peerId);
+  }
+
+  _assignLastDocument(QueryDocumentSnapshot lastDocument) {
     lastdocumentSnapshot = lastDocument;
   }
 
@@ -37,16 +49,14 @@ class ChatRoomViewModel extends GetxController {
     if (!_moreMessagesAvailable || loadingMessages) return;
     loadingMessages = true;
     if (lastdocumentSnapshot == null) {
-      AppUtil.debugPrint("loadChatMessages");
       chatService.loadChatMessages(groupChatId: groupChatId).listen((event) {
         chatMessages.value =
             event.docs.map((e) => ChatMessage.fromJson(e.data())).toList();
         if (event.docs.isNotEmpty) {
-          assignLastDocument(event.docs[event.docs.length - 1]);
+          _assignLastDocument(event.docs[event.docs.length - 1]);
         }
       });
     } else {
-      AppUtil.debugPrint("loadMoreChatMessages");
       chatService
           .loadMoreChatMessages(
               groupChatId: groupChatId,
@@ -55,7 +65,7 @@ class ChatRoomViewModel extends GetxController {
         if (event.docs.isNotEmpty) {
           chatMessages.addAll(
               event.docs.map((e) => ChatMessage.fromJson(e.data())).toList());
-          assignLastDocument(event.docs[event.docs.length - 1]);
+          _assignLastDocument(event.docs[event.docs.length - 1]);
         } else {
           _moreMessagesAvailable = false;
         }
@@ -88,6 +98,37 @@ class ChatRoomViewModel extends GetxController {
           peerId: peerId);
       chatService.addRecentChat(
           content: content, currentUserId: currentUserId, peerId: peerId);
+      sending = false;
+      return true;
+    } catch (e) {
+      AppUtil.debugPrint(e.toString());
+      return false;
+    } finally {
+      sending = false;
+    }
+  }
+
+  Future<bool> sendChatMessageWithPushNotification(
+      {required String content,
+      required String type,
+      required String groupChatId,
+      required ChatUser currentUser,
+      required ChatUser peer}) async {
+    if (content.isEmpty) return false;
+    sending = true;
+    try {
+      await chatService.sendChatMessage(
+          content: content,
+          type: type,
+          groupChatId: groupChatId,
+          currentUserId: currentUser.id,
+          peerId: peer.id);
+      chatService.addRecentChat(
+          content: content, currentUserId: currentUser.id, peerId: peer.id);
+      if (!AppUtil.checkIsNull(peer.deviceToken)) {
+        PushNotificationService().pushNotification(
+            currentUser: currentUser, peer: peer, message: content);
+      }
       sending = false;
       return true;
     } catch (e) {

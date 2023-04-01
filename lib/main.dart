@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/utils/app_controller.dart';
+import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/app_page.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/view/theme/app_theme.dart';
@@ -34,6 +35,7 @@ _getDeviceToken() async {
     );
   }
   final token = await firebaseMessaging.getToken();
+  AppGlobal().deviceToken = token;
   debugPrint("=======Token========");
   debugPrint(token);
   debugPrint("===============");

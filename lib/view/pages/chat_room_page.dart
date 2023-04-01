@@ -1,4 +1,6 @@
 import 'package:chat_app/model/chat_message.dart';
+import 'package:chat_app/model/recent_chat.dart';
+import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../model/chat_user.dart';
+import '../../model/recent_user_chat.dart';
 import '../widgets/chat_room_item.dart';
 import '../widgets/custom_textfield.dart';
 
@@ -21,7 +24,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   final ChatRoomViewModel _chatRoomViewModel = Get.find();
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final args = Get.arguments;
+  final Map<String, dynamic> args = Get.arguments;
   late ChatUser _peer;
   String _groupChatId = "";
 
@@ -39,10 +42,23 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   }
 
   init() {
-    if (args != null && args["peer"] != null) {
-      _peer = args["peer"];
-      _groupChatId = _chatRoomViewModel.generateGroupChatId(
-          FirebaseAuth.instance.currentUser!.uid, _peer.id);
+    if (args.isNotEmpty) {
+      String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+      if (args.containsKey('recentUserChat')) {
+        RecentUserChat recentUserChat = args["recentUserChat"];
+        RecentChat recentChat = recentUserChat.recentChat;
+        _peer = recentUserChat.chatUser;
+
+        _chatRoomViewModel.updateSeenRecentChat(
+            currentUserId: currentUserId,
+            peerId: _peer.id,
+            recentChat: recentChat);
+      } else {
+        _peer = args["peer"];
+      }
+
+      _groupChatId =
+          _chatRoomViewModel.generateGroupChatId(currentUserId, _peer.id);
       _chatRoomViewModel.loadMessages(_groupChatId);
     }
     _scrollController.addListener(() {
@@ -117,12 +133,20 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           Obx(
             () => IconButton(
               onPressed: () async {
-                final res = await _chatRoomViewModel.sendChatMessage(
-                    content: _messageController.text,
-                    type: ChatMessageType.text,
-                    groupChatId: _groupChatId,
-                    currentUserId: FirebaseAuth.instance.currentUser!.uid,
-                    peerId: _peer.id);
+                // final res = await _chatRoomViewModel.sendChatMessage(
+                //     content: _messageController.text,
+                //     type: ChatMessageType.text,
+                //     groupChatId: _groupChatId,
+                //     currentUserId: FirebaseAuth.instance.currentUser!.uid,
+                //     peerId: _peer.id);
+                final res = await _chatRoomViewModel
+                    .sendChatMessageWithPushNotification(
+                        content: _messageController.text,
+                        type: ChatMessageType.text,
+                        groupChatId: _groupChatId,
+                        currentUser: AppGlobal().firebaseUserToChatUser(
+                            FirebaseAuth.instance.currentUser!),
+                        peer: _peer);
                 if (!res) {
                   AppUtil.showSnackBar("failed to send a message");
                 }

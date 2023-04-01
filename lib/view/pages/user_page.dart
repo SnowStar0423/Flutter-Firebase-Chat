@@ -39,17 +39,15 @@ class _UserPageState extends State<UserPage> {
   }
 
   _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 60, 15, 5),
-      child: Column(
-        children: [
-          _buildHeader(),
-          const SizedBox(
-            height: 15,
-          ),
-          _buildChatList(),
-        ],
-      ),
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(15, 50, 15, 20),
+      children: [
+        _buildHeader(),
+        const SizedBox(
+          height: 10,
+        ),
+        _buildChatList(),
+      ],
     );
   }
 

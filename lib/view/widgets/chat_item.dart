@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,14 @@ class ChatItem extends StatelessWidget {
       required this.recentUserChat,
       this.onTap,
       this.isNotified = true,
+      this.notifiedNumber = 0,
       this.profileSize = 50})
       : super(key: key);
   final RecentUserChat recentUserChat;
   final bool isNotified;
   final GestureTapCallback? onTap;
   final double profileSize;
+  final int notifiedNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +77,14 @@ class ChatItem extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 5),
+                        Visibility(
+                          visible: recentUserChat.recentChat.isUnread,
+                          child: const Badge(
+                            badgeStyle:
+                                BadgeStyle(badgeColor: AppColor.primary),
+                          ),
+                        ),
+                        const SizedBox(width: 5),
                         Text(
                           AppUtil.formatTimeAgo(DateTime.parse(
                               recentUserChat.recentChat.timestamp)),
@@ -100,10 +111,10 @@ class ChatItem extends StatelessWidget {
                           ),
                         ),
                         if (isNotified)
-                          const Padding(
-                            padding: EdgeInsets.only(right: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5),
                             child: NotifyBox(
-                              number: 0,
+                              number: notifiedNumber,
                               boxSize: 17,
                             ),
                           )

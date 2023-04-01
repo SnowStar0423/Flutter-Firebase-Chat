@@ -1,3 +1,5 @@
+import '../utils/firestore_constant.dart';
+
 class ChatMessageType {
   static const String text = "text";
   static const String image = "text";
@@ -19,19 +21,19 @@ class ChatMessage {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'idFrom': idFrom,
-      'idTo': idTo,
-      'timestamp': timestamp,
-      'content': content,
-      'type': type,
+      ChatMessageConstant.idFrom: idFrom,
+      ChatMessageConstant.idTo: idTo,
+      ChatMessageConstant.timestamp: timestamp,
+      ChatMessageConstant.content: content,
+      ChatMessageConstant.type: type,
     };
   }
 
   factory ChatMessage.fromJson(Map<String, dynamic> map) => ChatMessage(
-        idFrom: map['idFrom'],
-        idTo: map['idTo'],
-        timestamp: map['timestamp'],
-        content: map['content'],
-        type: map['type'],
+        idFrom: map[ChatMessageConstant.idFrom],
+        idTo: map[ChatMessageConstant.idTo],
+        timestamp: map[ChatMessageConstant.timestamp],
+        content: map[ChatMessageConstant.content],
+        type: map[ChatMessageConstant.type],
       );
 }

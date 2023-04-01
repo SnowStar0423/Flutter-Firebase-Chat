@@ -39,7 +39,7 @@ class ChatService {
         .collection(FireStoreConstant.chatCollectionPath)
         .doc(groupChatId)
         .collection(FireStoreConstant.messageCollectionPath)
-        .orderBy('timestamp', descending: true)
+        .orderBy(ChatMessageConstant.timestamp, descending: true)
         .limit(limit)
         .snapshots();
   }
@@ -52,7 +52,7 @@ class ChatService {
         .collection(FireStoreConstant.chatCollectionPath)
         .doc(groupChatId)
         .collection(FireStoreConstant.messageCollectionPath)
-        .orderBy('timestamp', descending: true)
+        .orderBy(ChatMessageConstant.timestamp, descending: true)
         .startAfterDocument(lastdocumentSnapshot)
         .limit(limit)
         .snapshots();
@@ -64,9 +64,21 @@ class ChatService {
         .collection(FireStoreConstant.recentChatCollectionPath)
         .doc(currentUserId)
         .collection(FireStoreConstant.recentPeerCollectionPath)
-        .orderBy('timestamp', descending: true)
+        .orderBy(ChatMessageConstant.timestamp, descending: true)
         .limit(limit)
         .snapshots();
+  }
+
+  updateSeenRecentChat(
+      {required RecentChat recentChat,
+      required String currentUserId,
+      required String peerId}) async {
+    firebaseFirestore
+        .collection(FireStoreConstant.recentChatCollectionPath)
+        .doc(currentUserId)
+        .collection(FireStoreConstant.recentPeerCollectionPath)
+        .doc(peerId)
+        .update(recentChat.toJson());
   }
 
   addRecentChat(
@@ -93,11 +105,11 @@ class ChatService {
         .collection(FireStoreConstant.recentPeerCollectionPath)
         .doc(peerId);
     RecentChat recentChat = RecentChat(
-      idFrom: currentUserId,
-      idTo: peerId,
-      timestamp: DateTime.now().toString(),
-      content: content,
-    );
+        idFrom: currentUserId,
+        idTo: peerId,
+        timestamp: DateTime.now().toString(),
+        content: content,
+        isUnread: false);
     try {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         transaction.set(documentReference, recentChat.toJson());
@@ -117,11 +129,11 @@ class ChatService {
         .collection(FireStoreConstant.recentPeerCollectionPath)
         .doc(currentUserId);
     RecentChat recentChat = RecentChat(
-      idFrom: peerId,
-      idTo: currentUserId,
-      timestamp: DateTime.now().toString(),
-      content: content,
-    );
+        idFrom: peerId,
+        idTo: currentUserId,
+        timestamp: DateTime.now().toString(),
+        content: content,
+        isUnread: true);
     try {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         transaction.set(documentReference, recentChat.toJson());

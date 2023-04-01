@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random_avatar/random_avatar.dart';
 
 import '../../utils/app_util.dart';
 import '../../viewmodel/theme_view_model.dart';
@@ -69,8 +70,9 @@ class ChangeThemePage extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                          ThemeModeItem(title: "ABC"),
-                          ThemeModeItem(title: "ABC"),
+                          ThemeModeItem(title: "Go"),
+                          ThemeModeItem(title: "David"),
+                          ThemeModeItem(title: "Joe"),
                         ],
                       ),
                     ),
@@ -119,8 +121,9 @@ class ChangeThemePage extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                          ThemeModeItem(title: "ABC", mode: ThemeMode.dark),
-                          ThemeModeItem(title: "ABC", mode: ThemeMode.dark),
+                          ThemeModeItem(title: "Go", mode: ThemeMode.dark),
+                          ThemeModeItem(title: "David", mode: ThemeMode.dark),
+                          ThemeModeItem(title: "Joe", mode: ThemeMode.dark),
                         ],
                       ),
                     ),
@@ -190,7 +193,7 @@ class ThemeModeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 4, left: 3, right: 3),
-      height: 40,
+      height: 20,
       width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -207,12 +210,27 @@ class ThemeModeItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 6,
-          color: mode == ThemeMode.dark ? Colors.white : Colors.black,
-        ),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 5,
+          ),
+          SizedBox(
+            width: 10,
+            height: 10,
+            child: randomAvatar(title),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 6,
+              color: mode == ThemeMode.dark ? Colors.white : Colors.black,
+            ),
+          ),
+        ],
       ),
     );
   }

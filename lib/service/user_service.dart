@@ -1,26 +1,21 @@
+import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/utils/firestore_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class UserService {
   final FirebaseFirestore firebaseFirestore;
   UserService({required this.firebaseFirestore});
-  Future<void> addUser(User user) async {
+  Future<void> addUser(ChatUser user) async {
     firebaseFirestore
         .collection(FireStoreConstant.userCollectionPath)
-        .doc(user.uid)
-        .set({
-      "id": user.uid,
-      "photoUrl": user.photoURL,
-      "displayName": user.displayName,
-      "phoneNumber": user.phoneNumber
-    });
+        .doc(user.id)
+        .set(user.toJson());
   }
 
   Future<bool> checkUserExist(String userId) async {
     final QuerySnapshot result = await firebaseFirestore
         .collection(FireStoreConstant.userCollectionPath)
-        .where("id", isEqualTo: userId)
+        .where(ChatUserConstant.id, isEqualTo: userId)
         .limit(1)
         .get();
     return result.docs.isNotEmpty;
@@ -31,8 +26,9 @@ class UserService {
     if (searchText.isNotEmpty) {
       return await firebaseFirestore
           .collection(FireStoreConstant.userCollectionPath)
-          .where("displayName", isGreaterThanOrEqualTo: searchText)
-          .where("displayName", isLessThan: '${searchText}z')
+          .where(ChatUserConstant.displayName,
+              isGreaterThanOrEqualTo: searchText)
+          .where(ChatUserConstant.displayName, isLessThan: '${searchText}z')
           .limit(limit)
           .get();
     } else {
@@ -48,7 +44,7 @@ class UserService {
     if (ids.isNotEmpty) {
       return await firebaseFirestore
           .collection(FireStoreConstant.userCollectionPath)
-          .where("id", whereIn: ids)
+          .where(ChatUserConstant.id, whereIn: ids)
           .limit(limit)
           .get();
     } else {
@@ -64,7 +60,7 @@ class UserService {
     if (ids.isNotEmpty) {
       return firebaseFirestore
           .collection(FireStoreConstant.userCollectionPath)
-          .where("id", whereIn: ids)
+          .where(ChatUserConstant.id, whereIn: ids)
           .limit(limit)
           .snapshots();
     } else {
