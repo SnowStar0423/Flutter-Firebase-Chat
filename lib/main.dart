@@ -4,6 +4,7 @@ import 'package:chat_app/utils/app_controller.dart';
 import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/app_page.dart';
 import 'package:chat_app/utils/app_route.dart';
+import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/view/theme/app_theme.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,21 +25,13 @@ void main() async {
 _getDeviceToken() async {
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   if (Platform.isIOS) {
-    firebaseMessaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
+    firebaseMessaging.requestPermission();
   }
   final token = await firebaseMessaging.getToken();
   AppGlobal().deviceToken = token;
-  debugPrint("=======Token========");
-  debugPrint(token);
-  debugPrint("===============");
+  AppUtil.debugPrint("=======Token========");
+  AppUtil.debugPrint(token);
+  AppUtil.debugPrint("===============");
 }
 
 class MyApp extends StatelessWidget {

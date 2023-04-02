@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   initState() {
     super.initState();
     _nameController.text = _profileViewModel.getUserDisplayName();
+    _profileViewModel.resetUserProfile();
   }
 
   @override
@@ -138,22 +140,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
+        AppUtil.checkIsNull(_profileViewModel.getUserPhotoUrl())
             ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                trBackground: true, width: 70, height: 70)
-            : CustomImage(
-                FirebaseAuth.instance.currentUser!.photoURL!,
-                imageType: ImageType.network,
-                width: 70,
-                height: 70,
-                radius: 100,
+                trBackground: true, width: 78, height: 78)
+            : Badge(
+                onTap: () {
+                  _profileViewModel.removeUserPhotoUrl();
+                },
+                badgeContent: const Icon(
+                  Icons.close_outlined,
+                  color: Colors.white,
+                  size: 15,
+                ),
+                child: CustomImage(
+                  _profileViewModel.getUserPhotoUrl()!,
+                  imageType: ImageType.network,
+                  width: 70,
+                  height: 70,
+                  radius: 100,
+                ),
               )
       ],
     );
   }
 
   Widget _buildProfileImage() {
-    return _profileViewModel.getSelectedImage() == null
+    return AppUtil.checkIsNull(_profileViewModel.selectedImage)
         ? _checkProfileImage()
         : ClipRRect(
             borderRadius: BorderRadius.circular(100),
@@ -162,13 +174,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
               height: 80,
               child: _profileViewModel.isUploadingImage.value
                   ? Image.file(
-                      _profileViewModel.getSelectedImage()!,
+                      _profileViewModel.selectedImage!,
                       fit: BoxFit.cover,
                       color: Colors.black.withOpacity(0.2),
                       colorBlendMode: BlendMode.dstATop,
                     )
                   : Image.file(
-                      _profileViewModel.getSelectedImage()!,
+                      _profileViewModel.selectedImage!,
                       fit: BoxFit.cover,
                     ),
             ),

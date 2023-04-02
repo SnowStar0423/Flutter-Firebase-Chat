@@ -14,7 +14,8 @@ class CustomImage extends StatelessWidget {
       this.radius = 0,
       this.padding = 0,
       this.bgColor,
-      this.borderRadius});
+      this.borderRadius,
+      this.isBoxShadow = true});
   final String image;
   final ImageType imageType;
   final double width;
@@ -24,6 +25,7 @@ class CustomImage extends StatelessWidget {
   final double radius;
   final BorderRadiusGeometry? borderRadius;
   final BoxFit fit;
+  final bool isBoxShadow;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +37,13 @@ class CustomImage extends StatelessWidget {
         color: bgColor,
         borderRadius: borderRadius ?? BorderRadius.circular(radius),
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade400,
-            spreadRadius: .3,
-            blurRadius: .3,
-            offset: const Offset(0, .5), // changes position of shadow
-          ),
+          if (isBoxShadow)
+            BoxShadow(
+              color: Colors.grey.shade400,
+              spreadRadius: .3,
+              blurRadius: .3,
+              offset: const Offset(0, .5), // changes position of shadow
+            ),
         ],
       ),
       child: checkImageType(),

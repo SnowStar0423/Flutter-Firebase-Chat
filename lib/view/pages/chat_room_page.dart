@@ -127,18 +127,13 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           Expanded(
             child: CustomTextField(
               controller: _messageController,
+              maxLines: 5,
               hintText: "Write your message",
             ),
           ),
           Obx(
             () => IconButton(
               onPressed: () async {
-                // final res = await _chatRoomViewModel.sendChatMessage(
-                //     content: _messageController.text,
-                //     type: ChatMessageType.text,
-                //     groupChatId: _groupChatId,
-                //     currentUserId: FirebaseAuth.instance.currentUser!.uid,
-                //     peerId: _peer.id);
                 final res = await _chatRoomViewModel
                     .sendChatMessageWithPushNotification(
                         content: _messageController.text,

@@ -15,6 +15,18 @@ class PushNotificationService {
       "notification": {
         "title": currentUser.displayName,
         "body": message,
+      },
+      "data": {
+        "idFrom": currentUser.id,
+        "idTo": peer.id,
+        "message": message,
+      },
+      "apns": {
+        "payload": {
+          "aps": {
+            "sound": 'default',
+          }
+        }
       }
     };
     final header = {"Authorization": FireStoreConstant.pushServerKey};

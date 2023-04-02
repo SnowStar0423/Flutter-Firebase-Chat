@@ -9,25 +9,29 @@ class CustomTextField extends StatelessWidget {
   final String? errorText;
   final String? hintText;
   final String? labelText;
+  final int minLines;
+  final int maxLines;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final GestureTapCallback? onTap;
   final ValueChanged<String>? onChanged;
-  const CustomTextField(
-      {Key? key,
-      this.onTap,
-      this.onChanged,
-      this.keyboardType,
-      this.controller,
-      this.hintText,
-      this.labelText,
-      this.readOnly = false,
-      this.validatedField = true,
-      this.errorText = 'Cannot be empty',
-      this.leadingIcon,
-      this.suffixIcon,
-      this.obscureText = false})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    this.onTap,
+    this.onChanged,
+    this.keyboardType,
+    this.controller,
+    this.hintText,
+    this.labelText,
+    this.readOnly = false,
+    this.validatedField = true,
+    this.errorText = 'Cannot be empty',
+    this.leadingIcon,
+    this.suffixIcon,
+    this.obscureText = false,
+    this.minLines = 1,
+    this.maxLines = 1,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,8 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       cursorColor: Theme.of(context).colorScheme.secondary,
+      minLines: minLines,
+      maxLines: maxLines,
       readOnly: readOnly,
       obscureText: obscureText,
       decoration: InputDecoration(

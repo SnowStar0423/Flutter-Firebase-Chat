@@ -188,6 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
         height: 150,
         child: CustomImage(
           AppConstant.logo,
+          padding: 10,
           imageType: ImageType.network,
           bgColor: Theme.of(context).scaffoldBackgroundColor,
           radius: 5,
@@ -253,21 +254,24 @@ class _RegisterPageState extends State<RegisterPage> {
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
+                topRight: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor.withOpacity(0.1),
                   spreadRadius: 1,
                   blurRadius: 1,
-                  offset: const Offset(0, 1), // changes position of shadow
+                  offset: const Offset(1, 1), // changes position of shadow
                 ),
               ],
             ),
             child: const Text(
               "Login",
               style: TextStyle(
-                  color: AppColor.primary, fontWeight: FontWeight.w500),
+                color: AppColor.primary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         )

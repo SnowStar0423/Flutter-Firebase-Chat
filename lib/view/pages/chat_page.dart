@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 
+import '../../viewmodel/profile_view_model.dart';
 import '../widgets/chat_item.dart';
 import '../widgets/custom_image.dart';
 import '../widgets/round_textbox.dart';
@@ -65,8 +66,10 @@ class ChatPage extends StatelessWidget {
               child: ChatItem(
                 recentUserChat: recentUserChat,
                 onTap: () {
-                  Get.toNamed(AppRoute.chatRoomPage,
-                      arguments: {"recentUserChat": recentUserChat});
+                  Get.toNamed(
+                    AppRoute.chatRoomPage,
+                    arguments: {"recentUserChat": recentUserChat},
+                  );
                 },
               ),
             );
@@ -99,22 +102,21 @@ class ChatPage extends StatelessWidget {
             "Chats",
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
           ),
-          GestureDetector(
-            onTap: () {
-              Get.toNamed(AppRoute.settingPage);
-            },
-            child:
-                AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
-                    ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                        trBackground: true, width: 40, height: 40)
-                    : CustomImage(
-                        FirebaseAuth.instance.currentUser!.photoURL!,
-                        imageType: ImageType.network,
-                        width: 40,
-                        height: 40,
-                        radius: 100,
-                      ),
-          ),
+          GestureDetector(onTap: () {
+            Get.toNamed(AppRoute.settingPage);
+          }, child: GetBuilder<ProfileViewModel>(builder: (controller) {
+            return AppUtil.checkIsNull(
+                    FirebaseAuth.instance.currentUser!.photoURL)
+                ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                    trBackground: true, width: 40, height: 40)
+                : CustomImage(
+                    FirebaseAuth.instance.currentUser!.photoURL!,
+                    imageType: ImageType.network,
+                    width: 40,
+                    height: 40,
+                    radius: 100,
+                  );
+          })),
         ],
       ),
     );

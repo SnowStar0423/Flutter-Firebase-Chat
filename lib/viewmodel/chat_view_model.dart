@@ -36,8 +36,6 @@ class ChatViewModel extends GetxController {
           listIdTo.add(recentChats[i].idTo);
         }
         recentUsers = await _getRecentUsers(listIdTo);
-        AppUtil.debugPrint(recentUsers.length);
-        AppUtil.debugPrint(recentChats.length);
         for (int i = 0; i < recentChats.length; i++) {
           var user = recentUsers
               .firstWhere((element) => element.id == recentChats[i].idTo);

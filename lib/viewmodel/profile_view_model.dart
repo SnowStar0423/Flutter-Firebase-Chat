@@ -26,7 +26,7 @@ class ProfileViewModel extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _newPhotoUrl = firebaseAuth.currentUser!.photoURL;
+    resetUserProfile();
   }
 
   bool get saving => _saving.value;
@@ -35,11 +35,20 @@ class ProfileViewModel extends GetxController {
   Future<bool> saveProfile(String name) async {
     if (saving) return false;
     saving = true;
+    bool shouldSave = false;
     try {
-      await _updateDisplayName(name);
-      await _updateProfilePhotoURL(_newPhotoUrl);
+      if (name != firebaseAuth.currentUser!.displayName) {
+        shouldSave = true;
+        await _updateDisplayName(name);
+      }
+      if (_newPhotoUrl != firebaseAuth.currentUser!.photoURL) {
+        shouldSave = true;
+        await _updateProfilePhotoURL(_newPhotoUrl);
+      }
       await _reloadCurrentUser();
-      _saveUserProfileToFirestore();
+      if (shouldSave) {
+        _saveUserProfileToFirestore();
+      }
       saving = false;
     } catch (e) {
       AppUtil.debugPrint(e.toString());
@@ -52,6 +61,11 @@ class ProfileViewModel extends GetxController {
     return true;
   }
 
+  resetUserProfile() {
+    _newPhotoUrl = firebaseAuth.currentUser!.photoURL;
+    _selectedImage = null;
+  }
+
   _saveUserProfileToFirestore() async {
     if (firebaseAuth.currentUser == null) return;
     userService.addUser(
@@ -59,8 +73,13 @@ class ProfileViewModel extends GetxController {
     );
   }
 
+  void removeUserPhotoUrl() {
+    _newPhotoUrl = null;
+    update();
+  }
+
   String? getUserPhotoUrl() {
-    return firebaseAuth.currentUser!.photoURL;
+    return _newPhotoUrl;
   }
 
   String getUserDisplayName() {
@@ -89,7 +108,6 @@ class ProfileViewModel extends GetxController {
   }
 
   Future<bool> _updateProfilePhotoURL(url) async {
-    if (AppUtil.checkIsNull(url)) return false;
     bool res = false;
     try {
       await firebaseAuth.currentUser!.updatePhotoURL(url).then((value) {
@@ -106,7 +124,7 @@ class ProfileViewModel extends GetxController {
 
     try {
       if (!AppUtil.checkIsNull(file)) {
-        String fileName = firebaseAuth.currentUser!.email!;
+        String fileName = firebaseAuth.currentUser!.uid;
         res = await uploadFile(
             file, fileName, FireStoreConstant.profileImagesPath);
       }
@@ -165,6 +183,6 @@ class ProfileViewModel extends GetxController {
 
   bool _setUploadingImage(bool val) => isUploadingImage.value = val;
 
-  File? getSelectedImage() => _selectedImage;
+  File? get selectedImage => _selectedImage;
   bool _setBrowsingImage(bool val) => _browsingImage = val;
 }
