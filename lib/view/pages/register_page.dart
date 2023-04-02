@@ -17,21 +17,20 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController conPasswordController = TextEditingController();
-  final RoundedLoadingButtonController btnController =
-      RoundedLoadingButtonController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _conPasswordController = TextEditingController();
+  final btnController = RoundedLoadingButtonController();
   final AuthViewModel _authViewModel = Get.find();
 
   @override
   dispose() {
     super.dispose();
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    conPasswordController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _conPasswordController.dispose();
   }
 
   @override
@@ -111,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildNameBlock() {
     return CustomTextField(
-      controller: nameController,
+      controller: _nameController,
       leadingIcon: const Icon(
         Icons.person_outline,
         color: Colors.grey,
@@ -122,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildEmailBlock() {
     return CustomTextField(
-      controller: emailController,
+      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       leadingIcon: const Icon(
         Icons.email_outlined,
@@ -135,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _buildConPassowrdBlock() {
     return Obx(
       () => CustomTextField(
-        controller: conPasswordController,
+        controller: _conPasswordController,
         leadingIcon: const Icon(
           Icons.lock_outline,
           color: Colors.grey,
@@ -159,7 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _buildPassowrdBlcok() {
     return Obx(
       () => CustomTextField(
-        controller: passwordController,
+        controller: _passwordController,
         leadingIcon: const Icon(
           Icons.lock_outline,
           color: Colors.grey,
@@ -209,10 +208,10 @@ class _RegisterPageState extends State<RegisterPage> {
             onPressed: () async {
               FocusScope.of(context).unfocus();
               bool res = await _authViewModel.registerWithEmailPassword(
-                  name: nameController.text,
-                  email: emailController.text,
-                  password: passwordController.text,
-                  confirmPassword: conPasswordController.text);
+                  name: _nameController.text,
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  confirmPassword: _conPasswordController.text);
               if (res) {
                 btnController.success();
                 Get.back();
@@ -230,8 +229,10 @@ class _RegisterPageState extends State<RegisterPage> {
             },
             child: const Text(
               "Register",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

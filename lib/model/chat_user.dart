@@ -1,4 +1,4 @@
-import 'package:chat_app/utils/firestore_constant.dart';
+import 'package:chat_app/utils/firebase_constant.dart';
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable

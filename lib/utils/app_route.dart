@@ -9,4 +9,5 @@ class AppRoute {
   static const userPage = '/chat_user';
   static const changeThemePage = '/change_theme';
   static const editProfilePage = '/edit_profile';
+  static const forgotPasswordPage = '/forgot_password';
 }

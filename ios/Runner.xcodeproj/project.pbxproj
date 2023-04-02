@@ -367,7 +367,7 @@
 				DEVELOPMENT_TEAM = FZL8259LD9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chat App";
+				INFOPLIST_KEY_CFBundleDisplayName = "My-Chat";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -502,7 +502,7 @@
 				DEVELOPMENT_TEAM = FZL8259LD9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chat App";
+				INFOPLIST_KEY_CFBundleDisplayName = "My-Chat";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -531,7 +531,7 @@
 				DEVELOPMENT_TEAM = FZL8259LD9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chat App";
+				INFOPLIST_KEY_CFBundleDisplayName = "My-Chat";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

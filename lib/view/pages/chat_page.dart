@@ -56,25 +56,41 @@ class ChatPage extends StatelessWidget {
 
   _buildChatList() {
     return Obx(
-      () => SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            RecentUserChat recentUserChat =
-                _chatViewModel.recentUserChats[index];
-            return Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: ChatItem(
-                recentUserChat: recentUserChat,
-                onTap: () {
-                  Get.toNamed(
-                    AppRoute.chatRoomPage,
-                    arguments: {"recentUserChat": recentUserChat},
+      () => _chatViewModel.recentUserChats.isEmpty
+          ? _buildNoData()
+          : SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  RecentUserChat recentUserChat =
+                      _chatViewModel.recentUserChats[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: ChatItem(
+                      recentUserChat: recentUserChat,
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoute.chatRoomPage,
+                          arguments: {"recentUserChat": recentUserChat},
+                        );
+                      },
+                    ),
                   );
                 },
+                childCount: _chatViewModel.recentUserChats.length,
               ),
-            );
-          },
-          childCount: _chatViewModel.recentUserChats.length,
+            ),
+    );
+  }
+
+  _buildNoData() {
+    return const SliverToBoxAdapter(
+      child: SizedBox(
+        height: 50,
+        child: Center(
+          child: Text(
+            "No Recent Chats",
+            style: TextStyle(fontSize: 18),
+          ),
         ),
       ),
     );

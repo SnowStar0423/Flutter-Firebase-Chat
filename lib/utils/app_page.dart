@@ -1,6 +1,7 @@
 import 'package:chat_app/view/pages/change_theme_page.dart';
 import 'package:chat_app/view/pages/chat_page.dart';
 import 'package:chat_app/view/pages/edit_profile_page.dart';
+import 'package:chat_app/view/pages/forgot_password_page.dart';
 import 'package:chat_app/view/pages/login_page.dart';
 import 'package:chat_app/view/pages/register_page.dart';
 import 'package:chat_app/view/pages/root_page.dart';
@@ -19,6 +20,12 @@ class AppPage {
     GetPage(name: AppRoute.chatPage, page: () => ChatPage()),
     GetPage(name: AppRoute.chatRoomPage, page: () => const ChatRoomPage()),
     GetPage(name: AppRoute.changeThemePage, page: () => ChangeThemePage()),
+    GetPage(
+      name: AppRoute.forgotPasswordPage,
+      page: () => const ForgotPasswordPage(),
+      fullscreenDialog: true,
+      transition: Transition.fade,
+    ),
     GetPage(
         name: AppRoute.editProfilePage, page: () => const EditProfilePage()),
     GetPage(

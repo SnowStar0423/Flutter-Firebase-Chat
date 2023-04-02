@@ -17,7 +17,7 @@ class ChangeThemePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Theme Mode",
+          "Theme",
         ),
       ),
       body: buildBody(context),

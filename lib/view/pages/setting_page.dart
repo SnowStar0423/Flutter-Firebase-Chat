@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../utils/app_constant.dart';
 import '../../utils/app_util.dart';
@@ -10,6 +11,7 @@ import '../../viewmodel/auth_view_model.dart';
 import '../../viewmodel/profile_view_model.dart';
 import '../theme/app_color.dart';
 import '../widgets/custom_image.dart';
+import '../widgets/custom_input_dialog.dart';
 import '../widgets/settting_item.dart';
 
 class SettingPage extends StatelessWidget {
@@ -25,6 +27,15 @@ class SettingPage extends StatelessWidget {
         title: const Text("Setting"),
       ),
       body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(context) {
+    return ListView(
+      children: [
+        _buildProfile(),
+        _buildSettingList(context),
+      ],
     );
   }
 
@@ -58,15 +69,6 @@ class SettingPage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildBody(context) {
-    return ListView(
-      children: [
-        _buildProfile(),
-        _buildSettingList(context),
-      ],
     );
   }
 
@@ -107,7 +109,7 @@ class SettingPage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SettingItem(
-            title: "Theme Mode",
+            title: "Change Theme",
             leadingIcon: Icons.dark_mode_rounded,
             leadingIconColor: AppColor.purple,
             trailing: const Icon(
@@ -116,6 +118,35 @@ class SettingPage extends StatelessWidget {
             ),
             onTap: () {
               Get.toNamed(AppRoute.changeThemePage);
+            },
+          ),
+          const SizedBox(height: 10),
+          SettingItem(
+            title: "Feedback",
+            leadingIcon: Icons.rate_review,
+            leadingIconColor: AppColor.blue,
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            ),
+            onTap: () {
+              _showDialog(context);
+            },
+          ),
+          const SizedBox(height: 10),
+          SettingItem(
+            title: "Share",
+            leadingIcon: Icons.share_outlined,
+            leadingIconColor: AppColor.yellow,
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            ),
+            onTap: () {
+              Share.share(
+                AppConstant.appStoreLink,
+                subject: AppConstant.appName,
+              );
             },
           ),
           const SizedBox(height: 10),
@@ -148,5 +179,24 @@ class SettingPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _showDialog(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const CustomInputDialog(
+          title: 'Feedback',
+          hint: 'Please write your feedback',
+          ok: 'Submit',
+        );
+      },
+    ).then((value) {
+      if (value != null) {
+        AppUtil.debugPrint(value);
+        _profileViewModel.sendFeedback(value);
+        AppUtil.showSnackBar("Submitted! Thank you.");
+      }
+    });
   }
 }

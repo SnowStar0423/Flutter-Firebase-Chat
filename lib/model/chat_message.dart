@@ -1,4 +1,4 @@
-import '../utils/firestore_constant.dart';
+import '../utils/firebase_constant.dart';
 
 class ChatMessageType {
   static const String text = "text";

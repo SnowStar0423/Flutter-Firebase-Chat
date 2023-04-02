@@ -17,26 +17,21 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  final RoundedLoadingButtonController btnController =
-      RoundedLoadingButtonController();
-
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final btnController = RoundedLoadingButtonController();
   final AuthViewModel _authViewModel = Get.find();
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -107,7 +102,9 @@ class _LoginPageState extends State<LoginPage>
     return Align(
       alignment: Alignment.centerRight,
       child: GestureDetector(
-        onTap: () {},
+        onTap: () async {
+          Get.toNamed(AppRoute.forgotPasswordPage);
+        },
         child: const Text(
           "Forgot Password?",
           style: TextStyle(
@@ -138,7 +135,7 @@ class _LoginPageState extends State<LoginPage>
 
   Widget _buildEmailBlock() {
     return CustomTextField(
-      controller: emailController,
+      controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       leadingIcon: const Icon(
         Icons.email_outlined,
@@ -151,7 +148,7 @@ class _LoginPageState extends State<LoginPage>
   Widget _buildPasswordBlock() {
     return Obx(
       () => CustomTextField(
-        controller: passwordController,
+        controller: _passwordController,
         leadingIcon: const Icon(
           Icons.lock_outline,
           color: Colors.grey,
@@ -184,8 +181,8 @@ class _LoginPageState extends State<LoginPage>
             onPressed: () async {
               FocusScope.of(context).unfocus();
               var res = await _authViewModel.signInWithEmailPassword(
-                  email: emailController.text,
-                  password: passwordController.text);
+                  email: _emailController.text,
+                  password: _passwordController.text);
               if (res) {
                 btnController.success();
               } else {

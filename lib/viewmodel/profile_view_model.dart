@@ -2,17 +2,23 @@ import 'dart:io';
 
 import 'package:chat_app/service/user_service.dart';
 import 'package:chat_app/utils/app_global.dart';
-import 'package:chat_app/utils/firestore_constant.dart';
+import 'package:chat_app/utils/firebase_constant.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import '../utils/app_constant.dart';
 import '../utils/app_util.dart';
 
 class ProfileViewModel extends GetxController {
-  ProfileViewModel({required this.firebaseAuth, required this.userService});
+  ProfileViewModel(
+      {required this.firebaseAuth,
+      required this.userService,
+      required this.firebaseFirestore});
   final FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firebaseFirestore;
   final UserService userService;
   RxBool isUploadingImage = false.obs;
   bool _browsingImage = false;
@@ -24,8 +30,9 @@ class ProfileViewModel extends GetxController {
   final RxBool _saving = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+
     resetUserProfile();
   }
 
@@ -185,4 +192,16 @@ class ProfileViewModel extends GetxController {
 
   File? get selectedImage => _selectedImage;
   bool _setBrowsingImage(bool val) => _browsingImage = val;
+
+  sendFeedback(String data) async {
+    final feedbackDoc =
+        firebaseFirestore.collection(FireStoreConstant.feedbackCollectionPath);
+    final record = {
+      FeedbackConstant.uid: firebaseAuth.currentUser!.uid,
+      FeedbackConstant.feedback: data,
+      FeedbackConstant.appVersion: AppConstant.appVersion,
+      FeedbackConstant.timestamp: DateTime.now().toString(),
+    };
+    await feedbackDoc.add(record);
+  }
 }

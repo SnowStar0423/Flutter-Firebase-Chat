@@ -37,8 +37,10 @@ class AppController {
     Get.lazyPut(
         () => ProfileViewModel(
               firebaseAuth: FirebaseAuth.instance,
-              userService:
-                  UserService(firebaseFirestore: FirebaseFirestore.instance),
+              userService: UserService(
+                firebaseFirestore: FirebaseFirestore.instance,
+              ),
+              firebaseFirestore: FirebaseFirestore.instance,
             ),
         fenix: true);
   }
