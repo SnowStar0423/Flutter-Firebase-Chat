@@ -1,26 +1,58 @@
+import 'dart:convert';
+
+import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 
+import '../../utils/firebase_constant.dart';
 import '../../viewmodel/profile_view_model.dart';
 import '../widgets/chat_item.dart';
 import '../widgets/custom_image.dart';
 import '../widgets/round_textbox.dart';
 
-class ChatPage extends StatelessWidget {
-  ChatPage({super.key});
+class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
   final ChatViewModel _chatViewModel = Get.find();
+
+  @override
+  void initState() {
+    _setupInteractedMessage();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(context),
     );
+  }
+
+  Future<void> _setupInteractedMessage() async {
+    FirebaseMessaging.onMessage.listen(_handleMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) async {
+    AppUtil.debugPrint("====> _handleMessage:");
+    AppUtil.debugPrint(message.data.toString());
+    if (message.data[NotificationConstant.type] == NotificationConstant.chat) {
+      var userFrom = ChatUser.fromJson(
+          jsonDecode(message.data[NotificationConstant.userFrom]));
+      Get.toNamed(AppRoute.chatRoomPage, arguments: {"peer": userFrom});
+    }
   }
 
   _buildBody(context) {

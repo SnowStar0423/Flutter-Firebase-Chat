@@ -17,9 +17,10 @@ class PushNotificationService {
         "body": message,
       },
       "data": {
-        "idFrom": currentUser.id,
-        "idTo": peer.id,
-        "message": message,
+        NotificationConstant.type: NotificationConstant.chat,
+        NotificationConstant.userFrom: currentUser,
+        NotificationConstant.userTo: peer,
+        NotificationConstant.message: message,
       },
       "apns": {
         "payload": {

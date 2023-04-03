@@ -35,3 +35,11 @@ class FeedbackConstant {
   static const appVersion = 'appVersion';
   static const timestamp = 'timestamp';
 }
+
+class NotificationConstant {
+  static const type = 'type';
+  static const chat = 'chat';
+  static const userFrom = 'userFrom';
+  static const userTo = 'userTo';
+  static const message = 'message';
+}

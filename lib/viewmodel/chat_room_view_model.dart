@@ -114,20 +114,22 @@ class ChatRoomViewModel extends GetxController {
       required String groupChatId,
       required ChatUser currentUser,
       required ChatUser peer}) async {
-    if (content.isEmpty) return false;
+    if (content.trim().isEmpty) return false;
     sending = true;
     try {
       await chatService.sendChatMessage(
-          content: content,
+          content: content.trim(),
           type: type,
           groupChatId: groupChatId,
           currentUserId: currentUser.id,
           peerId: peer.id);
       chatService.addRecentChat(
-          content: content, currentUserId: currentUser.id, peerId: peer.id);
+          content: content.trim(),
+          currentUserId: currentUser.id,
+          peerId: peer.id);
       if (!AppUtil.checkIsNull(peer.deviceToken)) {
         PushNotificationService().pushNotification(
-            currentUser: currentUser, peer: peer, message: content);
+            currentUser: currentUser, peer: peer, message: content.trim());
       }
       sending = false;
       return true;

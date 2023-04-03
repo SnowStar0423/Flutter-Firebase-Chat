@@ -11,7 +11,7 @@ class RootPage extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: ((context, snapshot) {
-        return snapshot.hasData ? ChatPage() : const LoginPage();
+        return snapshot.hasData ? const ChatPage() : const LoginPage();
       }),
     );
   }
