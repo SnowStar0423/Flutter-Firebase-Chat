@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 10,
             ),
             const SizedBox(
-              height: 15,
+              height: 18,
             ),
             _buildForgotPasswordBlcok(),
             const SizedBox(
@@ -108,9 +108,10 @@ class _LoginPageState extends State<LoginPage> {
         child: const Text(
           "Forgot Password?",
           style: TextStyle(
-              color: AppColor.primary,
-              fontWeight: FontWeight.w400,
-              fontSize: 14),
+            color: AppColor.primary,
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+          ),
         ),
       ),
     );
@@ -242,6 +243,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(
                 color: AppColor.primary,
                 fontWeight: FontWeight.w500,
+                fontSize: 15,
               ),
             ),
           ),

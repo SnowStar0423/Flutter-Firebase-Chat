@@ -54,9 +54,6 @@ class _UserPageState extends State<UserPage> {
             title: _buildHeader(),
           ),
         ),
-        // SliverToBoxAdapter(
-        //   child: _buildHeader(),
-        // ),
         const SliverToBoxAdapter(
           child: SizedBox(
             height: 10,

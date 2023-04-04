@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:chat_app/service/report_service.dart';
 import 'package:chat_app/service/user_service.dart';
 import 'package:chat_app/utils/app_global.dart';
@@ -9,8 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
-import '../utils/app_constant.dart';
 import '../utils/app_util.dart';
 
 class ProfileViewModel extends GetxController {

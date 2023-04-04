@@ -5,6 +5,7 @@ import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+import '../service/analytics_service.dart';
 import '../utils/app_util.dart';
 
 class AuthViewModel extends GetxController {
@@ -15,8 +16,7 @@ class AuthViewModel extends GetxController {
   final RxBool _isObscureConPassword = true.obs;
   String _message = "";
   final RxBool _loading = false.obs;
-
-  // final AnalyticsService _analyticsService = AnalyticsService();
+  final _analyticsService = AnalyticsService();
 
   hideShowPassword() => _isObscurePassword.value = !_isObscurePassword.value;
   hideShowConfirmPassword() =>
@@ -40,9 +40,9 @@ class AuthViewModel extends GetxController {
       AppUtil.debugPrint(res.user);
       userService.addUser(AppGlobal().firebaseUserToChatUser(res.user!));
       setMessage("successfully logged in");
-      // _analyticsService.setUserProperties(
-      //     userId: firebaseAuth.currentUser!.uid);
-      // _analyticsService.logLogin();
+      _analyticsService.setUserProperties(
+          userId: firebaseAuth.currentUser!.uid);
+      _analyticsService.logLogin();
       return true;
     } on FirebaseException catch (e) {
       AppUtil.debugPrint(e.toString());
@@ -120,9 +120,9 @@ class AuthViewModel extends GetxController {
             AppGlobal().firebaseUserToChatUser(firebaseAuth.currentUser!));
       }
       setMessage("successfully registered in");
-      // _analyticsService.setUserProperties(
-      //     userId: firebaseAuth.currentUser!.uid);
-      // _analyticsService.logSignUp();
+      _analyticsService.setUserProperties(
+          userId: firebaseAuth.currentUser!.uid);
+      _analyticsService.logSignUp();
       return true;
     } on FirebaseException catch (e) {
       AppUtil.debugPrint(e.toString());
@@ -141,7 +141,7 @@ class AuthViewModel extends GetxController {
     await firebaseAuth.signOut();
     Get.delete<ChatViewModel>();
     AppUtil.debugPrint(firebaseAuth.currentUser);
-    // _analyticsService.logEvent(eventName: "signOut");
+    _analyticsService.logEvent(eventName: "signOut");
   }
 
   ChatUser _removeUserDeviceToken(User user) {
