@@ -3,7 +3,7 @@ import 'package:chat_app/view/widgets/chat_user_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/app_route.dart';
-import '../../viewmodel/user_view_model.dart';
+import '../../viewmodel/chat_user_view_model.dart';
 import '../widgets/round_textbox.dart';
 
 class UserPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  final UserViewModel _userViewModel = Get.find<UserViewModel>();
+  final ChatUserViewModel _userViewModel = Get.find<ChatUserViewModel>();
   final TextEditingController _searchController = TextEditingController();
   Timer? _debounce;
 
@@ -34,11 +34,26 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: SafeArea(child: _buildBody()),
     );
   }
 
   _buildBody() {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: _buildHeader(),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 10,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: _buildChatList(),
+        ),
+      ],
+    );
     return ListView(
       padding: const EdgeInsets.fromLTRB(15, 50, 15, 20),
       children: [
@@ -88,7 +103,8 @@ class _UserPageState extends State<UserPage> {
           return ChatUserItem(
             user: user,
             onTap: () {
-              Get.toNamed(AppRoute.chatRoomPage, arguments: {"peer": user});
+              Get.toNamed(AppRoute.chatRoomPage,
+                  arguments: {"peer": user, "fromRoute": AppRoute.userPage});
             },
           );
         }),

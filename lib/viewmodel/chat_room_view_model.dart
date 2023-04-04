@@ -1,16 +1,16 @@
 import 'package:chat_app/model/chat_user.dart';
-import 'package:chat_app/model/recent_chat.dart';
 import 'package:chat_app/service/chat_service.dart';
 import 'package:chat_app/service/push_notification_service.dart';
+import 'package:chat_app/service/report_service.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-
 import '../model/chat_message.dart';
 
 class ChatRoomViewModel extends GetxController {
   final ChatService chatService;
-  ChatRoomViewModel({required this.chatService});
+  final ReportService reportService;
+  ChatRoomViewModel({required this.chatService, required this.reportService});
   final RxBool _sending = false.obs;
   final RxBool _loadingMessages = false.obs;
   String _message = "";
@@ -32,13 +32,12 @@ class ChatRoomViewModel extends GetxController {
     chatMessages.value = [];
   }
 
-  updateSeenRecentChat(
-      {required RecentChat recentChat,
-      required String currentUserId,
-      required String peerId}) async {
-    recentChat.isUnread = false;
-    chatService.updateSeenRecentChat(
-        recentChat: recentChat, currentUserId: currentUserId, peerId: peerId);
+  updateRecentChatSeen(
+      {required String currentUserId,
+      required String peerId,
+      bool isSeen = true}) async {
+    chatService.updateRecentChatSeen(
+        currentUserId: currentUserId, peerId: peerId, isSeen: isSeen);
   }
 
   _assignLastDocument(QueryDocumentSnapshot lastDocument) {
@@ -139,5 +138,16 @@ class ChatRoomViewModel extends GetxController {
     } finally {
       sending = false;
     }
+  }
+
+  reportUser(
+      {required String currentUserId,
+      required String reportedUserId,
+      String data = ""}) async {
+    reportService.reportUser(
+      userId: currentUserId,
+      reportedUserId: reportedUserId,
+      content: data,
+    );
   }
 }

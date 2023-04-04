@@ -1,11 +1,12 @@
 import 'package:chat_app/service/chat_service.dart';
+import 'package:chat_app/service/report_service.dart';
 import 'package:chat_app/service/user_service.dart';
 import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:chat_app/viewmodel/profile_view_model.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
-import 'package:chat_app/viewmodel/user_view_model.dart';
+import 'package:chat_app/viewmodel/chat_user_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -20,11 +21,14 @@ class AppController {
         fenix: true);
     Get.lazyPut(
         () => ChatRoomViewModel(
-            chatService:
-                ChatService(firebaseFirestore: FirebaseFirestore.instance)),
+              chatService:
+                  ChatService(firebaseFirestore: FirebaseFirestore.instance),
+              reportService:
+                  ReportService(firebaseFirestore: FirebaseFirestore.instance),
+            ),
         fenix: true);
     Get.lazyPut(
-        () => UserViewModel(
+        () => ChatUserViewModel(
             userService:
                 UserService(firebaseFirestore: FirebaseFirestore.instance)),
         fenix: true);
@@ -41,6 +45,9 @@ class AppController {
                 firebaseFirestore: FirebaseFirestore.instance,
               ),
               firebaseFirestore: FirebaseFirestore.instance,
+              reportService: ReportService(
+                firebaseFirestore: FirebaseFirestore.instance,
+              ),
             ),
         fenix: true);
   }

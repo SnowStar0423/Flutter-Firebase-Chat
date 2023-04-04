@@ -8,6 +8,7 @@ class FireStoreConstant {
   static const recentPeerCollectionPath = 'peer';
   static const profileImagesPath = 'profileImages';
   static const feedbackCollectionPath = 'feedback';
+  static const userReportCollectionPath = 'userreport';
   static const pushNotificationURL = 'https://fcm.googleapis.com/fcm/send';
   static const pushServerKey =
       "key=AAAAN1I-RfU:APA91bFf57hL8xDhY58ojdiSJ8J0WwYeco9yg0vafZId9IiUbyCrbrBw-LE3yN9JjeeyA5dLr1jTCZJ1wXtPVscpFlJZykVJYD69n4ShjvSP2KR7loWKfR227HQYR0YG7IFlG9Q-E4XN";
@@ -33,6 +34,13 @@ class FeedbackConstant {
   static const uid = 'uid';
   static const feedback = 'feedback';
   static const appVersion = 'appVersion';
+  static const timestamp = 'timestamp';
+}
+
+class UserReportConstant {
+  static const userId = 'userId';
+  static const reportedUserId = 'reportedUserId';
+  static const content = 'content';
   static const timestamp = 'timestamp';
 }
 

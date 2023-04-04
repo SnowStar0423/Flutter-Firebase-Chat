@@ -1,6 +1,7 @@
 import 'package:chat_app/model/chat_message.dart';
-import 'package:chat_app/model/recent_chat.dart';
+import 'package:chat_app/utils/app_constant.dart';
 import 'package:chat_app/utils/app_global.dart';
+import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../model/chat_user.dart';
-import '../../model/recent_user_chat.dart';
 import '../widgets/chat_room_item.dart';
 import '../widgets/custom_textfield.dart';
 
@@ -44,17 +44,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   init() {
     if (args.isNotEmpty) {
       String currentUserId = FirebaseAuth.instance.currentUser!.uid;
-      if (args.containsKey('recentUserChat')) {
-        RecentUserChat recentUserChat = args["recentUserChat"];
-        RecentChat recentChat = recentUserChat.recentChat;
-        _peer = recentUserChat.chatUser;
-
-        _chatRoomViewModel.updateSeenRecentChat(
-            currentUserId: currentUserId,
-            peerId: _peer.id,
-            recentChat: recentChat);
-      } else {
-        _peer = args["peer"];
+      _peer = args["peer"];
+      if (args.containsKey('fromRoute') &&
+          args["fromRoute"] == AppRoute.chatPage) {
+        _chatRoomViewModel.updateRecentChatSeen(
+            currentUserId: currentUserId, peerId: _peer.id);
       }
 
       _groupChatId =
@@ -74,11 +68,31 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Column(
           children: [
             Text(_peer.displayName),
           ],
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              var res = await AppUtil.showConfirmDialog(
+                  context, "Report This User",
+                  okTitle: "Report");
+              if (res) {
+                _chatRoomViewModel.reportUser(
+                    currentUserId: FirebaseAuth.instance.currentUser!.uid,
+                    reportedUserId: _peer.id);
+                AppUtil.showSnackBar(
+                  AppConstant.messageAfterReport,
+                  duration: 3,
+                );
+              }
+            },
+            icon: const Icon(Icons.more_horiz),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15, bottom: 90),

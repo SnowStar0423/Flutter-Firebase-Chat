@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chat_app/service/report_service.dart';
 import 'package:chat_app/service/user_service.dart';
 import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/firebase_constant.dart';
@@ -13,13 +14,16 @@ import '../utils/app_constant.dart';
 import '../utils/app_util.dart';
 
 class ProfileViewModel extends GetxController {
-  ProfileViewModel(
-      {required this.firebaseAuth,
-      required this.userService,
-      required this.firebaseFirestore});
+  ProfileViewModel({
+    required this.firebaseAuth,
+    required this.userService,
+    required this.firebaseFirestore,
+    required this.reportService,
+  });
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firebaseFirestore;
   final UserService userService;
+  final ReportService reportService;
   RxBool isUploadingImage = false.obs;
   bool _browsingImage = false;
   final firebase_storage.FirebaseStorage storage =
@@ -194,14 +198,7 @@ class ProfileViewModel extends GetxController {
   bool _setBrowsingImage(bool val) => _browsingImage = val;
 
   sendFeedback(String data) async {
-    final feedbackDoc =
-        firebaseFirestore.collection(FireStoreConstant.feedbackCollectionPath);
-    final record = {
-      FeedbackConstant.uid: firebaseAuth.currentUser!.uid,
-      FeedbackConstant.feedback: data,
-      FeedbackConstant.appVersion: AppConstant.appVersion,
-      FeedbackConstant.timestamp: DateTime.now().toString(),
-    };
-    await feedbackDoc.add(record);
+    reportService.addFeedback(
+        userId: firebaseAuth.currentUser!.uid, content: data);
   }
 }

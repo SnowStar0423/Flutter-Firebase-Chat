@@ -69,16 +69,16 @@ class ChatService {
         .snapshots();
   }
 
-  updateSeenRecentChat(
-      {required RecentChat recentChat,
-      required String currentUserId,
-      required String peerId}) async {
+  updateRecentChatSeen(
+      {required String currentUserId,
+      required String peerId,
+      bool isSeen = true}) async {
     firebaseFirestore
         .collection(FireStoreConstant.recentChatCollectionPath)
         .doc(currentUserId)
         .collection(FireStoreConstant.recentPeerCollectionPath)
         .doc(peerId)
-        .update(recentChat.toJson());
+        .update({"isUnread": !isSeen});
   }
 
   addRecentChat(

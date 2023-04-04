@@ -41,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<void> _setupInteractedMessage() async {
-    FirebaseMessaging.onMessage.listen(_handleMessage);
+    // FirebaseMessaging.onMessage.listen(_handleMessage);
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
@@ -51,7 +51,7 @@ class _ChatPageState extends State<ChatPage> {
     if (message.data[NotificationConstant.type] == NotificationConstant.chat) {
       var userFrom = ChatUser.fromJson(
           jsonDecode(message.data[NotificationConstant.userFrom]));
-      Get.toNamed(AppRoute.chatRoomPage, arguments: {"peer": userFrom});
+      _navigateToChatRoom(peer: userFrom);
     }
   }
 
@@ -86,47 +86,49 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  _buildChatList() {
-    return Obx(
-      () => _chatViewModel.recentUserChats.isEmpty
-          ? _buildNoData()
-          : SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  RecentUserChat recentUserChat =
-                      _chatViewModel.recentUserChats[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: ChatItem(
-                      recentUserChat: recentUserChat,
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoute.chatRoomPage,
-                          arguments: {"recentUserChat": recentUserChat},
-                        );
-                      },
-                    ),
-                  );
-                },
-                childCount: _chatViewModel.recentUserChats.length,
-              ),
-            ),
+  _navigateToChatRoom({required ChatUser peer}) {
+    Get.toNamed(
+      AppRoute.chatRoomPage,
+      arguments: {"peer": peer, "fromRoute": AppRoute.chatPage},
     );
   }
 
-  _buildNoData() {
-    return const SliverToBoxAdapter(
-      child: SizedBox(
-        height: 50,
-        child: Center(
-          child: Text(
-            "No Recent Chats",
-            style: TextStyle(fontSize: 18),
-          ),
+  _buildChatList() {
+    return Obx(
+      () => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            RecentUserChat recentUserChat =
+                _chatViewModel.recentUserChats[index];
+            return Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: ChatItem(
+                recentUserChat: recentUserChat,
+                onTap: () {
+                  _navigateToChatRoom(peer: recentUserChat.chatUser);
+                },
+              ),
+            );
+          },
+          childCount: _chatViewModel.recentUserChats.length,
         ),
       ),
     );
   }
+
+  // _buildNoData() {
+  //   return const SliverToBoxAdapter(
+  //     child: SizedBox(
+  //       height: 50,
+  //       child: Center(
+  //         child: Text(
+  //           "No Recent Chats",
+  //           style: TextStyle(fontSize: 18),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _buildSearchBox() {
     return Padding(

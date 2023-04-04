@@ -2,8 +2,8 @@ import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/user_service.dart';
 import 'package:get/get.dart';
 
-class UserViewModel extends GetxController {
-  UserViewModel({required this.userService});
+class ChatUserViewModel extends GetxController {
+  ChatUserViewModel({required this.userService});
   final UserService userService;
   RxList<ChatUser> users = <ChatUser>[].obs;
 

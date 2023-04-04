@@ -8,4 +8,8 @@ class AppConstant {
   static const delayAnimateBodyDuration = 1000;
   static const appStoreLink =
       'https://apps.apple.com/us/app/my-chat/id6447117872?platform=iphone';
+  static const playStoreLink =
+      "https://play.google.com/store/apps/details?id=com.sangvaleap.chatapp";
+  static const messageAfterReport =
+      "Thank you for your report. we will investigate the situation thoroughly within 24 hours.";
 }
