@@ -41,28 +41,54 @@ class _UserPageState extends State<UserPage> {
   _buildBody() {
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
-          child: _buildHeader(),
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          pinned: true,
+          snap: false,
+          floating: false,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          expandedHeight: 60.0,
+          flexibleSpace: FlexibleSpaceBar(
+            expandedTitleScale: 1,
+            titlePadding: EdgeInsets.zero,
+            title: _buildHeader(),
+          ),
         ),
+        // SliverToBoxAdapter(
+        //   child: _buildHeader(),
+        // ),
         const SliverToBoxAdapter(
           child: SizedBox(
             height: 10,
           ),
         ),
-        SliverToBoxAdapter(
-          child: _buildChatList(),
+        _buildUserList(),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 20,
+          ),
         ),
       ],
     );
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(15, 50, 15, 20),
-      children: [
-        _buildHeader(),
-        const SizedBox(
-          height: 10,
+  }
+
+  _buildUserList() {
+    return Obx(
+      () => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            final user = _userViewModel.users[index];
+            return ChatUserItem(
+              user: user,
+              onTap: () {
+                Get.toNamed(AppRoute.chatRoomPage,
+                    arguments: {"peer": user, "fromRoute": AppRoute.userPage});
+              },
+            );
+          },
+          childCount: _userViewModel.users.length,
         ),
-        _buildChatList(),
-      ],
+      ),
     );
   }
 
@@ -91,25 +117,5 @@ class _UserPageState extends State<UserPage> {
     _debounce = Timer(const Duration(milliseconds: 500), () {
       _userViewModel.getUsers(searchText: text);
     });
-  }
-
-  _buildChatList() {
-    return Obx(
-      () => ListView.builder(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        itemBuilder: ((context, index) {
-          final user = _userViewModel.users[index];
-          return ChatUserItem(
-            user: user,
-            onTap: () {
-              Get.toNamed(AppRoute.chatRoomPage,
-                  arguments: {"peer": user, "fromRoute": AppRoute.userPage});
-            },
-          );
-        }),
-        itemCount: _userViewModel.users.length,
-      ),
-    );
   }
 }
