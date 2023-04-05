@@ -1,4 +1,5 @@
 import 'package:chat_app/model/chat_user.dart';
+import 'package:chat_app/service/auth_service.dart';
 import 'package:chat_app/service/user_service.dart';
 import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
@@ -9,8 +10,8 @@ import '../service/analytics_service.dart';
 import '../utils/app_util.dart';
 
 class AuthViewModel extends GetxController {
-  AuthViewModel({required this.firebaseAuth, required this.userService});
-  final FirebaseAuth firebaseAuth;
+  AuthViewModel({required this.authService, required this.userService});
+  final AuthService authService;
   final UserService userService;
   final RxBool _isObscurePassword = true.obs;
   final RxBool _isObscureConPassword = true.obs;
@@ -35,13 +36,12 @@ class AuthViewModel extends GetxController {
       {required String email, required String password}) async {
     try {
       if (!_validateEmail(email) || !_validatePassword(password)) return false;
-      final res = await firebaseAuth.signInWithEmailAndPassword(
+      final res = await authService.signInWithEmailPassword(
           email: email, password: password);
       AppUtil.debugPrint(res.user);
       userService.addUser(AppGlobal().firebaseUserToChatUser(res.user!));
       setMessage("successfully logged in");
-      _analyticsService.setUserProperties(
-          userId: firebaseAuth.currentUser!.uid);
+      _analyticsService.setUserProperties(userId: authService.currentUser!.uid);
       _analyticsService.logLogin();
       return true;
     } on FirebaseException catch (e) {
@@ -51,6 +51,67 @@ class AuthViewModel extends GetxController {
     } catch (e) {
       setMessage("Failed to login.");
       return false;
+    }
+  }
+
+  Future<bool> registerWithEmailPassword(
+      {required String name,
+      required String email,
+      required String password,
+      required String confirmPassword}) async {
+    if (!validateForm(name, email, password, confirmPassword)) return false;
+    try {
+      final res = await authService.registerWithEmailPassword(
+          name: name.trim(), email: email.trim(), password: password.trim());
+      AppUtil.debugPrint(res.user);
+      if (res.user != null) {
+        userService.addUser(
+            AppGlobal().firebaseUserToChatUser(authService.currentUser!));
+      }
+      setMessage("successfully registered in");
+      _analyticsService.setUserProperties(userId: authService.currentUser!.uid);
+      _analyticsService.logSignUp();
+      return true;
+    } on FirebaseException catch (e) {
+      AppUtil.debugPrint(e.toString());
+      setMessage(e.message.toString());
+      return false;
+    } catch (e) {
+      AppUtil.debugPrint(e.toString());
+      setMessage("Failed to register.");
+      return false;
+    }
+  }
+
+  Future signOut() async {
+    var tempUser = _removeUserDeviceToken(authService.currentUser!);
+    await userService.addUser(tempUser);
+    await authService.signOut();
+    Get.delete<ChatViewModel>();
+    AppUtil.debugPrint(authService.currentUser);
+    _analyticsService.logEvent(eventName: "signOut");
+  }
+
+  ChatUser _removeUserDeviceToken(User user) {
+    ChatUser temp = AppGlobal().firebaseUserToChatUser(user);
+    temp.deviceToken = '';
+    return temp;
+  }
+
+  Future<bool> submitResetPasswordEmail(String email) async {
+    if (!_validateEmail(email)) return false;
+
+    loading = true;
+    try {
+      await authService.resetPasswordEmail(email);
+      loading = false;
+      setMessage('Reset password link was sent to $email');
+      return true;
+    } on FirebaseAuthException catch (e) {
+      AppUtil.debugPrint(e.toString());
+      return false;
+    } finally {
+      loading = false;
     }
   }
 
@@ -99,76 +160,6 @@ class AuthViewModel extends GetxController {
     } else if (password.trim() != confirmPassword.trim()) {
       setMessage("Password and Confirm Password are not matched.");
       return false;
-    }
-    return true;
-  }
-
-  Future<bool> registerWithEmailPassword(
-      {required String name,
-      required String email,
-      required String password,
-      required String confirmPassword}) async {
-    if (!validateForm(name, email, password, confirmPassword)) return false;
-    try {
-      final res = await firebaseAuth.createUserWithEmailAndPassword(
-          email: email.trim(), password: password);
-      AppUtil.debugPrint(res.user);
-      if (res.user != null) {
-        await res.user!.updateDisplayName(name.trim());
-        await firebaseAuth.currentUser!.reload();
-        userService.addUser(
-            AppGlobal().firebaseUserToChatUser(firebaseAuth.currentUser!));
-      }
-      setMessage("successfully registered in");
-      _analyticsService.setUserProperties(
-          userId: firebaseAuth.currentUser!.uid);
-      _analyticsService.logSignUp();
-      return true;
-    } on FirebaseException catch (e) {
-      AppUtil.debugPrint(e.toString());
-      setMessage(e.message.toString());
-      return false;
-    } catch (e) {
-      AppUtil.debugPrint(e.toString());
-      setMessage("Failed to register.");
-      return false;
-    }
-  }
-
-  signOut() async {
-    var tempUser = _removeUserDeviceToken(firebaseAuth.currentUser!);
-    await userService.addUser(tempUser);
-    await firebaseAuth.signOut();
-    Get.delete<ChatViewModel>();
-    AppUtil.debugPrint(firebaseAuth.currentUser);
-    _analyticsService.logEvent(eventName: "signOut");
-  }
-
-  ChatUser _removeUserDeviceToken(User user) {
-    ChatUser temp = AppGlobal().firebaseUserToChatUser(user);
-    temp.deviceToken = '';
-    return temp;
-  }
-
-  Future<bool> submitResetPasswordEmail(String email) async {
-    if (!_validateEmail(email)) return false;
-
-    loading = true;
-    try {
-      await firebaseAuth
-          .sendPasswordResetEmail(email: email)
-          .then((value) async {
-        loading = false;
-        setMessage(
-          'Reset password link was sent to $email',
-        );
-        return true;
-      });
-    } on FirebaseAuthException catch (e) {
-      AppUtil.debugPrint(e.toString());
-      return false;
-    } finally {
-      loading = false;
     }
     return true;
   }

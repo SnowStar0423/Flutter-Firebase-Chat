@@ -48,7 +48,7 @@ class SettingPage extends StatelessWidget {
           ),
           _buildProfileImage(),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           Text(
             _profileViewModel.getUserDisplayName(),

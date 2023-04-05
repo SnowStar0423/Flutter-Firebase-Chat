@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
+import 'package:chat_app/service/notification_service.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
@@ -29,8 +30,11 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    _setupInteractedMessage();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _listenBackgroundMessage();
+      _listenMessageTerminated();
+    });
   }
 
   @override
@@ -40,15 +44,26 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Future<void> _setupInteractedMessage() async {
-    // FirebaseMessaging.onMessage.listen(_handleMessage);
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  void _listenBackgroundMessage() async {
+    NotificationService.onMessageOpenedApp().listen((message) {
+      AppUtil.debugPrint("====> _handleMessage:");
+      AppUtil.debugPrint(message.data.toString());
+      _onHandleMessage(message);
+    });
   }
 
-  void _handleMessage(RemoteMessage message) async {
-    AppUtil.debugPrint("====> _handleMessage:");
-    AppUtil.debugPrint(message.data.toString());
-    if (message.data[NotificationConstant.type] == NotificationConstant.chat) {
+  _listenMessageTerminated() async {
+    final RemoteMessage? message =
+        await NotificationService.getInitialMessage();
+    AppUtil.debugPrint("=======> _onListenMessageTerminated");
+    AppUtil.debugPrint(message);
+    if (!AppUtil.checkIsNull(message)) {
+      _onHandleMessage(message);
+    }
+  }
+
+  _onHandleMessage(RemoteMessage? message) {
+    if (message!.data[NotificationConstant.type] == NotificationConstant.chat) {
       var userFrom = ChatUser.fromJson(
           jsonDecode(message.data[NotificationConstant.userFrom]));
       _navigateToChatRoom(peer: userFrom);
