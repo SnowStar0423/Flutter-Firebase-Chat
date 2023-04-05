@@ -2,6 +2,7 @@ import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/chat_service.dart';
 import 'package:chat_app/service/push_notification_service.dart';
 import 'package:chat_app/service/report_service.dart';
+import 'package:chat_app/utils/app_constant.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -13,13 +14,20 @@ class ChatRoomViewModel extends GetxController {
   ChatRoomViewModel({required this.chatService, required this.reportService});
   final RxBool _sending = false.obs;
   final RxBool _loadingMessages = false.obs;
+  final RxBool _isBlockedPeer = false.obs;
+  final RxBool _isBlocked = false.obs;
   String _message = "";
   DocumentSnapshot? lastdocumentSnapshot;
   RxList<ChatMessage> chatMessages = <ChatMessage>[].obs;
 
   bool _moreMessagesAvailable = true;
 
-  get message => _message;
+  bool get isBlockedPeer => _isBlockedPeer.value;
+  set isBlockedPeer(value) => _isBlockedPeer.value = value;
+  bool get isBlocked => _isBlocked.value;
+  set isBlocked(value) => _isBlocked.value = value;
+
+  String get message => _message;
   set message(ms) => _message = ms;
 
   set sending(bool value) => _sending.value = value;
@@ -142,12 +150,78 @@ class ChatRoomViewModel extends GetxController {
 
   reportUser(
       {required String currentUserId,
-      required String reportedUserId,
-      String data = ""}) async {
+      required String peerId,
+      String content = ""}) async {
     reportService.reportUser(
       userId: currentUserId,
-      reportedUserId: reportedUserId,
-      content: data,
+      reportedUserId: peerId,
+      content: content,
     );
+    message = AppConstant.messageAfterReport;
+  }
+
+  toggleBlockPeer(
+      {required String currentUserId,
+      required String peerId,
+      String content = ""}) async {
+    if (isBlockedPeer) {
+      unBlockPeer(currentUserId: currentUserId, peerId: peerId);
+      message = AppConstant.messageAfterUnblock;
+    } else {
+      blockPeer(currentUserId: currentUserId, peerId: peerId, content: content);
+      message = AppConstant.messageAfterBlock;
+    }
+  }
+
+  blockPeer(
+      {required String currentUserId,
+      required String peerId,
+      String content = ""}) async {
+    try {
+      reportService.blockPeer(
+        userId: currentUserId,
+        peerId: peerId,
+        content: content,
+      );
+      isBlockedPeer = true;
+    } catch (e) {
+      AppUtil.checkIsNull(e.toString());
+    }
+  }
+
+  unBlockPeer(
+      {required String currentUserId,
+      required String peerId,
+      String content = ""}) async {
+    try {
+      reportService.unblockPeer(
+        userId: currentUserId,
+        peerId: peerId,
+      );
+      isBlockedPeer = false;
+    } catch (e) {
+      AppUtil.checkIsNull(e.toString());
+    }
+  }
+
+  checkIsBlockedPeer(
+      {required String currentUserId, required String peerId}) async {
+    try {
+      isBlockedPeer = await reportService.checkIsBlockedPeer(
+          userId: currentUserId, peerId: peerId);
+    } catch (e) {
+      AppUtil.checkIsNull(e.toString());
+    }
+  }
+
+  checkIsBlocked(
+      {required String currentUserId, required String peerId}) async {
+    try {
+      isBlocked = await reportService.checkIsBlocked(
+          userId: currentUserId, peerId: peerId);
+      AppUtil.checkIsNull("checkIsBlocked $isBlocked");
+    } catch (e) {
+      AppUtil.checkIsNull(e.toString());
+    }
   }
 }

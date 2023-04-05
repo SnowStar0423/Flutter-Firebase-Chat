@@ -1,9 +1,9 @@
 import 'package:chat_app/model/chat_message.dart';
-import 'package:chat_app/utils/app_constant.dart';
 import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/view/widgets/not_found.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,19 +41,24 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     _scrollController.dispose();
   }
 
-  init() {
+  init() async {
     if (args.isNotEmpty) {
       String currentUserId = FirebaseAuth.instance.currentUser!.uid;
       _peer = args["peer"];
+      _groupChatId =
+          _chatRoomViewModel.generateGroupChatId(currentUserId, _peer.id);
+
+      _chatRoomViewModel.checkIsBlocked(
+          currentUserId: currentUserId, peerId: _peer.id);
+      _chatRoomViewModel.loadMessages(_groupChatId);
+      _chatRoomViewModel.checkIsBlockedPeer(
+          currentUserId: currentUserId, peerId: _peer.id);
+
       if (args.containsKey('fromRoute') &&
           args["fromRoute"] == AppRoute.chatPage) {
         _chatRoomViewModel.updateRecentChatSeen(
             currentUserId: currentUserId, peerId: _peer.id);
       }
-
-      _groupChatId =
-          _chatRoomViewModel.generateGroupChatId(currentUserId, _peer.id);
-      _chatRoomViewModel.loadMessages(_groupChatId);
     }
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >
@@ -66,41 +71,72 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Column(
-          children: [
-            Text(_peer.displayName),
-          ],
-        ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              var res = await AppUtil.showConfirmDialog(
-                  context, "Report This User",
-                  okTitle: "Report");
-              if (res) {
-                _chatRoomViewModel.reportUser(
-                    currentUserId: FirebaseAuth.instance.currentUser!.uid,
-                    reportedUserId: _peer.id);
-                AppUtil.showSnackBar(
-                  AppConstant.messageAfterReport,
-                  duration: 3,
-                );
-              }
-            },
-            icon: const Icon(Icons.more_horiz),
-          )
+    return Obx(
+      () => _chatRoomViewModel.isBlocked
+          ? const NotFound()
+          : Scaffold(
+              appBar: _buildAppBar(),
+              body: Padding(
+                padding: const EdgeInsets.only(top: 15, bottom: 90),
+                child: _buildChats(),
+              ),
+              floatingActionButton: _buildFooter(),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.miniCenterDocked,
+            ),
+    );
+  }
+
+  _buildAppBar() {
+    return AppBar(
+      centerTitle: true,
+      title: Column(
+        children: [
+          Text(_peer.displayName),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 90),
-        child: _buildChats(),
-      ),
-      floatingActionButton: _buildFooter(),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+      actions: [
+        IconButton(
+          onPressed: _onUserAction,
+          icon: const Icon(Icons.more_horiz),
+        )
+      ],
+    );
+  }
+
+  _onUserAction() async {
+    await AppUtil.showUserActionsDialog(
+      context,
+      "Actions",
+      onRepot: _onReportUser,
+      block: _chatRoomViewModel.isBlockedPeer ? "Unblock" : "Block",
+      onBlock: _onBlockUser,
+      onCancel: () {
+        Get.back();
+      },
+    );
+  }
+
+  _onReportUser() {
+    Get.back();
+    _chatRoomViewModel.reportUser(
+        currentUserId: FirebaseAuth.instance.currentUser!.uid,
+        peerId: _peer.id);
+    AppUtil.showSnackBar(
+      _chatRoomViewModel.message,
+      duration: 3,
+    );
+  }
+
+  _onBlockUser() async {
+    Get.back();
+    _chatRoomViewModel.toggleBlockPeer(
+        currentUserId: FirebaseAuth.instance.currentUser!.uid,
+        peerId: _peer.id);
+
+    AppUtil.showSnackBar(
+      _chatRoomViewModel.message,
+      duration: 3,
     );
   }
 
@@ -125,52 +161,82 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
-        children: [
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: const Icon(
-          //     Icons.add,
-          //     color: AppColor.primary,
-          //     size: 30,
-          //   ),
-          // ),
-          const SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: CustomTextField(
-              controller: _messageController,
-              maxLines: 5,
-              hintText: "Write your message",
-            ),
-          ),
-          Obx(
-            () => IconButton(
-              onPressed: () async {
-                final res = await _chatRoomViewModel
-                    .sendChatMessageWithPushNotification(
-                        content: _messageController.text,
-                        type: ChatMessageType.text,
-                        groupChatId: _groupChatId,
-                        currentUser: AppGlobal().firebaseUserToChatUser(
-                            FirebaseAuth.instance.currentUser!),
-                        peer: _peer);
-                if (!res) {
-                  AppUtil.showSnackBar("failed to send a message");
-                }
-                _messageController.clear();
-              },
-              icon: Icon(
-                Icons.send_rounded,
-                color:
-                    _chatRoomViewModel.sending ? Colors.grey : AppColor.primary,
-                size: 35,
-              ),
-            ),
-          )
-        ],
+      child: Obx(
+        () => _chatRoomViewModel.isBlockedPeer || _chatRoomViewModel.isBlocked
+            ? _buildCheckBlocked()
+            : _buildSendMessageBlcok(),
       ),
     );
+  }
+
+  _buildSendMessageBlcok() {
+    return Row(
+      children: [
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     Icons.add,
+        //     color: AppColor.primary,
+        //     size: 30,
+        //   ),
+        // ),
+        const SizedBox(
+          width: 20,
+        ),
+        Expanded(
+          child: CustomTextField(
+            controller: _messageController,
+            maxLines: 5,
+            hintText: "Write your message",
+          ),
+        ),
+        IconButton(
+          onPressed: () async {
+            final res =
+                await _chatRoomViewModel.sendChatMessageWithPushNotification(
+                    content: _messageController.text,
+                    type: ChatMessageType.text,
+                    groupChatId: _groupChatId,
+                    currentUser: AppGlobal().firebaseUserToChatUser(
+                        FirebaseAuth.instance.currentUser!),
+                    peer: _peer);
+            if (!res) {
+              AppUtil.showSnackBar("failed to send a message");
+            }
+            _messageController.clear();
+          },
+          icon: Icon(
+            Icons.send_rounded,
+            color: _chatRoomViewModel.sending ? Colors.grey : AppColor.primary,
+            size: 35,
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buildCheckBlocked() {
+    if (_chatRoomViewModel.isBlockedPeer) {
+      return _buildUnblockButton();
+    }
+    return const SizedBox();
+  }
+
+  _buildUnblockButton() {
+    return Row(children: [
+      Expanded(
+        child: TextButton(
+          onPressed: () {
+            _chatRoomViewModel.toggleBlockPeer(
+                currentUserId: FirebaseAuth.instance.currentUser!.uid,
+                peerId: _peer.id);
+          },
+          child: const Text(
+            "Unblock",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      )
+    ]);
   }
 }

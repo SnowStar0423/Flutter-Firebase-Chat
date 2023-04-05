@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-import '../../utils/app_constant.dart';
+import '../../utils/app_asset.dart';
 import '../theme/app_color.dart';
 import '../widgets/custom_dialog.dart';
 import '../widgets/custom_image.dart';
@@ -139,9 +139,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         width: 150,
         height: 150,
         child: CustomImage(
-          AppConstant.logo,
+          AppAsset.logo,
           padding: 10,
-          imageType: ImageType.network,
           bgColor: Theme.of(context).scaffoldBackgroundColor,
           radius: 5,
         ),

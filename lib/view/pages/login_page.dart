@@ -1,4 +1,4 @@
-import 'package:chat_app/utils/app_constant.dart';
+import 'package:chat_app/utils/app_asset.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/viewmodel/auth_view_model.dart';
@@ -124,9 +124,8 @@ class _LoginPageState extends State<LoginPage> {
         width: 150,
         height: 150,
         child: CustomImage(
-          AppConstant.logo,
+          AppAsset.logo,
           padding: 10,
-          imageType: ImageType.network,
           bgColor: Theme.of(context).scaffoldBackgroundColor,
           radius: 5,
         ),

@@ -1,6 +1,6 @@
+import 'package:chat_app/utils/app_asset.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import '../../utils/app_constant.dart';
 
 class CustomDialogBox extends StatelessWidget {
   final String title;
@@ -92,8 +92,8 @@ class CustomDialogBox extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               child: Image(
-                image: NetworkImage(
-                  AppConstant.logo,
+                image: AssetImage(
+                  AppAsset.logo,
                 ),
               ),
             ),

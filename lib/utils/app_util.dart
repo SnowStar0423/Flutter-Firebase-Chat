@@ -63,4 +63,45 @@ class AppUtil {
     );
     return res;
   }
+
+  static showUserActionsDialog(BuildContext context, String info,
+      {String report = "Report",
+      required Function() onRepot,
+      String block = "Block",
+      required Function() onBlock,
+      String cancel = "Cancel",
+      required Function() onCancel}) async {
+    await showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        // message: Text(
+        //   info,
+        //   style: Theme.of(context).textTheme.subtitle1,
+        // ),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: onRepot,
+            child: Text(
+              report,
+              style: const TextStyle(color: AppColor.actionColor),
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: onBlock,
+            child: Text(
+              block,
+              style: const TextStyle(color: AppColor.actionColor),
+            ),
+          )
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: onCancel,
+          child: Text(
+            cancel,
+            style: const TextStyle(color: Colors.grey),
+          ),
+        ),
+      ),
+    );
+  }
 }
