@@ -3,7 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../view/widgets/term_service.dart';
+import 'app_constant.dart';
 
 class AppUtil {
   static void debugPrint(var value) {
@@ -74,10 +78,6 @@ class AppUtil {
     await showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-        // message: Text(
-        //   info,
-        //   style: Theme.of(context).textTheme.subtitle1,
-        // ),
         actions: [
           CupertinoActionSheetAction(
             onPressed: onRepot,
@@ -103,5 +103,24 @@ class AppUtil {
         ),
       ),
     );
+  }
+
+  static showTermsService() async {
+    var box = GetStorage();
+    final val = box.read(AppConstant.termsService);
+    if (AppUtil.checkIsNull(val)) {
+      showDialog(
+        context: Get.context!,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return TermService(
+            onAccept: () {
+              box.write(AppConstant.termsService, true);
+              Get.back();
+            },
+          );
+        },
+      );
+    }
   }
 }

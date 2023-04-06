@@ -44,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void _listenBackgroundMessage() async {
+  _listenBackgroundMessage() async {
     NotificationService.onMessageOpenedApp().listen((message) {
       AppUtil.debugPrint("====> _handleMessage:");
       AppUtil.debugPrint(message.data.toString());
