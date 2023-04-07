@@ -1,73 +1,28 @@
-import 'dart:convert';
-
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
-import 'package:chat_app/service/notification_service.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 
-import '../../utils/firebase_constant.dart';
 import '../../viewmodel/profile_view_model.dart';
 import '../widgets/chat_item.dart';
 import '../widgets/custom_image.dart';
 import '../widgets/round_textbox.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
-
-  @override
-  State<ChatPage> createState() => _ChatPageState();
-}
-
-class _ChatPageState extends State<ChatPage> {
+class ChatPage extends StatelessWidget {
   final ChatViewModel _chatViewModel = Get.find();
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _listenBackgroundMessage();
-      _listenMessageTerminated();
-    });
-  }
+  ChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(context),
     );
-  }
-
-  _listenBackgroundMessage() async {
-    NotificationService.onMessageOpenedApp().listen((message) {
-      AppUtil.debugPrint("====> _handleMessage:");
-      AppUtil.debugPrint(message.data.toString());
-      _onHandleMessage(message);
-    });
-  }
-
-  _listenMessageTerminated() async {
-    final RemoteMessage? message =
-        await NotificationService.getInitialMessage();
-    AppUtil.debugPrint("=======> _onListenMessageTerminated");
-    AppUtil.debugPrint(message);
-    if (!AppUtil.checkIsNull(message)) {
-      _onHandleMessage(message);
-    }
-  }
-
-  _onHandleMessage(RemoteMessage? message) {
-    if (message!.data[NotificationConstant.type] == NotificationConstant.chat) {
-      var userFrom = ChatUser.fromJson(
-          jsonDecode(message.data[NotificationConstant.userFrom]));
-      _navigateToChatRoom(peer: userFrom);
-    }
   }
 
   _buildBody(context) {
@@ -101,8 +56,8 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  _navigateToChatRoom({required ChatUser peer}) {
-    Get.toNamed(
+  _navigateToChatRoom({required ChatUser peer}) async {
+    await Get.toNamed(
       AppRoute.chatRoomPage,
       arguments: {"peer": peer, "fromRoute": AppRoute.chatPage},
     );
@@ -167,21 +122,26 @@ class _ChatPageState extends State<ChatPage> {
             "Chats",
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
           ),
-          GestureDetector(onTap: () {
-            Get.toNamed(AppRoute.settingPage);
-          }, child: GetBuilder<ProfileViewModel>(builder: (controller) {
-            return AppUtil.checkIsNull(
-                    FirebaseAuth.instance.currentUser!.photoURL)
-                ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                    trBackground: true, width: 40, height: 40)
-                : CustomImage(
-                    FirebaseAuth.instance.currentUser!.photoURL!,
-                    imageType: ImageType.network,
-                    width: 40,
-                    height: 40,
-                    radius: 100,
-                  );
-          })),
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(AppRoute.settingPage);
+            },
+            child: GetBuilder<ProfileViewModel>(
+              builder: (controller) {
+                return AppUtil.checkIsNull(
+                        FirebaseAuth.instance.currentUser!.photoURL)
+                    ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                        trBackground: true, width: 40, height: 40)
+                    : CustomImage(
+                        FirebaseAuth.instance.currentUser!.photoURL!,
+                        imageType: ImageType.network,
+                        width: 40,
+                        height: 40,
+                        radius: 100,
+                      );
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -26,11 +26,11 @@ class ChatViewModel extends GetxController {
           .loadRecentChats(
               currentUserId: FirebaseAuth.instance.currentUser!.uid)
           .listen((event) async {
-        clearRecentUserChats();
         if (event.docs.isEmpty) return;
         List<String> listIdTo = [];
         List<RecentChat> recentChats = [];
         List<ChatUser> recentUsers = [];
+        List<RecentUserChat> tempRecentUserChats = [];
         for (int i = 0; i < event.docs.length; i++) {
           recentChats.add(RecentChat.fromJson(event.docs.elementAt(i).data()));
           listIdTo.add(recentChats[i].idTo);
@@ -39,9 +39,10 @@ class ChatViewModel extends GetxController {
         for (int i = 0; i < recentChats.length; i++) {
           var user = recentUsers
               .firstWhere((element) => element.id == recentChats[i].idTo);
-          recentUserChats
+          tempRecentUserChats
               .add(RecentUserChat(recentChat: recentChats[i], chatUser: user));
         }
+        recentUserChats.value = tempRecentUserChats;
       });
     } catch (e) {
       AppUtil.debugPrint(e.toString());

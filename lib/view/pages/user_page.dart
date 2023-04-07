@@ -39,33 +39,36 @@ class _UserPageState extends State<UserPage> {
   }
 
   _buildBody() {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          automaticallyImplyLeading: false,
-          pinned: true,
-          snap: false,
-          floating: false,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          expandedHeight: 60.0,
-          flexibleSpace: FlexibleSpaceBar(
-            expandedTitleScale: 1,
-            titlePadding: EdgeInsets.zero,
-            title: _buildHeader(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            pinned: true,
+            snap: false,
+            floating: false,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            expandedHeight: 60.0,
+            flexibleSpace: FlexibleSpaceBar(
+              expandedTitleScale: 1,
+              titlePadding: EdgeInsets.zero,
+              title: _buildHeader(),
+            ),
           ),
-        ),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 10,
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
           ),
-        ),
-        _buildUserList(),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 20,
+          _buildUserList(),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 20,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

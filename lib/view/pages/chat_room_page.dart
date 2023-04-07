@@ -71,15 +71,24 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
 
   @override
   Widget build(BuildContext context) {
+    AppUtil.debugPrint(
+        "===> keybaord: ${MediaQuery.of(context).viewInsets.bottom}");
     return Obx(
       () => _chatRoomViewModel.isBlocked
           ? const NotFound()
           : Scaffold(
               appBar: _buildAppBar(),
               body: Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 90),
+                padding: EdgeInsets.only(
+                    top: 10,
+                    bottom:
+                        MediaQuery.of(context).viewInsets.bottom > 0 ? 80 : 70),
                 child: _buildChats(),
               ),
+              // body: SingleChildScrollView(
+              //   padding: const EdgeInsets.only(top: 15, bottom: 70),
+              //   child: _buildChats(),
+              // ),
               floatingActionButton: _buildFooter(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniCenterDocked,
@@ -155,8 +164,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
 
   _buildFooter() {
     return Container(
-      padding: const EdgeInsets.only(left: 0, right: 5),
-      margin: const EdgeInsets.only(left: 10, right: 10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
