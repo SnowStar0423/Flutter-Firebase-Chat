@@ -224,4 +224,21 @@ class ChatRoomViewModel extends GetxController {
       AppUtil.checkIsNull(e.toString());
     }
   }
+
+  checkIsUserBlocked(
+      {required String currentUserId, required String peerId}) async {
+    try {
+      reportService
+          .checkIsUserBlocked(userId: currentUserId, peerId: peerId)
+          .listen((event) {
+        isBlocked = false;
+        if (event.exists) {
+          isBlocked = true;
+        }
+      });
+      AppUtil.checkIsNull("checkIsBlocked $isBlocked");
+    } catch (e) {
+      AppUtil.checkIsNull(e.toString());
+    }
+  }
 }

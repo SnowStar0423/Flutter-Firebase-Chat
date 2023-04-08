@@ -36,7 +36,7 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: SizedBox(
-        height: 300,
+        height: 260,
         child: Column(
           children: [
             Text(
@@ -53,7 +53,7 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
             const Divider(),
             TextField(
               controller: _textEditingController,
-              maxLines: 9,
+              maxLines: 7,
               decoration: InputDecoration(hintText: widget.hint),
             ),
             const SizedBox(

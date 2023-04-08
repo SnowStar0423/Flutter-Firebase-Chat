@@ -22,14 +22,16 @@ class UserService {
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> getUsers(
-      {required String searchText, int limit = 15}) async {
+      {required String searchText, int limit = 20}) async {
+    final search = searchText.toLowerCase();
     if (searchText.isNotEmpty) {
       return await firebaseFirestore
           .collection(FireStoreConstant.userCollectionPath)
-          .where(ChatUserConstant.displayName,
-              isGreaterThanOrEqualTo: searchText)
-          .where(ChatUserConstant.displayName, isLessThan: '${searchText}z')
-          .limit(limit)
+          .where(ChatUserConstant.displayNameLowerCase,
+              isGreaterThanOrEqualTo: search)
+          .where(ChatUserConstant.displayNameLowerCase,
+              isLessThan: '${search}z')
+          .limit(limit > 10 ? 10 : limit)
           .get();
     } else {
       return await firebaseFirestore
@@ -45,7 +47,7 @@ class UserService {
       return await firebaseFirestore
           .collection(FireStoreConstant.userCollectionPath)
           .where(ChatUserConstant.id, whereIn: ids)
-          .limit(limit)
+          .limit(limit > 10 ? 10 : limit)
           .get();
     } else {
       return await firebaseFirestore
@@ -61,7 +63,7 @@ class UserService {
       return firebaseFirestore
           .collection(FireStoreConstant.userCollectionPath)
           .where(ChatUserConstant.id, whereIn: ids)
-          .limit(limit)
+          .limit(limit > 10 ? 10 : limit)
           .snapshots();
     } else {
       return firebaseFirestore

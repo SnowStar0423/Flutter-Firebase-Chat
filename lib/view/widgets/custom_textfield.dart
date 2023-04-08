@@ -40,7 +40,6 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       controller: controller,
       keyboardType: keyboardType,
-      cursorColor: Theme.of(context).colorScheme.secondary,
       minLines: minLines,
       maxLines: maxLines,
       readOnly: readOnly,

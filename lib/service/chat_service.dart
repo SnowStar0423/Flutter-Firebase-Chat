@@ -59,7 +59,7 @@ class ChatService {
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> loadRecentChats(
-      {required String currentUserId, int limit = 15}) {
+      {required String currentUserId, int limit = 20}) {
     return firebaseFirestore
         .collection(FireStoreConstant.recentChatCollectionPath)
         .doc(currentUserId)

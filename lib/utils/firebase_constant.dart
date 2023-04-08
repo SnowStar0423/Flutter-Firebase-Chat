@@ -21,6 +21,7 @@ class ChatUserConstant {
   static const id = 'uid';
   static const photoUrl = 'photoUrl';
   static const displayName = 'displayName';
+  static const displayNameLowerCase = 'displayNameLowerCase';
   static const phoneNumber = 'phoneNumber';
   static const deviceToken = 'deviceToken';
 }

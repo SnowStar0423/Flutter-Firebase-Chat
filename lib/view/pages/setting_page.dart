@@ -144,7 +144,7 @@ class SettingPage extends StatelessWidget {
             ),
             onTap: () {
               Share.share(
-                AppConstant.appStoreLink,
+                AppConstant.storesLink,
                 subject: AppConstant.appName,
               );
             },

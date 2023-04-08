@@ -31,7 +31,7 @@ class RoundTextBox extends StatelessWidget {
         onTap: onTap,
         onChanged: onChanged,
         keyboardType: keyboardType,
-        style: const TextStyle(color: Colors.black),
+        // style: const TextStyle(color: Colors.black),
         decoration: const InputDecoration(
           prefixIcon: Icon(Icons.search, color: Colors.grey),
           border: InputBorder.none,

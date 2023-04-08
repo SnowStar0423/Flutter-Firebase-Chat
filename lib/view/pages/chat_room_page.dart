@@ -48,7 +48,9 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       _groupChatId =
           _chatRoomViewModel.generateGroupChatId(currentUserId, _peer.id);
 
-      _chatRoomViewModel.checkIsBlocked(
+      // _chatRoomViewModel.checkIsBlocked(
+      //     currentUserId: currentUserId, peerId: _peer.id);
+      _chatRoomViewModel.checkIsUserBlocked(
           currentUserId: currentUserId, peerId: _peer.id);
       _chatRoomViewModel.loadMessages(_groupChatId);
       _chatRoomViewModel.checkIsBlockedPeer(

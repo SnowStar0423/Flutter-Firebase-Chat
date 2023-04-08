@@ -138,6 +138,16 @@ class ReportService {
     return result.exists;
   }
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> checkIsUserBlocked(
+      {required String userId, required String peerId}) {
+    return firebaseFirestore
+        .collection(FireStoreConstant.userBlockCollectionPath)
+        .doc(userId)
+        .collection(FireStoreConstant.isBlockedCollectionPath)
+        .doc(peerId)
+        .snapshots();
+  }
+
   Future<bool> checkIsBlockedPeer(
       {required String userId, required String peerId}) async {
     final result = await firebaseFirestore

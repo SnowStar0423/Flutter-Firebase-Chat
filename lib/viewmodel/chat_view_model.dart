@@ -24,7 +24,7 @@ class ChatViewModel extends GetxController {
     try {
       chatService
           .loadRecentChats(
-              currentUserId: FirebaseAuth.instance.currentUser!.uid)
+              currentUserId: FirebaseAuth.instance.currentUser!.uid, limit: 10)
           .listen((event) async {
         if (event.docs.isEmpty) return;
         List<String> listIdTo = [];
@@ -37,7 +37,7 @@ class ChatViewModel extends GetxController {
         }
         recentUsers = await _getRecentUsers(listIdTo);
         for (int i = 0; i < recentChats.length; i++) {
-          var user = recentUsers
+          ChatUser? user = recentUsers
               .firstWhere((element) => element.id == recentChats[i].idTo);
           tempRecentUserChats
               .add(RecentUserChat(recentChat: recentChats[i], chatUser: user));

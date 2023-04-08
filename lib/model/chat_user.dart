@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 class ChatUser extends Equatable {
   late String id;
   late String displayName;
+  String? displayNameLowerCase;
   String? photoUrl;
   String? phoneNumber;
   String? deviceToken;
@@ -12,6 +13,7 @@ class ChatUser extends Equatable {
   ChatUser(
       {required this.id,
       this.displayName = "",
+      this.displayNameLowerCase,
       this.photoUrl,
       this.phoneNumber,
       this.deviceToken});
@@ -25,6 +27,7 @@ class ChatUser extends Equatable {
       ChatUserConstant.id: id,
       ChatUserConstant.photoUrl: photoUrl,
       ChatUserConstant.displayName: displayName,
+      ChatUserConstant.displayNameLowerCase: displayName.toLowerCase(),
       ChatUserConstant.phoneNumber: phoneNumber,
       ChatUserConstant.deviceToken: deviceToken
     };
@@ -35,6 +38,10 @@ class ChatUser extends Equatable {
       id: (map[ChatUserConstant.id]),
       photoUrl: (map[ChatUserConstant.photoUrl]),
       displayName: (map[ChatUserConstant.displayName]),
+      displayNameLowerCase:
+          (map.containsKey(ChatUserConstant.displayNameLowerCase)
+              ? map[ChatUserConstant.displayNameLowerCase]
+              : map[ChatUserConstant.displayName].toString().toLowerCase()),
       phoneNumber: (map[ChatUserConstant.phoneNumber]),
       deviceToken: (map.containsKey(ChatUserConstant.deviceToken)
           ? map[ChatUserConstant.deviceToken]
