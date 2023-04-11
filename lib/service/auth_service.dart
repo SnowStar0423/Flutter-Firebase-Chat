@@ -2,14 +2,17 @@ import 'package:chat_app/utils/app_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth firebaseAuth;
 
-  User? get currentUser => _firebaseAuth.currentUser;
+  AuthService({required this.firebaseAuth});
+  // final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  User? get currentUser => firebaseAuth.currentUser;
 
   Future<UserCredential> signInWithEmailPassword(
       {required String email, required String password}) async {
     try {
-      return await _firebaseAuth.signInWithEmailAndPassword(
+      return await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {
       AppUtil.debugPrint(e.toString());
@@ -22,11 +25,11 @@ class AuthService {
       required String email,
       required String password}) async {
     try {
-      final res = await _firebaseAuth.createUserWithEmailAndPassword(
+      final res = await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (res.user != null) {
         await res.user!.updateDisplayName(name);
-        await _firebaseAuth.currentUser!.reload();
+        await firebaseAuth.currentUser!.reload();
       }
       return res;
     } catch (e) {
@@ -37,7 +40,7 @@ class AuthService {
 
   Future<void> signOut() async {
     try {
-      await _firebaseAuth.signOut();
+      await firebaseAuth.signOut();
     } catch (e) {
       AppUtil.debugPrint(e.toString());
       rethrow;
@@ -46,7 +49,7 @@ class AuthService {
 
   Future resetPasswordEmail(String email) async {
     try {
-      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      await firebaseAuth.sendPasswordResetEmail(email: email);
     } catch (e) {
       AppUtil.debugPrint(e.toString());
       rethrow;

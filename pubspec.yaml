@@ -35,6 +35,9 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  firebase_auth_mocks: any
+  fake_cloud_firestore: any
+  mockito: any
 
 flutter_icons:
   android: true

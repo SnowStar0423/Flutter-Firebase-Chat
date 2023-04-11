@@ -16,7 +16,7 @@ class AppController {
   static Future init() async {
     Get.lazyPut(
         () => AuthViewModel(
-              authService: AuthService(),
+              authService: AuthService(firebaseAuth: FirebaseAuth.instance),
               userService:
                   UserService(firebaseFirestore: FirebaseFirestore.instance),
             ),
