@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:chat_app/firebase_options.dart';
 import 'package:chat_app/service/notification_service.dart';
 import 'package:chat_app/utils/app_constant.dart';
 import 'package:chat_app/utils/app_controller.dart';
@@ -11,6 +12,7 @@ import 'package:chat_app/view/widgets/custom_error.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,13 +21,22 @@ import 'service/analytics_service.dart';
 void main() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     await GetStorage.init();
     _initDeviceToken();
     AppController.init();
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    if (!kIsWeb) {
+      FlutterError.onError =
+          FirebaseCrashlytics.instance.recordFlutterFatalError;
+    }
     runApp(const MyApp());
-  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
+  }, (error, stack) {
+    if (!kIsWeb) {
+      FirebaseCrashlytics.instance.recordError(error, stack);
+    }
+  });
 }
 
 _initDeviceToken() async {

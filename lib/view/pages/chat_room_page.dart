@@ -73,8 +73,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
 
   @override
   Widget build(BuildContext context) {
-    AppUtil.debugPrint(
-        "===> keybaord: ${MediaQuery.of(context).viewInsets.bottom}");
     return Obx(
       () => _chatRoomViewModel.isBlocked
           ? const NotFound()

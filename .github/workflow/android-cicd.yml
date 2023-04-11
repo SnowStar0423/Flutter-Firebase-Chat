@@ -1,0 +1,73 @@
+
+name: ENN App Android CI/CD
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
+
+env:  
+  FLUTTER_VERSION: '3.3.9'
+  FLUTTER_CHANNEL: 'stable'
+  ANDROID_PACKAGE_NAME: 'com.sangvaleap.chatapp'
+  PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
+
+jobs:
+  ci-cd:
+    name: android ci/cd
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      
+      - name: install flutter
+        uses: subosito/flutter-action@v2
+        with: 
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: download dependencies
+        run: flutter pub get
+
+      - name: analyze the project
+        run: flutter analyze
+      
+      - name: test the project
+        run: flutter test
+
+      - name: Download Android keystore
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.0.3
+        with:
+          fileName: upload-keystore.jks
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
+      
+      - name: Create key.properties
+        run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+      
+      - name: Build AAB
+        run: flutter build appbundle 
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-release
+          path: ${{ env.PATH_TO_AAB }}
+          retention-days: 2
+
+      - name: Deploy to Play Store
+        id: deploy
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
+          packageName: ${{ env.ANDROID_PACKAGE_NAME }}
+          releaseFiles: ${{ env.PATH_TO_AAB }}
+          track: production
+          status: draft
