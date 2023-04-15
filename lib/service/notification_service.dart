@@ -14,7 +14,7 @@ class NotificationService {
   static Future<String?> getDeviceToken() async {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
     if (Platform.isIOS) {
-      await firebaseMessaging.requestPermission();
+      await firebaseMessaging.requestPermission(sound: true);
     }
     return await firebaseMessaging.getToken();
   }

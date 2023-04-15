@@ -15,19 +15,13 @@ class PushNotificationService {
       "notification": {
         "title": currentUser.displayName,
         "body": message,
+        "sound": "default"
       },
       "data": {
         NotificationConstant.type: NotificationConstant.chat,
         NotificationConstant.userFrom: currentUser,
         NotificationConstant.userTo: peer,
         NotificationConstant.message: message,
-      },
-      "apns": {
-        "payload": {
-          "aps": {
-            "sound": 'default',
-          }
-        }
       }
     };
     final header = {"Authorization": FireStoreConstant.pushServerKey};
