@@ -53,11 +53,13 @@ jobs:
       with:
         channel: 'stable'
         flutter-version: '3.3.10'
+
     - name: Restore packages
       run: flutter pub get
 
     - name: Building IPA
-      run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+      # run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+      run: flutter build ios --release --no-codesign
 
     - name: collect ipa artifacts
       uses: actions/upload-artifact@v2
