@@ -2,7 +2,7 @@ import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/chat_service.dart';
 import 'package:chat_app/service/push_notification_service.dart';
 import 'package:chat_app/service/report_service.dart';
-import 'package:chat_app/utils/app_constant.dart';
+import 'package:chat_app/utils/app_message.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -157,7 +157,7 @@ class ChatRoomViewModel extends GetxController {
       reportedUserId: peerId,
       content: content,
     );
-    message = AppConstant.messageAfterReport;
+    message = AppMessage.messageAfterReport;
   }
 
   toggleBlockPeer(
@@ -166,10 +166,10 @@ class ChatRoomViewModel extends GetxController {
       String content = ""}) async {
     if (isBlockedPeer) {
       unBlockPeer(currentUserId: currentUserId, peerId: peerId);
-      message = AppConstant.messageAfterUnblock;
+      message = AppMessage.messageAfterUnblock;
     } else {
       blockPeer(currentUserId: currentUserId, peerId: peerId, content: content);
-      message = AppConstant.messageAfterBlock;
+      message = AppMessage.messageAfterBlock;
     }
   }
 

@@ -1,5 +1,5 @@
+import 'package:chat_app/utils/app_message.dart';
 import 'package:flutter/material.dart';
-import '../../utils/static_content.dart';
 import '../theme/app_color.dart';
 import 'custom_button.dart';
 
@@ -30,7 +30,7 @@ class _TermServiceState extends State<TermService> {
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            const Text(termData),
+            const Text(AppMessage.termData),
             FittedBox(
               child: Row(
                 children: [

@@ -12,10 +12,4 @@ class AppConstant {
   static const playStoreLink =
       "https://play.google.com/store/apps/details?id=com.sangvaleap.chatapp";
   static const storesLink = "https://urlgeni.us/Ct47";
-
-  static const messageAfterReport =
-      "Thank you for your report. We will investigate the situation thoroughly within 24 hours.";
-  static const messageAfterBlock =
-      "This user is blocked and will no longer be able to disturb you.";
-  static const messageAfterUnblock = "This user is unblocked.";
 }
