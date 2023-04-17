@@ -57,10 +57,10 @@ jobs:
     - name: Restore packages
       run: flutter pub get
 
-    - name: Building IPA
+    - name: Build IPA
       run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
 
-    - name: collect ipa artifacts
+    - name: Collect ipa artifacts
       uses: actions/upload-artifact@v2
       with:
         name: release-ipa
