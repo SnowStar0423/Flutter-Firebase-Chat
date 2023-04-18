@@ -61,10 +61,9 @@ jobs:
       run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
 
     - name: Collect ipa artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: release-ipa
-         # Path to the release files
         path: build/ios/ipa/*.ipa
 
     - name: Clean up keychain and provisioning profile
