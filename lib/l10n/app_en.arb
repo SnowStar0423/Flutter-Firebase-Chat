@@ -1,0 +1,20 @@
+{
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "name": "Name",
+  "register": "Register",
+  "forgotPassword": "Forgot Password",
+  "successfullyLoggedIn": "Successfully logged in.",
+  "failedToLogin": "Failed to login.",
+  "successfullyRegistered": "Successfully registered.",
+  "failedToRegister": "Failed to register.",
+  "pleaseEnterEmail": "Please enter your email",
+  "invalidEmail": "Invalid email",
+  "pleaseEnterName": "Please enter your name",
+  "pleaseEnterPassword": "Please enter your password",
+  "pleaseEnterConfirmPassword": "Please enter confirm password",
+  "passwordAndConfirmPasswordNotMatch": "Password and Confirm Password are not matched",
+  "resetPasswordLinkSentTo": "Reset password link was sent to"
+}

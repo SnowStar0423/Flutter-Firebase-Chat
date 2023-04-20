@@ -1,0 +1,20 @@
+{
+    "login": "Acceso",  
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "name": "Nombre",
+    "register": "Registro",
+    "forgotPassword": "Has olvidado tu contraseña",
+    "successfullyLoggedIn": "Iniciado sesión con éxito",
+    "failedToLogin": "Error al iniciar sesión",
+    "successfullyRegistered": "Registrado exitosamente",
+    "failedToRegister": "Fallo el registro",
+    "pleaseEnterEmail": "Por favor introduzca su correo electrónico",
+    "invalidEmail": "Email inválido",
+    "pleaseEnterName": "Por favor, escriba su nombre",
+    "pleaseEnterPassword": "Por favor, introduzca su contraseña",
+    "pleaseEnterConfirmPassword": "Por favor ingrese confirmar contraseña",
+    "passwordAndConfirmPasswordNotMatch": "Contraseña y Confirmar contraseña no coinciden",
+    "resetPasswordLinkSentTo": "El enlace de restablecimiento de contraseña fue enviado a"
+}

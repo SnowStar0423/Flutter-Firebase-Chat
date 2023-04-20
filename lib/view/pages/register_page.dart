@@ -4,6 +4,7 @@ import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/custom_dialog.dart';
 import '../widgets/custom_image.dart';
@@ -23,6 +24,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final _conPasswordController = TextEditingController();
   final btnController = RoundedLoadingButtonController();
   final AuthViewModel _authViewModel = Get.find();
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    _local = AppLocalizations.of(context);
+    super.didChangeDependencies();
+  }
 
   @override
   dispose() {
@@ -60,10 +68,11 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 10,
             ),
-            const Center(
+            Center(
               child: Text(
-                "Register",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                _local.register,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
               ),
             ),
             const SizedBox(
@@ -115,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Icons.person_outline,
         color: Colors.grey,
       ),
-      hintText: "Name",
+      hintText: _local.name,
     );
   }
 
@@ -127,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Icons.email_outlined,
         color: Colors.grey,
       ),
-      hintText: "Email",
+      hintText: _local.email,
     );
   }
 
@@ -150,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
               color: Colors.grey),
         ),
         obscureText: _authViewModel.isObscureConPassword,
-        hintText: "Confirm Password",
+        hintText: _local.confirmPassword,
       ),
     );
   }
@@ -174,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
               color: Colors.grey),
         ),
         obscureText: _authViewModel.isObscurePassword,
-        hintText: "Password",
+        hintText: _local.password,
       ),
     );
   }
@@ -220,15 +229,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return CustomDialogBox(
-                        title: "Register",
+                        title: _local.register,
                         descriptions: _authViewModel.getMessage(),
                       );
                     });
               }
             },
-            child: const Text(
-              "Register",
-              style: TextStyle(
+            child: Text(
+              _local.register,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -266,9 +275,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ],
             ),
-            child: const Text(
-              "Login",
-              style: TextStyle(
+            child: Text(
+              _local.login,
+              style: const TextStyle(
                 color: AppColor.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 15,

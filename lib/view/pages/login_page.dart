@@ -6,6 +6,7 @@ import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/custom_dialog.dart';
 import '../widgets/custom_image.dart';
@@ -23,6 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   final btnController = RoundedLoadingButtonController();
   final AuthViewModel _authViewModel = Get.find();
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    _local = AppLocalizations.of(context);
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
@@ -66,10 +74,13 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 10,
             ),
-            const Center(
+            Center(
               child: Text(
-                "Login",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                _local.login,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                ),
               ),
             ),
             const SizedBox(
@@ -109,9 +120,9 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () async {
           Get.toNamed(AppRoute.forgotPasswordPage);
         },
-        child: const Text(
-          "Forgot Password?",
-          style: TextStyle(
+        child: Text(
+          _local.forgotPassword,
+          style: const TextStyle(
             color: AppColor.primary,
             fontWeight: FontWeight.w400,
             fontSize: 15,
@@ -145,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
         Icons.email_outlined,
         color: Colors.grey,
       ),
-      hintText: "Email",
+      hintText: _local.email,
     );
   }
 
@@ -168,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
               color: Colors.grey),
         ),
         obscureText: _authViewModel.isObscurePassword,
-        hintText: "Password",
+        hintText: _local.password,
       ),
     );
   }
@@ -195,15 +206,15 @@ class _LoginPageState extends State<LoginPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return CustomDialogBox(
-                        title: "Login",
+                        title: _local.login,
                         descriptions: _authViewModel.getMessage(),
                       );
                     });
               }
             },
-            child: const Text(
-              "Login",
-              style: TextStyle(
+            child: Text(
+              _local.login,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -241,9 +252,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
-            child: const Text(
-              "Register",
-              style: TextStyle(
+            child: Text(
+              _local.register,
+              style: const TextStyle(
                 color: AppColor.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 15,

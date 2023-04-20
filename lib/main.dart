@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'service/analytics_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   runZonedGuarded(() async {
@@ -60,6 +61,9 @@ class MyApp extends StatelessWidget {
       darkTheme: AppThemes.darkTheme,
       initialRoute: AppRoute.rootPage,
       getPages: AppPage.pages,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('es'),
       builder: (BuildContext context, Widget? widget) {
         _initCustomErrorWidget();
         return widget!;
