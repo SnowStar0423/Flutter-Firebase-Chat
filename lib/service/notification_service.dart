@@ -5,8 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 class NotificationService {
   static FirebaseMessaging get firebaseMessaging => FirebaseMessaging.instance;
 
-  static Future<void> initializeFirebase() async {}
-
   static Stream<RemoteMessage> onMessageOpenedApp() {
     return FirebaseMessaging.onMessageOpenedApp;
   }

@@ -207,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (BuildContext context) {
                       return CustomDialogBox(
                         title: _local.login,
-                        descriptions: _authViewModel.getMessage(),
+                        descriptions: _authViewModel.message,
                       );
                     });
               }

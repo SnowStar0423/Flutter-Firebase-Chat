@@ -34,14 +34,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       appBar: AppBar(
         elevation: 0,
       ),
-      body: getBody(context),
+      body: _buildBody(context),
     );
   }
 
-  getBody(context) {
+  _buildBody(context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -103,7 +103,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   builder: (BuildContext context) {
                     return CustomDialogBox(
                       title: "Forgot Password",
-                      descriptions: _authViewModel.getMessage(),
+                      descriptions: _authViewModel.message,
                     );
                   });
             },

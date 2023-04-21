@@ -2,7 +2,7 @@ import '../utils/firebase_constant.dart';
 
 class ChatMessageType {
   static const String text = "text";
-  static const String image = "text";
+  static const String image = "image";
 }
 
 class ChatMessage {
@@ -11,6 +11,7 @@ class ChatMessage {
   late String timestamp;
   late String content;
   late String type;
+
   ChatMessage({
     required this.idFrom,
     required this.idTo,

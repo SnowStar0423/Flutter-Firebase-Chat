@@ -5,6 +5,7 @@ class RecentChat {
   late String timestamp;
   late String content;
   late bool isUnread;
+
   RecentChat(
       {required this.idFrom,
       required this.idTo,

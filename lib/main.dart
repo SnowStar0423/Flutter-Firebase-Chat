@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
       getPages: AppPage.pages,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('es'),
+      locale: const Locale('en'),
       builder: (BuildContext context, Widget? widget) {
         _initCustomErrorWidget();
         return widget!;

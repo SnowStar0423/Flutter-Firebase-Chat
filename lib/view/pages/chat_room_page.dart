@@ -80,9 +80,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
               appBar: _buildAppBar(),
               body: Padding(
                 padding: EdgeInsets.only(
-                    top: 10,
-                    bottom:
-                        MediaQuery.of(context).viewInsets.bottom > 0 ? 80 : 70),
+                  top: 10,
+                  bottom:
+                      MediaQuery.of(context).viewInsets.bottom > 0 ? 80 : 70,
+                ),
                 child: _buildChats(),
               ),
               // body: SingleChildScrollView(

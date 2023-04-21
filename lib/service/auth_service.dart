@@ -2,10 +2,9 @@ import 'package:chat_app/utils/app_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  final FirebaseAuth firebaseAuth;
-
   AuthService({required this.firebaseAuth});
-  // final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  final FirebaseAuth firebaseAuth;
 
   User? get currentUser => firebaseAuth.currentUser;
 

@@ -16,7 +16,7 @@ class AuthViewModel extends GetxController {
   final UserService userService;
   final RxBool _isObscurePassword = true.obs;
   final RxBool _isObscureConPassword = true.obs;
-  String _message = "";
+  String message = "";
   final RxBool _loading = false.obs;
   final _analyticsService = AnalyticsService();
   late AppLocalizations _local;
@@ -34,9 +34,6 @@ class AuthViewModel extends GetxController {
   bool get isObscurePassword => _isObscurePassword.value;
   bool get isObscureConPassword => _isObscureConPassword.value;
 
-  getMessage() => _message;
-  setMessage(ms) => _message = ms;
-
   set loading(bool value) => _loading.value = value;
   bool get loading => _loading.value;
 
@@ -48,16 +45,16 @@ class AuthViewModel extends GetxController {
           email: email, password: password);
       AppUtil.debugPrint(res.user);
       userService.addUser(AppGlobal().firebaseUserToChatUser(res.user!));
-      setMessage(_local.successfullyLoggedIn);
+      message = _local.successfullyLoggedIn;
       _analyticsService.setUserProperties(userId: authService.currentUser!.uid);
       _analyticsService.logLogin();
       return true;
     } on FirebaseException catch (e) {
       AppUtil.debugPrint(e.toString());
-      setMessage(e.message.toString());
+      message = e.message.toString();
       return false;
     } catch (e) {
-      setMessage(_local.failedToLogin);
+      message = _local.failedToLogin;
       return false;
     }
   }
@@ -76,17 +73,18 @@ class AuthViewModel extends GetxController {
         userService.addUser(
             AppGlobal().firebaseUserToChatUser(authService.currentUser!));
       }
-      setMessage(_local.successfullyRegistered);
+      message = _local.successfullyRegistered;
+
       _analyticsService.setUserProperties(userId: authService.currentUser!.uid);
       _analyticsService.logSignUp();
       return true;
     } on FirebaseException catch (e) {
       AppUtil.debugPrint(e.toString());
-      setMessage(e.message.toString());
+      message = e.message.toString();
       return false;
     } catch (e) {
       AppUtil.debugPrint(e.toString());
-      setMessage(_local.failedToRegister);
+      message = _local.failedToRegister;
       return false;
     }
   }
@@ -113,7 +111,7 @@ class AuthViewModel extends GetxController {
     try {
       await authService.resetPasswordEmail(email);
       loading = false;
-      setMessage('${_local.resetPasswordLinkSentTo} $email');
+      message = '${_local.resetPasswordLinkSentTo} $email';
       return true;
     } on FirebaseAuthException catch (e) {
       AppUtil.debugPrint(e.toString());
@@ -125,10 +123,10 @@ class AuthViewModel extends GetxController {
 
   bool _validateEmail(String email) {
     if (AppUtil.checkIsNull(email.trim())) {
-      setMessage(_local.pleaseEnterEmail);
+      message = _local.pleaseEnterEmail;
       return false;
     } else if (!GetUtils.isEmail(email)) {
-      setMessage(_local.invalidEmail);
+      message = _local.invalidEmail;
       return false;
     }
     return true;
@@ -136,7 +134,7 @@ class AuthViewModel extends GetxController {
 
   bool _validateName(String name) {
     if (AppUtil.checkIsNull(name.trim())) {
-      setMessage(_local.pleaseEnterName);
+      message = _local.pleaseEnterName;
       return false;
     }
     return true;
@@ -144,7 +142,7 @@ class AuthViewModel extends GetxController {
 
   bool _validatePassword(String password) {
     if (AppUtil.checkIsNull(password.trim())) {
-      setMessage(_local.pleaseEnterPassword);
+      message = _local.pleaseEnterPassword;
       return false;
     }
     return true;
@@ -152,7 +150,7 @@ class AuthViewModel extends GetxController {
 
   bool _validateConfirmPassword(String conPassword) {
     if (AppUtil.checkIsNull(conPassword.trim())) {
-      setMessage(_local.pleaseEnterConfirmPassword);
+      message = _local.pleaseEnterConfirmPassword;
       return false;
     }
     return true;
@@ -166,7 +164,7 @@ class AuthViewModel extends GetxController {
         !_validateConfirmPassword(confirmPassword)) {
       return false;
     } else if (password.trim() != confirmPassword.trim()) {
-      setMessage(_local.passwordAndConfirmPasswordNotMatch);
+      message = _local.passwordAndConfirmPasswordNotMatch;
       return false;
     }
     return true;

@@ -4,8 +4,9 @@ import 'package:chat_app/utils/firebase_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatService {
-  final FirebaseFirestore firebaseFirestore;
   ChatService({required this.firebaseFirestore});
+
+  final FirebaseFirestore firebaseFirestore;
 
   sendChatMessage(
       {required String content,

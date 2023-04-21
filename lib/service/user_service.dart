@@ -3,8 +3,10 @@ import 'package:chat_app/utils/firebase_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserService {
-  final FirebaseFirestore firebaseFirestore;
   UserService({required this.firebaseFirestore});
+
+  final FirebaseFirestore firebaseFirestore;
+
   Future<void> addUser(ChatUser user) async {
     firebaseFirestore
         .collection(FireStoreConstant.userCollectionPath)

@@ -73,7 +73,9 @@ class ChatItem extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w700),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 5),
@@ -86,8 +88,9 @@ class ChatItem extends StatelessWidget {
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          AppUtil.formatTimeAgo(DateTime.parse(
-                              recentUserChat.recentChat.timestamp)),
+                          AppUtil.formatTimeAgo(
+                            DateTime.parse(recentUserChat.recentChat.timestamp),
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

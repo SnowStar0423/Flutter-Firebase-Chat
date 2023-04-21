@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../utils/firebase_constant.dart';
 
 class ReportService {
-  final FirebaseFirestore firebaseFirestore;
   ReportService({required this.firebaseFirestore});
+
+  final FirebaseFirestore firebaseFirestore;
+
   addFeedback(
       {required String userId,
       required String content,

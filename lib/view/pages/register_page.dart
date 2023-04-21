@@ -230,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     builder: (BuildContext context) {
                       return CustomDialogBox(
                         title: _local.register,
-                        descriptions: _authViewModel.getMessage(),
+                        descriptions: _authViewModel.message,
                       );
                     });
               }
