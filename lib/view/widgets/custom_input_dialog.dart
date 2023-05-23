@@ -43,7 +43,7 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
               widget.title,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).textTheme.caption?.color,
+                color: Theme.of(context).textTheme.bodySmall?.color,
                 fontSize: 20,
               ),
             ),
@@ -79,7 +79,7 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
                       Navigator.of(context).pop(_textEditingController.text);
                     },
                   ),
-                )
+                ),
               ],
             )
           ],

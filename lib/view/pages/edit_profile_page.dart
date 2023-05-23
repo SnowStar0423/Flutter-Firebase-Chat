@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   _buildAppBar() {
     return AppBar(
+      centerTitle: true,
       title: const Text(
         "Profile",
       ),
@@ -143,7 +144,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         AppUtil.checkIsNull(_profileViewModel.getUserPhotoUrl())
             ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
                 trBackground: true, width: 78, height: 78)
-            : Badge(
+            : badges.Badge(
                 onTap: () {
                   _profileViewModel.removeUserPhotoUrl();
                 },
@@ -216,7 +217,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
           Text(
             _profileViewModel.getUserDisplayName(),
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -225,7 +226,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             _profileViewModel.getUserEmail(),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ],
       ),

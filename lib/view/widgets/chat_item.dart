@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:chat_app/model/recent_user_chat.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:flutter/material.dart';
@@ -81,9 +81,9 @@ class ChatItem extends StatelessWidget {
                         const SizedBox(width: 5),
                         Visibility(
                           visible: recentUserChat.recentChat.isUnread,
-                          child: const Badge(
+                          child: const badges.Badge(
                             badgeStyle:
-                                BadgeStyle(badgeColor: AppColor.primary),
+                                badges.BadgeStyle(badgeColor: AppColor.primary),
                           ),
                         ),
                         const SizedBox(width: 5),

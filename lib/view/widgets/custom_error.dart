@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '../../utils/app_asset.dart';
 
 class CustomError extends StatelessWidget {
@@ -13,7 +14,6 @@ class CustomError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -23,7 +23,7 @@ class CustomError extends StatelessWidget {
               SizedBox(
                 width: 300,
                 height: 300,
-                child: Image.asset(AppAsset.error),
+                child: Lottie.asset(AppAsset.errorBuilder),
               ),
               const SizedBox(
                 height: 20,
@@ -33,16 +33,19 @@ class CustomError extends StatelessWidget {
                     ? errorDetails.summary.toString()
                     : 'Oups! Something went wrong!',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: kDebugMode ? Colors.red : Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 21),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
               ),
               const SizedBox(height: 20),
               const Text(
-                "We apologize for the inconvenience and are working to resolve the issue as quickly as possible.",
+                "We apologize for the inconvenience.",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black, fontSize: 15),
+                style: TextStyle(fontSize: 15),
+              ),
+              const Text(
+                "We are working to resolve the issue as quickly as possible.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15),
               ),
             ],
           ),

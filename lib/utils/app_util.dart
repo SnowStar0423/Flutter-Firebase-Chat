@@ -9,16 +9,20 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../view/widgets/term_service.dart';
 import 'app_constant.dart';
 
+/// AppUtil provides helper methods
 class AppUtil {
+  /// prints only in debug mode
   static void debugPrint(var value) {
     if (kDebugMode) print(value);
   }
 
+  /// checks if [value] is null
   static bool checkIsNull(value) {
     return [null, "null", ""].contains(value);
   }
 
-  static showSnackBar(String message, {int duration = 2}) {
+  /// shows snackbar with [message]
+  static void showSnackBar(String message, {int duration = 2}) {
     BuildContext context = Get.context!;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -28,19 +32,21 @@ class AppUtil {
     );
   }
 
-  static formatTimeAgo(DateTime dt) {
+  /// format DateTime [dt] to string time ago
+  static String formatTimeAgo(DateTime dt) {
     return timeago.format(dt, allowFromNow: true, locale: 'en_short');
   }
 
-  static Future<bool> showConfirmDialog(BuildContext context, String info,
+  /// show custom confirm dialog with [message]
+  static Future<bool> showConfirmDialog(BuildContext context, String message,
       {okTitle = "Ok", cancelTitle = "Cancel"}) async {
     bool res = false;
     await showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
         message: Text(
-          info,
-          style: Theme.of(context).textTheme.subtitle1,
+          message,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         actions: [
           CupertinoActionSheetAction(
@@ -68,7 +74,8 @@ class AppUtil {
     return res;
   }
 
-  static showUserActionsDialog(BuildContext context, String info,
+  /// show options for a user to perform actions [report, block] on another user
+  static Future<void> showUserActionsDialog(BuildContext context,
       {String report = "Report",
       required Function() onRepot,
       String block = "Block",
@@ -105,7 +112,8 @@ class AppUtil {
     );
   }
 
-  static showTermsService() async {
+  /// show app's terms and service agreement to a user who is required to accept before using the app
+  static Future<void> showTermsService() async {
     var box = GetStorage();
     final val = box.read(AppConstant.termsService);
     if (AppUtil.checkIsNull(val)) {

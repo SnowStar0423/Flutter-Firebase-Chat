@@ -62,7 +62,10 @@ class SettingPage extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-                fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w500),
+              fontSize: 15,
+              color: Colors.grey,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const SizedBox(
             height: 40,
@@ -195,7 +198,7 @@ class SettingPage extends StatelessWidget {
       if (value != null) {
         AppUtil.debugPrint(value);
         _profileViewModel.sendFeedback(value);
-        AppUtil.showSnackBar("Submitted! Thank you.");
+        AppUtil.showSnackBar("Thank you for your feedback.");
       }
     });
   }

@@ -6,7 +6,6 @@ import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../service/analytics_service.dart';
 import '../utils/app_util.dart';
 

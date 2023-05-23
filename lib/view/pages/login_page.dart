@@ -202,14 +202,16 @@ class _LoginPageState extends State<LoginPage> {
                 btnController.success();
               } else {
                 btnController.reset();
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CustomDialogBox(
-                        title: _local.login,
-                        descriptions: _authViewModel.message,
-                      );
-                    });
+                if (context.mounted) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomDialogBox(
+                          title: _local.login,
+                          descriptions: _authViewModel.message,
+                        );
+                      });
+                }
               }
             },
             child: Text(

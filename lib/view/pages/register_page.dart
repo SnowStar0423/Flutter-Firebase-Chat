@@ -225,14 +225,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 Get.back();
               } else {
                 btnController.reset();
-                showDialog(
+                if (context.mounted) {
+                  showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return CustomDialogBox(
                         title: _local.register,
                         descriptions: _authViewModel.message,
                       );
-                    });
+                    },
+                  );
+                }
               }
             },
             child: Text(

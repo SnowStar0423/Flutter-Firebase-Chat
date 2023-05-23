@@ -97,15 +97,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               } else {
                 _btnSubmitController.reset();
               }
-
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CustomDialogBox(
-                      title: "Forgot Password",
-                      descriptions: _authViewModel.message,
-                    );
-                  });
+              if (context.mounted) {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomDialogBox(
+                        title: "Forgot Password",
+                        descriptions: _authViewModel.message,
+                      );
+                    });
+              }
             },
             child: const Text(
               "Submit",

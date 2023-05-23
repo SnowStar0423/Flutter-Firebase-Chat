@@ -18,56 +18,56 @@ class AppThemes {
       iconTheme: IconThemeData(color: AppColor.white),
     ),
     textTheme: const TextTheme(
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         fontSize: 18,
         color: AppColor.darker,
         fontWeight: FontWeight.w600,
       ),
-      headline5: TextStyle(
+      headlineSmall: TextStyle(
         fontSize: 20,
         color: AppColor.darker,
         fontWeight: FontWeight.w600,
       ),
-      headline4: TextStyle(
+      headlineMedium: TextStyle(
         fontSize: 22,
         color: AppColor.darker,
         fontWeight: FontWeight.w600,
       ),
-      headline3: TextStyle(
+      displaySmall: TextStyle(
         fontSize: 24,
         color: AppColor.darker,
         fontWeight: FontWeight.w600,
       ),
-      headline2: TextStyle(
+      displayMedium: TextStyle(
         fontSize: 30,
         color: Colors.black,
         fontWeight: FontWeight.w600,
       ),
-      headline1: TextStyle(
+      displayLarge: TextStyle(
         fontSize: 40,
         color: Colors.black,
         fontWeight: FontWeight.w600,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         color: AppColor.labelColor,
         fontSize: 15,
         fontWeight: FontWeight.w500,
       ),
-      subtitle2: TextStyle(
+      titleSmall: TextStyle(
         color: AppColor.labelColor,
         fontSize: 13,
         fontWeight: FontWeight.w500,
       ),
-      caption: TextStyle(
+      bodySmall: TextStyle(
         color: AppColor.textColor,
         fontWeight: FontWeight.w500,
         fontSize: 16,
       ),
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         fontSize: 16,
         color: AppColor.darker,
       ),
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
         fontSize: 14,
         color: AppColor.darker,
       ),
@@ -113,56 +113,56 @@ class AppThemes {
       shadowColor: Colors.grey,
     ),
     textTheme: const TextTheme(
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         fontSize: 18,
         color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
-      headline5: TextStyle(
+      headlineSmall: TextStyle(
         fontSize: 20,
         color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
-      headline4: TextStyle(
+      headlineMedium: TextStyle(
         fontSize: 22,
         color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
-      headline3: TextStyle(
+      displaySmall: TextStyle(
         fontSize: 24,
         color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
-      headline2: TextStyle(
+      displayMedium: TextStyle(
         fontSize: 30,
         color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
-      headline1: TextStyle(
+      displayLarge: TextStyle(
         fontSize: 40,
         color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         color: Colors.grey,
         fontSize: 15,
         fontWeight: FontWeight.w500,
       ),
-      subtitle2: TextStyle(
+      titleSmall: TextStyle(
         color: Colors.grey,
         fontSize: 13,
         fontWeight: FontWeight.w500,
       ),
-      caption: TextStyle(
+      bodySmall: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.w500,
         fontSize: 16,
       ),
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         fontSize: 16,
         color: Colors.white,
       ),
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
         fontSize: 14,
         color: Colors.white,
       ),

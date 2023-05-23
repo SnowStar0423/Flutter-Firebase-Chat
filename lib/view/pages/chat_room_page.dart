@@ -117,7 +117,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   _onUserAction() async {
     await AppUtil.showUserActionsDialog(
       context,
-      "Actions",
       onRepot: _onReportUser,
       block: _chatRoomViewModel.isBlockedPeer ? "Unblock" : "Block",
       onBlock: _onBlockUser,

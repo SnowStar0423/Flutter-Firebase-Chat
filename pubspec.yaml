@@ -29,17 +29,18 @@ dependencies:
   get_storage: ^2.1.1
   image_picker: ^0.8.7+1
   intl: any
+  lottie: ^2.3.2
   random_avatar: ^0.0.7
   rounded_loading_button: ^2.1.0
   share_plus: ^6.3.1
   timeago: ^3.3.0
 
 dev_dependencies:
+  fake_cloud_firestore: any
+  firebase_auth_mocks: any
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  firebase_auth_mocks: any
-  fake_cloud_firestore: any
   mockito: any
 
 flutter_icons:
@@ -48,7 +49,7 @@ flutter_icons:
   image_path: "assets/images/icon.png"
   image_path_android: "assets/images/icon-android.png"
 
-flutter: 
+flutter:
   generate: true
   uses-material-design: true
   assets:

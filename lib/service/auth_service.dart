@@ -5,7 +5,6 @@ class AuthService {
   AuthService({required this.firebaseAuth});
 
   final FirebaseAuth firebaseAuth;
-
   User? get currentUser => firebaseAuth.currentUser;
 
   Future<UserCredential> signInWithEmailPassword(

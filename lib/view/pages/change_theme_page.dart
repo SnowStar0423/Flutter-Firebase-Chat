@@ -16,6 +16,7 @@ class ChangeThemePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           "Theme",
         ),
@@ -159,7 +160,7 @@ class ChangeThemePage extends StatelessWidget {
             children: [
               Text(
                 "Default system",
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               Obx(
                 () => Switch(
