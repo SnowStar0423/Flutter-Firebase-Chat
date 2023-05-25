@@ -31,6 +31,9 @@ jobs:
       - name: download dependencies
         run: flutter pub get
 
+      - name: generate localization files
+        run: flutter gen-l10n
+
       - name: analyze the project
         run: flutter analyze
       
