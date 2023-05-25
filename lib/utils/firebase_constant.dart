@@ -24,6 +24,12 @@ class ChatUserConstant {
   static const displayNameLowerCase = 'displayNameLowerCase';
   static const phoneNumber = 'phoneNumber';
   static const deviceToken = 'deviceToken';
+  static const onlineStatus = 'onlineStatus';
+}
+
+class UserOnlineStatus {
+  static const online = 'online';
+  static const offline = 'offline';
 }
 
 class ChatMessageConstant {

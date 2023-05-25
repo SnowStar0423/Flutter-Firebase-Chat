@@ -2,6 +2,7 @@ import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/chat_service.dart';
 import 'package:chat_app/service/push_notification_service.dart';
 import 'package:chat_app/service/report_service.dart';
+import 'package:chat_app/service/user_service.dart';
 import 'package:chat_app/utils/app_message.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,9 +10,14 @@ import 'package:get/get.dart';
 import '../model/chat_message.dart';
 
 class ChatRoomViewModel extends GetxController {
+  ChatRoomViewModel(
+      {required this.chatService,
+      required this.reportService,
+      required this.userService});
+
   final ChatService chatService;
   final ReportService reportService;
-  ChatRoomViewModel({required this.chatService, required this.reportService});
+  final UserService userService;
   final RxBool _sending = false.obs;
   final RxBool _loadingMessages = false.obs;
   final RxBool _isBlockedPeer = false.obs;
@@ -19,7 +25,6 @@ class ChatRoomViewModel extends GetxController {
   String _message = "";
   DocumentSnapshot? lastdocumentSnapshot;
   RxList<ChatMessage> chatMessages = <ChatMessage>[].obs;
-
   bool _moreMessagesAvailable = true;
 
   bool get isBlockedPeer => _isBlockedPeer.value;
@@ -185,7 +190,7 @@ class ChatRoomViewModel extends GetxController {
       );
       isBlockedPeer = true;
     } catch (e) {
-      AppUtil.checkIsNull(e.toString());
+      AppUtil.debugPrint(e.toString());
     }
   }
 
@@ -200,7 +205,7 @@ class ChatRoomViewModel extends GetxController {
       );
       isBlockedPeer = false;
     } catch (e) {
-      AppUtil.checkIsNull(e.toString());
+      AppUtil.debugPrint(e.toString());
     }
   }
 
@@ -210,7 +215,7 @@ class ChatRoomViewModel extends GetxController {
       isBlockedPeer = await reportService.checkIsBlockedPeer(
           userId: currentUserId, peerId: peerId);
     } catch (e) {
-      AppUtil.checkIsNull(e.toString());
+      AppUtil.debugPrint(e.toString());
     }
   }
 
@@ -219,9 +224,9 @@ class ChatRoomViewModel extends GetxController {
     try {
       isBlocked = await reportService.checkIsBlocked(
           userId: currentUserId, peerId: peerId);
-      AppUtil.checkIsNull("checkIsBlocked $isBlocked");
+      AppUtil.debugPrint("checkIsBlocked $isBlocked");
     } catch (e) {
-      AppUtil.checkIsNull(e.toString());
+      AppUtil.debugPrint(e.toString());
     }
   }
 
@@ -236,9 +241,14 @@ class ChatRoomViewModel extends GetxController {
           isBlocked = true;
         }
       });
-      AppUtil.checkIsNull("checkIsBlocked $isBlocked");
+      AppUtil.debugPrint("checkIsBlocked $isBlocked");
     } catch (e) {
-      AppUtil.checkIsNull(e.toString());
+      AppUtil.debugPrint(e.toString());
     }
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> loadPeerOnlineStatus(
+      String peerId) {
+    return userService.loadUserOnlineStatus(peerId);
   }
 }

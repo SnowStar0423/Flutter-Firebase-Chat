@@ -74,4 +74,19 @@ class UserService {
           .snapshots();
     }
   }
+
+  Future<void> updateUserOnlineStatus(String userId, String status) async {
+    await firebaseFirestore
+        .collection(FireStoreConstant.userCollectionPath)
+        .doc(userId)
+        .update({ChatUserConstant.onlineStatus: status});
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> loadUserOnlineStatus(
+      String userId) {
+    return firebaseFirestore
+        .collection(FireStoreConstant.userCollectionPath)
+        .doc(userId)
+        .snapshots();
+  }
 }

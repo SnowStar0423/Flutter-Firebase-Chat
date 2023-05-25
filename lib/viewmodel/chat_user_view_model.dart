@@ -1,9 +1,11 @@
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class ChatUserViewModel extends GetxController {
-  ChatUserViewModel({required this.userService});
+  ChatUserViewModel({required this.firebaseAuth, required this.userService});
+  final FirebaseAuth firebaseAuth;
   final UserService userService;
   RxList<ChatUser> users = <ChatUser>[].obs;
 
@@ -17,5 +19,10 @@ class ChatUserViewModel extends GetxController {
 
   clearUser() {
     users.value = [];
+  }
+
+  updateUserOnlineStatus(String status) async {
+    await userService.updateUserOnlineStatus(
+        firebaseAuth.currentUser!.uid, status);
   }
 }

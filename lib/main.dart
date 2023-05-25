@@ -19,6 +19,8 @@ import 'package:get_storage/get_storage.dart';
 import 'service/analytics_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'view/pages/app_lifecycle_tracker.dart';
+
 void main() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,10 @@ void main() async {
       FlutterError.onError =
           FirebaseCrashlytics.instance.recordFlutterFatalError;
     }
-    runApp(const MyApp());
+    runApp(AppLifecycleTracker(
+      child: const MyApp(),
+      didChangeAppState: (state) => AppGlobal().appState = state,
+    ));
   }, (error, stack) {
     if (!kIsWeb) {
       FirebaseCrashlytics.instance.recordError(error, stack);

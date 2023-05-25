@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:chat_app/view/pages/chat_page.dart';
 import 'package:chat_app/view/pages/login_page.dart';
+import 'package:chat_app/viewmodel/chat_user_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,9 +10,11 @@ import 'package:get/get.dart';
 
 import '../../model/chat_user.dart';
 import '../../service/notification_service.dart';
+import '../../utils/app_global.dart';
 import '../../utils/app_route.dart';
 import '../../utils/app_util.dart';
 import '../../utils/firebase_constant.dart';
+import 'app_lifecycle_tracker.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -20,14 +23,39 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
+  final chatUserViewModel = Get.find<ChatUserViewModel>();
+
   @override
   void initState() {
     super.initState();
+    //====== check app lifecycle state =====
+    WidgetsBinding.instance.addObserver(this);
+    _checkAppState(AppGlobal().appState ?? AppState.opened);
+    //==== end check app lifecycle state =========
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _listenBackgroundMessage();
       _listenMessageTerminated();
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _checkAppState(AppGlobal().appState ?? AppState.opened);
+  }
+
+  _checkAppState(AppState state) {
+    if (state == AppState.opened || state == AppState.resumed) {
+      chatUserViewModel.updateUserOnlineStatus(UserOnlineStatus.online);
+    } else {
+      chatUserViewModel.updateUserOnlineStatus(UserOnlineStatus.offline);
+    }
   }
 
   _listenBackgroundMessage() async {

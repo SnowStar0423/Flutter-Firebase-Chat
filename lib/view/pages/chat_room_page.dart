@@ -2,6 +2,7 @@ import 'package:chat_app/model/chat_message.dart';
 import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/utils/firebase_constant.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/widgets/not_found.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';
@@ -97,14 +98,34 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     );
   }
 
+  _buildPeerOnlineStatus() {
+    return StreamBuilder(
+        stream: _chatRoomViewModel.loadPeerOnlineStatus(_peer.id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var peer = ChatUser.fromJson(snapshot.data!.data()!);
+            return Column(
+              children: [
+                Text(_peer.displayName),
+                Text(
+                  peer.onlineStatus ?? UserOnlineStatus.offline,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        });
+  }
+
   _buildAppBar() {
     return AppBar(
       centerTitle: true,
-      title: Column(
-        children: [
-          Text(_peer.displayName),
-        ],
-      ),
+      title: _buildPeerOnlineStatus(),
       actions: [
         IconButton(
           onPressed: _onUserAction,

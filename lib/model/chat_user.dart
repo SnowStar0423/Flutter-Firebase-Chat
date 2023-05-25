@@ -9,6 +9,7 @@ class ChatUser extends Equatable {
   String? photoUrl;
   String? phoneNumber;
   String? deviceToken;
+  String? onlineStatus;
 
   ChatUser(
       {required this.id,
@@ -16,11 +17,19 @@ class ChatUser extends Equatable {
       this.displayNameLowerCase,
       this.photoUrl,
       this.phoneNumber,
-      this.deviceToken});
+      this.deviceToken,
+      this.onlineStatus});
 
   @override
-  List<Object?> get props =>
-      [id, photoUrl, displayName, phoneNumber, deviceToken];
+  List<Object?> get props => [
+        id,
+        photoUrl,
+        displayName,
+        displayNameLowerCase,
+        phoneNumber,
+        deviceToken,
+        onlineStatus
+      ];
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -29,7 +38,8 @@ class ChatUser extends Equatable {
       ChatUserConstant.displayName: displayName,
       ChatUserConstant.displayNameLowerCase: displayName.toLowerCase(),
       ChatUserConstant.phoneNumber: phoneNumber,
-      ChatUserConstant.deviceToken: deviceToken
+      ChatUserConstant.deviceToken: deviceToken,
+      ChatUserConstant.onlineStatus: onlineStatus,
     };
   }
 
@@ -46,6 +56,9 @@ class ChatUser extends Equatable {
       deviceToken: (map.containsKey(ChatUserConstant.deviceToken)
           ? map[ChatUserConstant.deviceToken]
           : null),
+      onlineStatus: (map.containsKey(ChatUserConstant.onlineStatus)
+          ? map[ChatUserConstant.onlineStatus]
+          : UserOnlineStatus.offline),
     );
   }
 }
