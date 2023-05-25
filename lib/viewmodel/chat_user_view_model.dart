@@ -1,5 +1,6 @@
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/user_service.dart';
+import 'package:chat_app/utils/app_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,7 @@ class ChatUserViewModel extends GetxController {
   }
 
   updateUserOnlineStatus(String status) async {
+    if (AppUtil.checkIsNull(firebaseAuth.currentUser)) return;
     await userService.updateUserOnlineStatus(
         firebaseAuth.currentUser!.uid, status);
   }

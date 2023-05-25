@@ -97,7 +97,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               } else {
                 _btnSubmitController.reset();
               }
-              if (context.mounted) {
+              if (mounted) {
                 showDialog(
                     context: context,
                     builder: (context) {

@@ -225,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Get.back();
               } else {
                 btnController.reset();
-                if (context.mounted) {
+                if (mounted) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
