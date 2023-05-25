@@ -28,13 +28,16 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.1.1
   image_picker: ^0.8.7+1
-  intl: any
+  # intl: any
   lottie: ^2.3.2
   random_avatar: ^0.0.7
   rounded_loading_button: ^2.1.0
   share_plus: ^6.3.1
   timeago: ^3.3.0
 
+dependency_overrides:
+  intl: any
+  
 dev_dependencies:
   fake_cloud_firestore: any
   firebase_auth_mocks: any
