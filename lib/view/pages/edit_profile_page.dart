@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 
-import '../../utils/app_util.dart';
-import '../../viewmodel/profile_view_model.dart';
-import '../widgets/custom_box.dart';
-import '../widgets/custom_image.dart';
-import '../widgets/custom_textfield.dart';
+import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/viewmodel/profile_view_model.dart';
+import 'package:chat_app/view/widgets/custom_box.dart';
+import 'package:chat_app/view/widgets/custom_image.dart';
+import 'package:chat_app/view/widgets/custom_textfield.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -142,7 +142,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AppUtil.checkIsNull(_profileViewModel.getUserPhotoUrl())
-            ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
+            ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
                 trBackground: true, width: 78, height: 78)
             : badges.Badge(
                 onTap: () {

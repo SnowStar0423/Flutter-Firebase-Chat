@@ -10,9 +10,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../model/chat_user.dart';
-import '../widgets/chat_room_item.dart';
-import '../widgets/custom_textfield.dart';
+import 'package:chat_app/model/chat_user.dart';
+import 'package:chat_app/view/widgets/chat_room_item.dart';
+import 'package:chat_app/view/widgets/custom_textfield.dart';
 
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key});

@@ -1,5 +1,5 @@
-import 'chat_user.dart';
-import 'recent_chat.dart';
+import 'package:chat_app/model/chat_user.dart';
+import 'package:chat_app/model/recent_chat.dart';
 
 class RecentUserChat {
   late RecentChat recentChat;

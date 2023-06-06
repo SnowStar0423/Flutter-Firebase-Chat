@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'app_color.dart';
+import 'package:chat_app/view/theme/app_color.dart';
 
 class AppThemes {
   static final lightTheme = ThemeData(

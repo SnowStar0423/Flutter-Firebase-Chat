@@ -56,6 +56,9 @@ jobs:
 
     - name: Restore packages
       run: flutter pub get
+      
+    - name: generate localization files
+      run: flutter gen-l10n
 
     - name: Build IPA/iOS
       # run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist

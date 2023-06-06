@@ -8,9 +8,9 @@ import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../widgets/custom_dialog.dart';
-import '../widgets/custom_image.dart';
-import '../widgets/custom_textfield.dart';
+import 'package:chat_app/view/widgets/custom_dialog.dart';
+import 'package:chat_app/view/widgets/custom_image.dart';
+import 'package:chat_app/view/widgets/custom_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

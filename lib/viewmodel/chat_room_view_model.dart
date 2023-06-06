@@ -7,7 +7,7 @@ import 'package:chat_app/utils/app_message.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import '../model/chat_message.dart';
+import 'package:chat_app/model/chat_message.dart';
 
 class ChatRoomViewModel extends GetxController {
   ChatRoomViewModel(

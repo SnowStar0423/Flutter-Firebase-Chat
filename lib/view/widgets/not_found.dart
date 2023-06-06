@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import '../../utils/app_asset.dart';
+import 'package:chat_app/utils/app_asset.dart';
 
 class NotFound extends StatelessWidget {
   const NotFound({

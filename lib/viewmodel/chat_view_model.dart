@@ -6,8 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../model/recent_chat.dart';
-import '../service/user_service.dart';
+import 'package:chat_app/model/recent_chat.dart';
+import 'package:chat_app/service/user_service.dart';
 
 class ChatViewModel extends GetxController {
   final ChatService chatService;

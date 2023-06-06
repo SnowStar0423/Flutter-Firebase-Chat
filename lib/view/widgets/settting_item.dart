@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_color.dart';
+import 'package:chat_app/view/theme/app_color.dart';
 
 class SettingItem extends StatelessWidget {
   final IconData? leadingIcon;

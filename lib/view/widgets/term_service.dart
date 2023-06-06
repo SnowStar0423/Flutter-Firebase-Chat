@@ -1,7 +1,7 @@
 import 'package:chat_app/utils/app_message.dart';
 import 'package:flutter/material.dart';
-import '../theme/app_color.dart';
-import 'custom_button.dart';
+import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/view/widgets/custom_button.dart';
 
 // ignore: must_be_immutable
 class TermService extends StatefulWidget {

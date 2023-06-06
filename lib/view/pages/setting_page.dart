@@ -5,14 +5,14 @@ import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../utils/app_constant.dart';
-import '../../utils/app_util.dart';
-import '../../viewmodel/auth_view_model.dart';
-import '../../viewmodel/profile_view_model.dart';
-import '../theme/app_color.dart';
-import '../widgets/custom_image.dart';
-import '../widgets/custom_input_dialog.dart';
-import '../widgets/settting_item.dart';
+import 'package:chat_app/utils/app_constant.dart';
+import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/viewmodel/auth_view_model.dart';
+import 'package:chat_app/viewmodel/profile_view_model.dart';
+import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/view/widgets/custom_image.dart';
+import 'package:chat_app/view/widgets/custom_input_dialog.dart';
+import 'package:chat_app/view/widgets/settting_item.dart';
 
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
@@ -80,7 +80,7 @@ class SettingPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
-            ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
+            ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
                 trBackground: true, width: 70, height: 70)
             : CustomImage(
                 FirebaseAuth.instance.currentUser!.photoURL!,

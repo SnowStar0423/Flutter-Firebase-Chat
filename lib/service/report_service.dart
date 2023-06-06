@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../utils/firebase_constant.dart';
+import 'package:chat_app/utils/firebase_constant.dart';
 
 class ReportService {
   ReportService({required this.firebaseFirestore});

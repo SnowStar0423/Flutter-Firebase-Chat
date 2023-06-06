@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 
-import '../../viewmodel/profile_view_model.dart';
-import '../widgets/chat_item.dart';
-import '../widgets/custom_image.dart';
-import '../widgets/round_textbox.dart';
+import 'package:chat_app/viewmodel/profile_view_model.dart';
+import 'package:chat_app/view/widgets/chat_item.dart';
+import 'package:chat_app/view/widgets/custom_image.dart';
+import 'package:chat_app/view/widgets/round_textbox.dart';
 
 class ChatPage extends StatelessWidget {
   final ChatViewModel _chatViewModel = Get.find();
@@ -130,7 +130,7 @@ class ChatPage extends StatelessWidget {
               builder: (controller) {
                 return AppUtil.checkIsNull(
                         FirebaseAuth.instance.currentUser!.photoURL)
-                    ? randomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                    ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
                         trBackground: true, width: 40, height: 40)
                     : CustomImage(
                         FirebaseAuth.instance.currentUser!.photoURL!,

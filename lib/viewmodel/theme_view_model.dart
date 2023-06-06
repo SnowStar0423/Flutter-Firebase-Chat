@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import '../utils/app_constant.dart';
+import 'package:chat_app/utils/app_constant.dart';
 
 class ThemeViewModel extends GetxController {
   static final _box = GetStorage();

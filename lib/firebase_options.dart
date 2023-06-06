@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -70,7 +67,17 @@ class DefaultFirebaseOptions {
     messagingSenderId: '237603014133',
     projectId: 'mychatapp-32423',
     storageBucket: 'mychatapp-32423.appspot.com',
-    iosClientId: '237603014133-q0vn0pskc3t6fe8jh2mk95nlq13p2tne.apps.googleusercontent.com',
+    iosClientId: '237603014133-ec1g96tn7m1bvsp3am74qbqlvrpslfbt.apps.googleusercontent.com',
     iosBundleId: 'com.sangvaleap.chatapp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDuf4-_ZPU-NACFYwnHeWAHvR-KSJiYl8g',
+    appId: '1:237603014133:ios:292ce7b9e8817b80e38cbc',
+    messagingSenderId: '237603014133',
+    projectId: 'mychatapp-32423',
+    storageBucket: 'mychatapp-32423.appspot.com',
+    iosClientId: '237603014133-dj3vanksl76k48ee52b5de83gbdm9c1s.apps.googleusercontent.com',
+    iosBundleId: 'com.sangvaleap.chatApp',
   );
 }

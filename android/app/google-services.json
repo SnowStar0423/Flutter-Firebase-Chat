@@ -31,10 +31,11 @@
               "client_type": 3
             },
             {
-              "client_id": "237603014133-q0vn0pskc3t6fe8jh2mk95nlq13p2tne.apps.googleusercontent.com",
+              "client_id": "237603014133-ec1g96tn7m1bvsp3am74qbqlvrpslfbt.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.sangvaleap.chatapp"
+                "bundle_id": "com.sangvaleap.chatapp",
+                "app_store_id": "6447117872"
               }
             }
           ]

@@ -16,10 +16,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'service/analytics_service.dart';
+import 'package:chat_app/service/analytics_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'view/pages/app_lifecycle_tracker.dart';
+import 'package:chat_app/view/pages/app_lifecycle_tracker.dart';
 
 void main() async {
   runZonedGuarded(() async {

@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../view/widgets/term_service.dart';
-import 'app_constant.dart';
+import 'package:chat_app/view/widgets/term_service.dart';
+import 'package:chat_app/utils/app_constant.dart';
 
 /// AppUtil provides helper methods
 class AppUtil {

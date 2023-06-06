@@ -8,13 +8,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../model/chat_user.dart';
-import '../../service/notification_service.dart';
-import '../../utils/app_global.dart';
-import '../../utils/app_route.dart';
-import '../../utils/app_util.dart';
-import '../../utils/firebase_constant.dart';
-import 'app_lifecycle_tracker.dart';
+import 'package:chat_app/model/chat_user.dart';
+import 'package:chat_app/service/notification_service.dart';
+import 'package:chat_app/utils/app_global.dart';
+import 'package:chat_app/utils/app_route.dart';
+import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/utils/firebase_constant.dart';
+import 'package:chat_app/view/pages/app_lifecycle_tracker.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});

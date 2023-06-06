@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 
-import '../../utils/app_util.dart';
-import '../../viewmodel/theme_view_model.dart';
-import '../theme/app_color.dart';
-import '../theme/app_theme.dart';
+import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/viewmodel/theme_view_model.dart';
+import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/view/theme/app_theme.dart';
 
 class ChangeThemePage extends StatelessWidget {
   ChangeThemePage({super.key});
@@ -219,7 +219,7 @@ class ThemeModeItem extends StatelessWidget {
           SizedBox(
             width: 10,
             height: 10,
-            child: randomAvatar(title),
+            child: RandomAvatar(title),
           ),
           const SizedBox(
             width: 5,

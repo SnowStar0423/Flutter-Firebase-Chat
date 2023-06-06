@@ -6,8 +6,8 @@ import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../service/analytics_service.dart';
-import '../utils/app_util.dart';
+import 'package:chat_app/service/analytics_service.dart';
+import 'package:chat_app/utils/app_util.dart';
 
 class AuthViewModel extends GetxController {
   AuthViewModel({required this.authService, required this.userService});
@@ -89,12 +89,13 @@ class AuthViewModel extends GetxController {
   }
 
   Future signOut() async {
+    _analyticsService.logEvent(eventName: "signOut");
     var tempUser = _removeUserDeviceToken(authService.currentUser!);
     await userService.addUser(tempUser);
     await authService.signOut();
+
     Get.delete<ChatViewModel>();
     AppUtil.debugPrint(authService.currentUser);
-    _analyticsService.logEvent(eventName: "signOut");
   }
 
   ChatUser _removeUserDeviceToken(User user) {

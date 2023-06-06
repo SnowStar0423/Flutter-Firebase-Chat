@@ -3,7 +3,7 @@ import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:random_avatar/random_avatar.dart';
-import 'custom_image.dart';
+import 'package:chat_app/view/widgets/custom_image.dart';
 
 class ChatUserItem extends StatelessWidget {
   const ChatUserItem(
@@ -35,7 +35,7 @@ class ChatUserItem extends StatelessWidget {
         child: Row(
           children: [
             AppUtil.checkIsNull(user.photoUrl)
-                ? randomAvatar(user.id,
+                ? RandomAvatar(user.id,
                     trBackground: true, width: profileSize, height: profileSize)
                 : CustomImage(
                     user.photoUrl!,

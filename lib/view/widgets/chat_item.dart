@@ -4,9 +4,9 @@ import 'package:chat_app/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'package:random_avatar/random_avatar.dart';
 
-import '../theme/app_color.dart';
-import 'custom_image.dart';
-import 'notify_box.dart';
+import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/view/widgets/custom_image.dart';
+import 'package:chat_app/view/widgets/notify_box.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem(
@@ -49,7 +49,7 @@ class ChatItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AppUtil.checkIsNull(recentUserChat.chatUser.photoUrl)
-                    ? randomAvatar(recentUserChat.chatUser.id,
+                    ? RandomAvatar(recentUserChat.chatUser.id,
                         trBackground: true,
                         width: profileSize,
                         height: profileSize)

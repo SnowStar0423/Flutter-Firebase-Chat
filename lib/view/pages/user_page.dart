@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:chat_app/view/widgets/chat_user_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../utils/app_route.dart';
-import '../../viewmodel/chat_user_view_model.dart';
-import '../widgets/round_textbox.dart';
+import 'package:chat_app/utils/app_route.dart';
+import 'package:chat_app/viewmodel/chat_user_view_model.dart';
+import 'package:chat_app/view/widgets/round_textbox.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
