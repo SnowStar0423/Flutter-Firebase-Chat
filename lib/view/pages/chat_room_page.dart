@@ -107,17 +107,35 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
             return Column(
               children: [
                 Text(_peer.displayName),
-                Text(
-                  peer.onlineStatus ?? UserOnlineStatus.offline,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.normal,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    peer.onlineStatus == null ||
+                            peer.onlineStatus == UserOnlineStatus.offline
+                        ? const Icon(
+                            Icons.cancel,
+                            size: 12,
+                            color: UserOnlineStatus.offlineColor,
+                          )
+                        : const Icon(
+                            Icons.check_circle,
+                            size: 12,
+                            color: UserOnlineStatus.onlineColor,
+                          ),
+                    const SizedBox(width: 3),
+                    Text(
+                      peer.onlineStatus ?? UserOnlineStatus.offline,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             );
           } else {
-            return Container();
+            return const SizedBox();
           }
         });
   }

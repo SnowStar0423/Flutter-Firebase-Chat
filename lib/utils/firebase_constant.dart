@@ -1,5 +1,7 @@
 // ignore_for_file: unused_field
 
+import 'package:chat_app/view/theme/app_color.dart';
+
 class FireStoreConstant {
   static const chatCollectionPath = 'chatroom';
   static const messageCollectionPath = 'message';
@@ -30,6 +32,8 @@ class ChatUserConstant {
 class UserOnlineStatus {
   static const online = 'online';
   static const offline = 'offline';
+  static const onlineColor = AppColor.green;
+  static const offlineColor = AppColor.darker;
 }
 
 class ChatMessageConstant {
