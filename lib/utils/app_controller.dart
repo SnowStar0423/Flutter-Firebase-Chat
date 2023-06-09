@@ -40,9 +40,13 @@ class AppController {
         fenix: true);
     Get.lazyPut(
         () => ChatViewModel(
-                chatService: ChatService(
-              firebaseFirestore: FirebaseFirestore.instance,
-            )),
+              firebaseAuth: FirebaseAuth.instance,
+              chatService: ChatService(
+                firebaseFirestore: FirebaseFirestore.instance,
+              ),
+              userService:
+                  UserService(firebaseFirestore: FirebaseFirestore.instance),
+            ),
         fenix: true);
     Get.lazyPut(() => ThemeViewModel(), fenix: true);
     Get.lazyPut(

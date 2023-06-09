@@ -114,12 +114,12 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             peer.onlineStatus == UserOnlineStatus.offline
                         ? const Icon(
                             Icons.cancel,
-                            size: 12,
+                            size: 11,
                             color: UserOnlineStatus.offlineColor,
                           )
                         : const Icon(
                             Icons.check_circle,
-                            size: 12,
+                            size: 11,
                             color: UserOnlineStatus.onlineColor,
                           ),
                     const SizedBox(width: 3),

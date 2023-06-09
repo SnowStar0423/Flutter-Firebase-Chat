@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/chat_service.dart';
 import 'package:chat_app/service/push_notification_service.dart';
@@ -41,6 +43,17 @@ class ChatRoomViewModel extends GetxController {
   set loadingMessages(bool value) => _loadingMessages.value = value;
   bool get loadingMessages => _loadingMessages.value;
 
+  StreamSubscription? loadMoreChatMessagesListener;
+  StreamSubscription? loadChatMessagesListener;
+  StreamSubscription? checkIsUserBlockedListener;
+
+  @override
+  onClose() {
+    loadChatMessagesListener?.cancel();
+    loadMoreChatMessagesListener?.cancel();
+    checkIsUserBlockedListener?.cancel();
+  }
+
   clearChatMessages() {
     chatMessages.value = [];
   }
@@ -61,7 +74,9 @@ class ChatRoomViewModel extends GetxController {
     if (!_moreMessagesAvailable || loadingMessages) return;
     loadingMessages = true;
     if (lastdocumentSnapshot == null) {
-      chatService.loadChatMessages(groupChatId: groupChatId).listen((event) {
+      loadChatMessagesListener = chatService
+          .loadChatMessages(groupChatId: groupChatId)
+          .listen((event) {
         chatMessages.value =
             event.docs.map((e) => ChatMessage.fromJson(e.data())).toList();
         if (event.docs.isNotEmpty) {
@@ -69,7 +84,7 @@ class ChatRoomViewModel extends GetxController {
         }
       });
     } else {
-      chatService
+      loadMoreChatMessagesListener = chatService
           .loadMoreChatMessages(
               groupChatId: groupChatId,
               lastdocumentSnapshot: lastdocumentSnapshot!)
@@ -233,7 +248,7 @@ class ChatRoomViewModel extends GetxController {
   checkIsUserBlocked(
       {required String currentUserId, required String peerId}) async {
     try {
-      reportService
+      checkIsUserBlockedListener = reportService
           .checkIsUserBlocked(userId: currentUserId, peerId: peerId)
           .listen((event) {
         isBlocked = false;

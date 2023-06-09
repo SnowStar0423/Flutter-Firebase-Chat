@@ -89,12 +89,11 @@ class AuthViewModel extends GetxController {
   }
 
   Future signOut() async {
-    _analyticsService.logEvent(eventName: "signOut");
     var tempUser = _removeUserDeviceToken(authService.currentUser!);
     await userService.addUser(tempUser);
     await authService.signOut();
-
-    Get.delete<ChatViewModel>();
+    await Get.delete<ChatViewModel>();
+    _analyticsService.logEvent(eventName: "signOut");
     AppUtil.debugPrint(authService.currentUser);
   }
 

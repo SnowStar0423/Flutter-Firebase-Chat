@@ -39,6 +39,7 @@ void main() async {
       didChangeAppState: (state) => AppGlobal().appState = state,
     ));
   }, (error, stack) {
+    AppUtil.debugPrint(error);
     if (!kIsWeb) {
       FirebaseCrashlytics.instance.recordError(error, stack);
     }

@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
 import 'package:chat_app/service/chat_service.dart';
 import 'package:chat_app/utils/app_util.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -10,9 +11,16 @@ import 'package:chat_app/model/recent_chat.dart';
 import 'package:chat_app/service/user_service.dart';
 
 class ChatViewModel extends GetxController {
+  ChatViewModel(
+      {required this.firebaseAuth,
+      required this.chatService,
+      required this.userService});
+
+  final FirebaseAuth firebaseAuth;
   final ChatService chatService;
-  ChatViewModel({required this.chatService});
+  final UserService userService;
   RxList<RecentUserChat> recentUserChats = <RecentUserChat>[].obs;
+  StreamSubscription? _loadRecentChatsListener;
 
   @override
   onInit() {
@@ -20,11 +28,16 @@ class ChatViewModel extends GetxController {
     loadRecentUserChats();
   }
 
+  @override
+  onClose() {
+    _loadRecentChatsListener?.cancel();
+  }
+
   loadRecentUserChats() async {
     try {
-      chatService
+      _loadRecentChatsListener = chatService
           .loadRecentChats(
-              currentUserId: FirebaseAuth.instance.currentUser!.uid, limit: 10)
+              currentUserId: firebaseAuth.currentUser!.uid, limit: 10)
           .listen((event) async {
         if (event.docs.isEmpty) return;
         List<String> listIdTo = [];
@@ -51,8 +64,6 @@ class ChatViewModel extends GetxController {
 
   Future<List<ChatUser>> _getRecentUsers(List<String> ids) async {
     try {
-      final userService =
-          UserService(firebaseFirestore: FirebaseFirestore.instance);
       final querySnap = await userService.getUsersByIds(ids: ids);
       List<ChatUser> users =
           querySnap.docs.map((e) => ChatUser.fromJson(e.data())).toList();
