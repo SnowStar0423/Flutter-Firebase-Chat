@@ -99,6 +99,7 @@ class _UserPageState extends State<UserPage> {
         Expanded(
           child: RoundTextBox(
             controller: _searchController,
+            autofocus: true,
             onChanged: _onSearchChanged,
           ),
         ),

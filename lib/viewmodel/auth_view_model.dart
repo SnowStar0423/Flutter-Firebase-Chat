@@ -1,7 +1,7 @@
-import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/service/auth_service.dart';
 import 'package:chat_app/service/user_service.dart';
 import 'package:chat_app/utils/app_global.dart';
+import 'package:chat_app/utils/firebase_constant.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -89,18 +89,14 @@ class AuthViewModel extends GetxController {
   }
 
   Future signOut() async {
-    var tempUser = _removeUserDeviceToken(authService.currentUser!);
-    await userService.addUser(tempUser);
+    await userService.updateUser(authService.currentUser!.uid, {
+      ChatUserConstant.onlineStatus: UserOnlineStatus.offline,
+      ChatUserConstant.deviceToken: ''
+    });
     await authService.signOut();
     await Get.delete<ChatViewModel>();
     _analyticsService.logEvent(eventName: "signOut");
     AppUtil.debugPrint(authService.currentUser);
-  }
-
-  ChatUser _removeUserDeviceToken(User user) {
-    ChatUser temp = AppGlobal().firebaseUserToChatUser(user);
-    temp.deviceToken = '';
-    return temp;
   }
 
   Future<bool> submitResetPasswordEmail(String email) async {

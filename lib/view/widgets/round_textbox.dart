@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
 class RoundTextBox extends StatelessWidget {
-  const RoundTextBox(
-      {this.controller,
-      Key? key,
-      this.keyboardType,
-      this.onTap,
-      this.onChanged,
-      this.height = 45,
-      this.readOnly = false})
-      : super(key: key);
+  const RoundTextBox({
+    this.controller,
+    Key? key,
+    this.keyboardType,
+    this.onTap,
+    this.onChanged,
+    this.height = 45,
+    this.readOnly = false,
+    this.autofocus = false,
+  }) : super(key: key);
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final GestureTapCallback? onTap;
   final ValueChanged<String>? onChanged;
   final bool readOnly;
+  final bool autofocus;
   final double height;
 
   @override
@@ -27,6 +29,7 @@ class RoundTextBox extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        autofocus: autofocus,
         readOnly: readOnly,
         onTap: onTap,
         onChanged: onChanged,

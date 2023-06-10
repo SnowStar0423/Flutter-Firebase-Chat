@@ -239,7 +239,6 @@ class ChatRoomViewModel extends GetxController {
     try {
       isBlocked = await reportService.checkIsBlocked(
           userId: currentUserId, peerId: peerId);
-      AppUtil.debugPrint("checkIsBlocked $isBlocked");
     } catch (e) {
       AppUtil.debugPrint(e.toString());
     }
@@ -256,7 +255,6 @@ class ChatRoomViewModel extends GetxController {
           isBlocked = true;
         }
       });
-      AppUtil.debugPrint("checkIsBlocked $isBlocked");
     } catch (e) {
       AppUtil.debugPrint(e.toString());
     }

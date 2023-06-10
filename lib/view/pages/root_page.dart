@@ -14,7 +14,7 @@ import 'package:chat_app/utils/app_global.dart';
 import 'package:chat_app/utils/app_route.dart';
 import 'package:chat_app/utils/app_util.dart';
 import 'package:chat_app/utils/firebase_constant.dart';
-import 'package:chat_app/view/pages/app_lifecycle_tracker.dart';
+import 'package:chat_app/utils/app_lifecycle_tracker.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -29,10 +29,9 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    //====== check app lifecycle state =====
+    //====== init app lifecycle state =====
     WidgetsBinding.instance.addObserver(this);
-    _checkAppState(AppGlobal().appState ?? AppState.opened);
-    //==== end check app lifecycle state =========
+    //==== end init app lifecycle state =========
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _listenBackgroundMessage();
       _listenMessageTerminated();
@@ -92,7 +91,12 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: ((context, snapshot) {
-        return snapshot.hasData ? ChatPage() : const LoginPage();
+        if (snapshot.hasData) {
+          _checkAppState(AppGlobal().appState ?? AppState.opened);
+          return ChatPage();
+        } else {
+          return const LoginPage();
+        }
       }),
     );
   }

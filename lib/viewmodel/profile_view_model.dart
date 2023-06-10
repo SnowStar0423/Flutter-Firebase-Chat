@@ -77,9 +77,8 @@ class ProfileViewModel extends GetxController {
 
   _saveUserProfileToFirestore() async {
     if (firebaseAuth.currentUser == null) return;
-    userService.addUser(
-      AppGlobal().firebaseUserToChatUser(firebaseAuth.currentUser!),
-    );
+    userService
+        .addUser(AppGlobal().firebaseUserToChatUser(firebaseAuth.currentUser!));
   }
 
   void removeUserPhotoUrl() {

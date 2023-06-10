@@ -89,4 +89,11 @@ class UserService {
         .doc(userId)
         .snapshots();
   }
+
+  Future<void> updateUser(String userId, Map<String, dynamic> map) async {
+    await firebaseFirestore
+        .collection(FireStoreConstant.userCollectionPath)
+        .doc(userId)
+        .update(map);
+  }
 }
