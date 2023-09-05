@@ -61,8 +61,8 @@ jobs:
       run: flutter gen-l10n
 
     - name: Build IPA/iOS
-      # run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
-      run: flutter build ios --release --no-codesign
+      run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+      # run: flutter build ios --release --no-codesign
 
     - name: Collect ipa artifacts
       uses: actions/upload-artifact@v3
