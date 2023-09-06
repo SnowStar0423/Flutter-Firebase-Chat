@@ -9,7 +9,7 @@ on:
 
 env:  
   FLUTTER_CHANNEL: 'stable'
-  FLUTTER_VERSION: '3.7.12'
+  FLUTTER_VERSION: '3.13.0'
   ANDROID_PACKAGE_NAME: 'com.sangvaleap.chatapp'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
 

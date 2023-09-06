@@ -5,7 +5,7 @@ on:
 
 env:
   FLUTTER_CHANNEL: 'stable'
-  FLUTTER_VERSION: '3.7.12'
+  FLUTTER_VERSION: '3.13.0'
   XCODE_VERSION: '14.2'
   PATH_TO_IPA: 'build/ios/ipa/flutter_github_actions_basics.ipa'
 
