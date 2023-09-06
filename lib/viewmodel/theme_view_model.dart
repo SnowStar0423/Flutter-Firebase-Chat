@@ -14,7 +14,7 @@ class ThemeViewModel extends GetxController {
 
   static bool _loadThemeMode() {
     if (_isDarkModeDefaultSystem.value) {
-      return SchedulerBinding.instance.window.platformBrightness ==
+      return SchedulerBinding.instance.platformDispatcher.platformBrightness ==
           Brightness.dark;
     }
     return _box.read(AppConstant.themeMode) ?? false;
@@ -55,8 +55,9 @@ class ThemeViewModel extends GetxController {
   setDarkModeDefaultSystem(bool isDefault) {
     isDarkModeDefaultSystem = isDefault;
     if (isDarkModeDefaultSystem) {
-      isDarkMode = SchedulerBinding.instance.window.platformBrightness ==
-          Brightness.dark;
+      isDarkMode =
+          SchedulerBinding.instance.platformDispatcher.platformBrightness ==
+              Brightness.dark;
     }
     _triggerDarkMode();
   }

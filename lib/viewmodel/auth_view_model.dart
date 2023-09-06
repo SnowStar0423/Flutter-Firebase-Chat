@@ -22,7 +22,7 @@ class AuthViewModel extends GetxController {
 
   @override
   void onReady() {
-    _local = AppLocalizations.of(Get.context!);
+    _local = AppLocalizations.of(Get.context!)!;
     super.onReady();
   }
 

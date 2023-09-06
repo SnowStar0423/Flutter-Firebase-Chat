@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void didChangeDependencies() {
-    _local = AppLocalizations.of(context);
+    _local = AppLocalizations.of(context)!;
     super.didChangeDependencies();
   }
 

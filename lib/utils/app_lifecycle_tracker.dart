@@ -47,11 +47,13 @@ class _AppLifecycleTrackerState extends State<AppLifecycleTracker>
       case AppLifecycleState.inactive:
         s = AppState.inactive;
         break;
-      case AppLifecycleState.paused:
-        s = AppState.paused;
-        break;
       case AppLifecycleState.detached:
         s = AppState.detached;
+        break;
+      case AppLifecycleState.paused:
+      case AppLifecycleState.hidden:
+      default:
+        s = AppState.paused;
         break;
     }
     widget.didChangeAppState(s);

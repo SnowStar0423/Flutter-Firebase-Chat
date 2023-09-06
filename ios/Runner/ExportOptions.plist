@@ -2,12 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>destination</key>
+	<string>export</string>
 	<key>manageAppVersionAndBuildNumber</key>
 	<true/>
 	<key>method</key>
 	<string>app-store</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.sangvaleap.chatapp</key>
+		<string>my-chat</string>
+	</dict>
+	<key>signingCertificate</key>
+	<string>070E0DC7E7F37759A6356FDC9B1C16AFE5BE1E4A</string>
 	<key>signingStyle</key>
-	<string>automatic</string>
+	<string>manual</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
 	<key>teamID</key>

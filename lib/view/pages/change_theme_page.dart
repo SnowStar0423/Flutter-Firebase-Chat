@@ -66,8 +66,8 @@ class ChangeThemePage extends StatelessWidget {
                               offset: const Offset(0, 3))
                         ],
                       ),
-                      child: Column(
-                        children: const [
+                      child: const Column(
+                        children: [
                           SizedBox(
                             height: 20,
                           ),
@@ -117,8 +117,8 @@ class ChangeThemePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Column(
-                        children: const [
+                      child: const Column(
+                        children: [
                           SizedBox(
                             height: 20,
                           ),

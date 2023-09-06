@@ -28,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void didChangeDependencies() {
-    _local = AppLocalizations.of(context);
+    _local = AppLocalizations.of(context)!;
     super.didChangeDependencies();
   }
 
