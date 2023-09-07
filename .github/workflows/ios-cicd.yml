@@ -43,7 +43,7 @@ jobs:
       run: |
         # create variables
         CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-        PP_PATH=$RUNNER_TEMP/my-chat.mobileprovision
+        PP_PATH=$RUNNER_TEMP/MyChat.mobileprovision
         KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
         # import certificate and provisioning profile from secrets
         echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
@@ -73,7 +73,7 @@ jobs:
       if: ${{ always() }}
       run: |
         security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-        rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+        rm ~/Library/MobileDevice/Provisioning\ Profiles/MyChat.mobileprovision
 
     # - name: Build IPA
     #   env:

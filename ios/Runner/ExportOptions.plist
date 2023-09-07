@@ -11,7 +11,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.sangvaleap.chatapp</key>
-		<string>my-chat</string>
+		<string>MyChat</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>070E0DC7E7F37759A6356FDC9B1C16AFE5BE1E4A</string>
