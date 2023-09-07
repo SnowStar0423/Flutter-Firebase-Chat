@@ -6,7 +6,7 @@ on:
 env:
   FLUTTER_CHANNEL: 'stable'
   FLUTTER_VERSION: '3.13.0'
-  PATH_TO_IPA: 'build/ios/ipa/flutter_github_actions_basics.ipa'
+  PATH_TO_IPA: 'build/ios/ipa/app-release.ipa'
 
 jobs:
   ci-cd:
@@ -67,7 +67,16 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: release-ipa
-        path: build/ios/ipa/*.ipa
+        path: ${{ env.PATH_TO_IPA }}
+        retention-days: 2
+
+    - name: Deploy to App Store (Testflight)
+      uses: apple-actions/upload-testflight-build@v1
+      with:
+        app-path: ${{ env.PATH_TO_IPA }}
+        issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        api-private-key: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY }}
 
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
