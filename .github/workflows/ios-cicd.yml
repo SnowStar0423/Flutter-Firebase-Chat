@@ -16,6 +16,18 @@ jobs:
     steps:  
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: ${{ env.FLUTTER_CHANNEL }}
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+
+    - name: Install dependencies
+      run: flutter pub get
+      
+    - name: Generate localization files
+      run: flutter gen-l10n
     
     # - name: Set up Xcode
     #   uses: maxim-lobanov/setup-xcode@v1
@@ -31,7 +43,7 @@ jobs:
       run: |
         # create variables
         CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-        PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+        PP_PATH=$RUNNER_TEMP/my-chat.mobileprovision
         KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
         # import certificate and provisioning profile from secrets
         echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
@@ -47,23 +59,11 @@ jobs:
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: ${{ env.FLUTTER_CHANNEL }}
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-
-    - name: Restore packages
-      run: flutter pub get
-      
-    - name: generate localization files
-      run: flutter gen-l10n
-
     - name: Build IPA/iOS
       run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
       # run: flutter build ios --release --no-codesign
-
-    - name: Collect ipa artifacts
+    
+    - name: Upload ipa artifact
       uses: actions/upload-artifact@v3
       with:
         name: release-ipa
