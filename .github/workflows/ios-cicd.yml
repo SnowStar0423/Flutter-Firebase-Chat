@@ -6,7 +6,8 @@ on:
 env:
   FLUTTER_CHANNEL: 'stable'
   FLUTTER_VERSION: '3.13.0'
-  PATH_TO_IPA: 'build/ios/ipa/app-release.ipa'
+  APP_BUNDLE_ID: 'com.sangvaleap.chatapp'
+  PATH_TO_IPA: 'build/ios/ipa/com.sangvaleap.chatapp.ipa'
 
 jobs:
   ci-cd:
@@ -70,13 +71,22 @@ jobs:
         path: ${{ env.PATH_TO_IPA }}
         retention-days: 2
 
+    - name: Create App Store API key
+      env:
+        APP_STORE_CONNECT_API_PRIVATE_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY_BASE64 }}
+      run: |
+        # create api private key 
+        APP_STORE_CONNECT_API_PRIVATE_KEY=$RUNNER_TEMP/api-private-key.p8
+        # import api private key from secrets
+        echo -n "$APP_STORE_CONNECT_API_PRIVATE_KEY_BASE64" | base64 --decode --output $APP_STORE_CONNECT_API_PRIVATE_KEY
+
     - name: Deploy to App Store (Testflight)
       uses: apple-actions/upload-testflight-build@v1
       with:
         app-path: ${{ env.PATH_TO_IPA }}
         issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-        api-private-key: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY }}
+        api-private-key: $RUNNER_TEMP/api-private-key.p8
 
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
