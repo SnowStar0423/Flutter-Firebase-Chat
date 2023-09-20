@@ -10,7 +10,7 @@ import 'package:chat_app/view/pages/user_page.dart';
 import 'package:get/get.dart';
 
 import 'package:chat_app/view/pages/chat_room_page.dart';
-import 'package:chat_app/utils/app_route.dart';
+import 'package:chat_app/core/utils/app_route.dart';
 
 class AppPage {
   static final List<GetPage> pages = [

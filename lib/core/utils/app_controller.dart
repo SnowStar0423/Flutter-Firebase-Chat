@@ -1,7 +1,7 @@
-import 'package:chat_app/service/auth_service.dart';
-import 'package:chat_app/service/chat_service.dart';
-import 'package:chat_app/service/report_service.dart';
-import 'package:chat_app/service/user_service.dart';
+import 'package:chat_app/core/service/auth_service.dart';
+import 'package:chat_app/core/service/chat_service.dart';
+import 'package:chat_app/core/service/report_service.dart';
+import 'package:chat_app/core/service/user_service.dart';
 import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';

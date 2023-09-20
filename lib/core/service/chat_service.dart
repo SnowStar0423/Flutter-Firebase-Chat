@@ -1,6 +1,6 @@
 import 'package:chat_app/model/chat_message.dart';
 import 'package:chat_app/model/recent_chat.dart';
-import 'package:chat_app/utils/firebase_constant.dart';
+import 'package:chat_app/core/utils/firebase_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatService {

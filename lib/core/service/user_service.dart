@@ -1,5 +1,5 @@
 import 'package:chat_app/model/chat_user.dart';
-import 'package:chat_app/utils/firebase_constant.dart';
+import 'package:chat_app/core/utils/firebase_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserService {

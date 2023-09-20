@@ -1,7 +1,7 @@
 import 'package:chat_app/model/chat_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:chat_app/utils/app_lifecycle_tracker.dart';
+import 'package:chat_app/core/utils/app_lifecycle_tracker.dart';
 
 /// singleton class accessible across the app
 class AppGlobal {

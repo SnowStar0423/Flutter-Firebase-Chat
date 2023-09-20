@@ -1,13 +1,13 @@
-import 'package:chat_app/service/auth_service.dart';
-import 'package:chat_app/service/user_service.dart';
-import 'package:chat_app/utils/app_global.dart';
-import 'package:chat_app/utils/firebase_constant.dart';
+import 'package:chat_app/core/service/auth_service.dart';
+import 'package:chat_app/core/service/user_service.dart';
+import 'package:chat_app/core/utils/app_global.dart';
+import 'package:chat_app/core/utils/firebase_constant.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:chat_app/service/analytics_service.dart';
-import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/core/service/analytics_service.dart';
+import 'package:chat_app/core/utils/app_util.dart';
 
 class AuthViewModel extends GetxController {
   AuthViewModel({required this.authService, required this.userService});

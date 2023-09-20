@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 
-import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/viewmodel/profile_view_model.dart';
 import 'package:chat_app/view/widgets/custom_box.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';

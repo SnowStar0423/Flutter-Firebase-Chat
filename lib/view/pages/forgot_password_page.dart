@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-import 'package:chat_app/utils/app_asset.dart';
+import 'package:chat_app/core/utils/app_asset.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/widgets/custom_dialog.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';

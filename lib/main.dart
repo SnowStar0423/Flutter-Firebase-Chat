@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:chat_app/firebase_options.dart';
-import 'package:chat_app/service/notification_service.dart';
-import 'package:chat_app/utils/app_constant.dart';
-import 'package:chat_app/utils/app_controller.dart';
-import 'package:chat_app/utils/app_global.dart';
-import 'package:chat_app/utils/app_page.dart';
-import 'package:chat_app/utils/app_route.dart';
-import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/core/service/notification_service.dart';
+import 'package:chat_app/core/utils/app_constant.dart';
+import 'package:chat_app/core/utils/app_controller.dart';
+import 'package:chat_app/core/utils/app_global.dart';
+import 'package:chat_app/core/utils/app_page.dart';
+import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/view/theme/app_theme.dart';
 import 'package:chat_app/view/widgets/custom_error.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
@@ -16,10 +16,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:chat_app/service/analytics_service.dart';
+import 'package:chat_app/core/service/analytics_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:chat_app/utils/app_lifecycle_tracker.dart';
+import 'package:chat_app/core/utils/app_lifecycle_tracker.dart';
 
 void main() async {
   runZonedGuarded(() async {

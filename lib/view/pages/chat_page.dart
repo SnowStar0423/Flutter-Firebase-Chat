@@ -1,7 +1,7 @@
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
-import 'package:chat_app/utils/app_route.dart';
-import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

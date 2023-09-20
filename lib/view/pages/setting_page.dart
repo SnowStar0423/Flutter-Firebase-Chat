@@ -1,12 +1,12 @@
-import 'package:chat_app/utils/app_route.dart';
+import 'package:chat_app/core/utils/app_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'package:chat_app/utils/app_constant.dart';
-import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/core/utils/app_constant.dart';
+import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:chat_app/viewmodel/profile_view_model.dart';
 import 'package:chat_app/view/theme/app_color.dart';

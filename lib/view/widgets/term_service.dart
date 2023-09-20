@@ -1,4 +1,4 @@
-import 'package:chat_app/utils/app_message.dart';
+import 'package:chat_app/core/utils/app_message.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/widgets/custom_button.dart';
@@ -34,8 +34,12 @@ class _TermServiceState extends State<TermService> {
             FittedBox(
               child: Row(
                 children: [
-                  Checkbox(value: _checkedRead, onChanged: _onCheckedChanged),
-                  const Text("I've read and agree to the terms."),
+                  Checkbox(value: _checkedRead, onChanged: (value) {
+                    _onToggleChanged();
+                  }),
+                  TextButton(child: const Text("I've read and agree to the terms."), onPressed: () {
+                    _onToggleChanged();
+                  },),
                 ],
               ),
             ),
@@ -60,9 +64,9 @@ class _TermServiceState extends State<TermService> {
     );
   }
 
-  _onCheckedChanged(value) {
+  _onToggleChanged() {
     setState(() {
-      _checkedRead = value ?? !_checkedRead;
+      _checkedRead = !_checkedRead;
     });
   }
 }

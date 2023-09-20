@@ -1,8 +1,8 @@
 import 'package:chat_app/model/chat_message.dart';
-import 'package:chat_app/utils/app_global.dart';
-import 'package:chat_app/utils/app_route.dart';
-import 'package:chat_app/utils/app_util.dart';
-import 'package:chat_app/utils/firebase_constant.dart';
+import 'package:chat_app/core/utils/app_global.dart';
+import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/utils/app_util.dart';
+import 'package:chat_app/core/utils/firebase_constant.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/widgets/not_found.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';

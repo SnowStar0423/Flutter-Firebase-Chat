@@ -1,5 +1,5 @@
 import 'package:chat_app/model/chat_message.dart';
-import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/core/utils/app_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

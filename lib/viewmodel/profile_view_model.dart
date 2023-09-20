@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'package:chat_app/service/report_service.dart';
-import 'package:chat_app/service/user_service.dart';
-import 'package:chat_app/utils/app_global.dart';
-import 'package:chat_app/utils/firebase_constant.dart';
+import 'package:chat_app/core/service/report_service.dart';
+import 'package:chat_app/core/service/user_service.dart';
+import 'package:chat_app/core/utils/app_global.dart';
+import 'package:chat_app/core/utils/firebase_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:chat_app/utils/app_util.dart';
+import 'package:chat_app/core/utils/app_util.dart';
 
 class ProfileViewModel extends GetxController {
   ProfileViewModel({
