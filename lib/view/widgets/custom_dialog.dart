@@ -20,7 +20,7 @@ class CustomDialogBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
+        borderRadius: BorderRadius.circular(_Constants.padding),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -33,16 +33,16 @@ class CustomDialogBox extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: const EdgeInsets.only(
-            left: Constants.padding,
-            top: Constants.avatarRadius + Constants.padding,
-            right: Constants.padding,
-            bottom: Constants.padding,
+            left: _Constants.padding,
+            top: _Constants.avatarRadius + _Constants.padding,
+            right: _Constants.padding,
+            bottom: _Constants.padding,
           ),
-          margin: const EdgeInsets.only(top: Constants.avatarRadius),
+          margin: const EdgeInsets.only(top: _Constants.avatarRadius),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(Constants.padding),
+            borderRadius: BorderRadius.circular(_Constants.padding),
             boxShadow: const [
               BoxShadow(
                   color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
@@ -84,11 +84,11 @@ class CustomDialogBox extends StatelessWidget {
           ),
         ),
         const Positioned(
-          left: Constants.padding,
-          right: Constants.padding,
+          left: _Constants.padding,
+          right: _Constants.padding,
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
-            radius: Constants.avatarRadius,
+            radius: _Constants.avatarRadius,
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               child: Image(
@@ -104,8 +104,8 @@ class CustomDialogBox extends StatelessWidget {
   }
 }
 
-class Constants {
-  Constants._();
+class _Constants {
+  _Constants._();
   static const double padding = 20;
   static const double avatarRadius = 45;
 }
