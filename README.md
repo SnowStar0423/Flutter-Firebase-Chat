@@ -2,6 +2,20 @@
 
 This app simplifies communication and connects you with friends, family, and new people anywhere, anytime.
 
+By version 1.4, features include:
+- Register
+- Login
+- Forgot password
+- Recent chats or chat history
+- Search users
+- Peer chat
+- Online/Offline status
+- Report and Block user
+- Push notification
+- Profile setting
+- Update account profile
+- Light and dark mode
+- Feedback
 
 # Development Setup
 
