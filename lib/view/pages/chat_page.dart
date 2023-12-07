@@ -2,6 +2,7 @@ import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
 import 'package:chat_app/core/utils/app_route.dart';
 import 'package:chat_app/core/utils/app_util.dart';
+import 'package:chat_app/view/widgets/custom_box.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -128,17 +129,20 @@ class ChatPage extends StatelessWidget {
             },
             child: GetBuilder<ProfileViewModel>(
               builder: (controller) {
-                return AppUtil.checkIsNull(
-                        FirebaseAuth.instance.currentUser!.photoURL)
-                    ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                        trBackground: true, width: 40, height: 40)
-                    : CustomImage(
-                        FirebaseAuth.instance.currentUser!.photoURL!,
-                        imageType: ImageType.network,
-                        width: 40,
-                        height: 40,
-                        radius: 100,
-                      );
+                return CustomBox(
+                  padding: 1,
+                  child: AppUtil.checkIsNull(
+                          FirebaseAuth.instance.currentUser!.photoURL)
+                      ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                          trBackground: true, width: 40, height: 40)
+                      : CustomImage(
+                          FirebaseAuth.instance.currentUser!.photoURL!,
+                          imageType: ImageType.network,
+                          width: 40,
+                          height: 40,
+                          radius: 100,
+                        ),
+                );
               },
             ),
           ),
