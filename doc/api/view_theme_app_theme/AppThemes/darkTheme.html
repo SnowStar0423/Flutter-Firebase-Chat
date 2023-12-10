@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the darkTheme property from the AppThemes class, for the Dart programming language.">
+  <title>darkTheme property - AppThemes class - app_theme library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">chat_app</a></li>
+    <li><a href="../../view_theme_app_theme/view_theme_app_theme-library.html">app_theme</a></li>
+    <li><a href="../../view_theme_app_theme/AppThemes-class.html">AppThemes</a></li>
+    <li class="self-crumb">darkTheme property</li>
+  </ol>
+  <div class="self-name">darkTheme</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="view_theme_app_theme&#47;AppThemes-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-property">darkTheme</span> property 
+</h1></div>
+
+        <section class="multi-line-signature">
+          
+          <a href="https://api.flutter.dev/flutter/material/ThemeData-class.html">ThemeData</a>
+          <span class="name ">darkTheme</span>
+          <div class="features"><span class="feature">final</span></div>
+
+        </section>
+        
+<section class="desc markdown">
+  <p>NAME         SIZE  WEIGHT  SPACING
+headline1    96.0  light   -1.5
+headline2    60.0  light   -0.5
+headline3    48.0  regular  0.0
+headline4    34.0  regular  0.25
+headline5    24.0  regular  0.0
+headline6    20.0  medium   0.15
+subtitle1    16.0  regular  0.15
+subtitle2    14.0  medium   0.1
+body1        16.0  regular  0.5   (bodyText1)
+body2        14.0  regular  0.25  (bodyText2)
+button       14.0  medium   1.25
+caption      12.0  regular  0.4
+overline     10.0  regular  1.5</p>
+</section>
+
+        
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static final darkTheme = ThemeData(
+  fontFamily: &#39;khmer-battambang&#39;,
+  brightness: Brightness.dark,
+  primaryColor: AppColor.primary,
+  primarySwatch: AppColor.primarySwatch,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xFF1e1e1e),
+    titleTextStyle: TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.w600,
+      color: Colors.white,
+    ),
+    iconTheme: IconThemeData(color: Colors.white),
+    shadowColor: Colors.grey,
+  ),
+  textTheme: const TextTheme(
+    titleLarge: TextStyle(
+      fontSize: 18,
+      color: Colors.white,
+      fontWeight: FontWeight.w600,
+    ),
+    headlineSmall: TextStyle(
+      fontSize: 20,
+      color: Colors.white,
+      fontWeight: FontWeight.w600,
+    ),
+    headlineMedium: TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+      fontWeight: FontWeight.w600,
+    ),
+    displaySmall: TextStyle(
+      fontSize: 24,
+      color: Colors.white,
+      fontWeight: FontWeight.w600,
+    ),
+    displayMedium: TextStyle(
+      fontSize: 30,
+      color: Colors.white,
+      fontWeight: FontWeight.w600,
+    ),
+    displayLarge: TextStyle(
+      fontSize: 40,
+      color: Colors.white,
+      fontWeight: FontWeight.w600,
+    ),
+    titleMedium: TextStyle(
+      color: Colors.grey,
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+    ),
+    titleSmall: TextStyle(
+      color: Colors.grey,
+      fontSize: 13,
+      fontWeight: FontWeight.w500,
+    ),
+    bodySmall: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 16,
+      color: Colors.white,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 14,
+      color: Colors.white,
+    ),
+  ),
+  scaffoldBackgroundColor: const Color(0xFF1e1e1e),
+  shadowColor: Colors.grey,
+  cardColor: const Color(0xFF333333),
+  dividerColor: Colors.white30,
+  iconTheme: const IconThemeData(color: Colors.white),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Color(0xFF333333),
+  ),
+  cupertinoOverrideTheme: const CupertinoThemeData(
+    textTheme: CupertinoTextThemeData(
+      textStyle: TextStyle(color: Colors.white),
+    ),
+  ),
+);</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">chat_app</a></li>
+    <li><a href="../../view_theme_app_theme/view_theme_app_theme-library.html">app_theme</a></li>
+    <li><a href="../../view_theme_app_theme/AppThemes-class.html">AppThemes</a></li>
+    <li class="self-crumb">darkTheme property</li>
+</ol>
+
+
+    <h5>AppThemes class</h5>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    chat_app
+      1.0.10+11
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

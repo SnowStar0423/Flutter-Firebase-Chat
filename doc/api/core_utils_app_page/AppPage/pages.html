@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the pages property from the AppPage class, for the Dart programming language.">
+  <title>pages property - AppPage class - app_page library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">chat_app</a></li>
+    <li><a href="../../core_utils_app_page/core_utils_app_page-library.html">app_page</a></li>
+    <li><a href="../../core_utils_app_page/AppPage-class.html">AppPage</a></li>
+    <li class="self-crumb">pages property</li>
+  </ol>
+  <div class="self-name">pages</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="core_utils_app_page&#47;AppPage-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-property">pages</span> property 
+</h1></div>
+
+        <section class="multi-line-signature">
+          
+          <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/get/4.6.5/get_navigation_src_routes_get_route/GetPage-class.html">GetPage</a></span>&gt;</span>
+          <span class="name ">pages</span>
+          <div class="features"><span class="feature">final</span></div>
+
+        </section>
+        
+
+        
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static final List&lt;GetPage&gt; pages = [
+  GetPage(name: AppRoute.rootPage, page: () =&gt; const RootPage()),
+  GetPage(name: AppRoute.loginPage, page: () =&gt; const LoginPage()),
+  GetPage(name: AppRoute.registerPage, page: () =&gt; const RegisterPage()),
+  GetPage(name: AppRoute.chatPage, page: () =&gt; ChatPage()),
+  GetPage(name: AppRoute.chatRoomPage, page: () =&gt; const ChatRoomPage()),
+  GetPage(name: AppRoute.changeThemePage, page: () =&gt; ChangeThemePage()),
+  GetPage(
+    name: AppRoute.forgotPasswordPage,
+    page: () =&gt; const ForgotPasswordPage(),
+    fullscreenDialog: true,
+    transition: Transition.fade,
+  ),
+  GetPage(
+      name: AppRoute.editProfilePage, page: () =&gt; const EditProfilePage()),
+  GetPage(
+    name: AppRoute.settingPage,
+    page: () =&gt; SettingPage(),
+    fullscreenDialog: true,
+    transition: Transition.fade,
+  ),
+  GetPage(
+    name: AppRoute.userPage,
+    page: () =&gt; const UserPage(),
+    fullscreenDialog: true,
+    transition: Transition.fade,
+  ),
+];</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">chat_app</a></li>
+    <li><a href="../../core_utils_app_page/core_utils_app_page-library.html">app_page</a></li>
+    <li><a href="../../core_utils_app_page/AppPage-class.html">AppPage</a></li>
+    <li class="self-crumb">pages property</li>
+</ol>
+
+
+    <h5>AppPage class</h5>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    chat_app
+      1.0.10+11
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
