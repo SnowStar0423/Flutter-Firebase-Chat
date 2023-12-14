@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:chat_app/view/pages/chat_page.dart';
-import 'package:chat_app/view/pages/login_page.dart';
+import 'package:chat_app/view/pages/authentication/login_page.dart';
+import 'package:chat_app/view/pages/chat/chat_page.dart';
 import 'package:chat_app/viewmodel/chat_user_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/core/service/notification_service.dart';
 import 'package:chat_app/core/utils/app_global.dart';

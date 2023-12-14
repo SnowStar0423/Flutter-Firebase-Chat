@@ -1,4 +1,5 @@
 import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/view/widgets/custom_box.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -79,16 +80,19 @@ class SettingPage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
-            ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                trBackground: true, width: 70, height: 70)
-            : CustomImage(
-                FirebaseAuth.instance.currentUser!.photoURL!,
-                imageType: ImageType.network,
-                width: 70,
-                height: 70,
-                radius: 100,
-              )
+        CustomBox(
+          child:
+              AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
+                  ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                      trBackground: true, width: 70, height: 70)
+                  : CustomImage(
+                      FirebaseAuth.instance.currentUser!.photoURL!,
+                      imageType: ImageType.network,
+                      width: 70,
+                      height: 70,
+                      radius: 100,
+                    ),
+        )
       ],
     );
   }

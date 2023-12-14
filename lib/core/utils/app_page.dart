@@ -1,15 +1,15 @@
-import 'package:chat_app/view/pages/change_theme_page.dart';
-import 'package:chat_app/view/pages/chat_page.dart';
-import 'package:chat_app/view/pages/edit_profile_page.dart';
-import 'package:chat_app/view/pages/forgot_password_page.dart';
-import 'package:chat_app/view/pages/login_page.dart';
-import 'package:chat_app/view/pages/register_page.dart';
+import 'package:chat_app/view/pages/authentication/forgot_password_page.dart';
+import 'package:chat_app/view/pages/authentication/login_page.dart';
+import 'package:chat_app/view/pages/authentication/register_page.dart';
+import 'package:chat_app/view/pages/chat/chat_page.dart';
+import 'package:chat_app/view/pages/chat/chat_room_page.dart';
+import 'package:chat_app/view/pages/chat/user_page.dart';
 import 'package:chat_app/view/pages/root_page.dart';
-import 'package:chat_app/view/pages/setting_page.dart';
-import 'package:chat_app/view/pages/user_page.dart';
+import 'package:chat_app/view/pages/setting/change_theme_page.dart';
+import 'package:chat_app/view/pages/setting/edit_profile_page.dart';
+import 'package:chat_app/view/pages/setting/setting_page.dart';
 import 'package:get/get.dart';
 
-import 'package:chat_app/view/pages/chat_room_page.dart';
 import 'package:chat_app/core/utils/app_route.dart';
 
 class AppPage {
