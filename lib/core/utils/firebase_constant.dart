@@ -42,6 +42,7 @@ class ChatMessageConstant {
   static const timestamp = 'timestamp';
   static const content = 'content';
   static const type = 'type';
+  static const imageUrl = 'imageUrl';
 }
 
 class FeedbackConstant {

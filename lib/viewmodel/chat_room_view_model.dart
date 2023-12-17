@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/core/service/chat_service.dart';
@@ -10,6 +11,7 @@ import 'package:chat_app/core/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:chat_app/model/chat_message.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatRoomViewModel extends GetxController {
   ChatRoomViewModel(
@@ -24,10 +26,12 @@ class ChatRoomViewModel extends GetxController {
   final RxBool _loadingMessages = false.obs;
   final RxBool _isBlockedPeer = false.obs;
   final RxBool _isBlocked = false.obs;
+
   String _message = "";
   DocumentSnapshot? lastdocumentSnapshot;
   RxList<ChatMessage> chatMessages = <ChatMessage>[].obs;
   bool _moreMessagesAvailable = true;
+  late final ImagePicker _imagePicker;
 
   bool get isBlockedPeer => _isBlockedPeer.value;
   set isBlockedPeer(value) => _isBlockedPeer.value = value;
@@ -46,6 +50,12 @@ class ChatRoomViewModel extends GetxController {
   StreamSubscription? loadMoreChatMessagesListener;
   StreamSubscription? loadChatMessagesListener;
   StreamSubscription? checkIsUserBlockedListener;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _imagePicker = ImagePicker();
+  }
 
   @override
   onClose() {
@@ -263,5 +273,24 @@ class ChatRoomViewModel extends GetxController {
   Stream<DocumentSnapshot<Map<String, dynamic>>> loadPeerOnlineStatus(
       String peerId) {
     return userService.loadUserOnlineStatus(peerId);
+  }
+
+  bool _browsingImage = false;
+  browseImage() async {
+    if (_browsingImage) return;
+    _browsingImage = true;
+
+    try {
+      final pickedFile =
+          await _imagePicker.pickImage(source: ImageSource.gallery);
+      if (!AppUtil.checkIsNull(pickedFile?.path)) {
+        var _selectedImage = File(pickedFile!.path);
+        AppUtil.debugPrint(pickedFile!.path);
+      }
+    } catch (e) {
+      AppUtil.debugPrint(e);
+    } finally {
+      _browsingImage = false;
+    }
   }
 }

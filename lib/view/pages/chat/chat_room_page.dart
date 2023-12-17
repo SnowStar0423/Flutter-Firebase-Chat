@@ -14,6 +14,11 @@ import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/view/widgets/chat_room_item.dart';
 import 'package:chat_app/view/widgets/custom_textfield.dart';
 
+enum MessageType {
+  text,
+  image,
+}
+
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key});
 
@@ -49,8 +54,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       _groupChatId =
           _chatRoomViewModel.generateGroupChatId(currentUserId, _peer.id);
 
-      // _chatRoomViewModel.checkIsBlocked(
-      //     currentUserId: currentUserId, peerId: _peer.id);
       _chatRoomViewModel.checkIsUserBlocked(
           currentUserId: currentUserId, peerId: _peer.id);
       _chatRoomViewModel.loadMessages(_groupChatId);
@@ -63,6 +66,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
             currentUserId: currentUserId, peerId: _peer.id);
       }
     }
+
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >
           (_scrollController.position.maxScrollExtent * 0.7)) {
@@ -87,10 +91,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                 ),
                 child: _buildChats(),
               ),
-              // body: SingleChildScrollView(
-              //   padding: const EdgeInsets.only(top: 15, bottom: 70),
-              //   child: _buildChats(),
-              // ),
               floatingActionButton: _buildFooter(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniCenterDocked,
@@ -211,28 +211,53 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       child: Obx(
         () => _chatRoomViewModel.isBlockedPeer || _chatRoomViewModel.isBlocked
             ? _buildCheckBlocked()
-            : _buildSendMessageBlcok(),
+            : _SendMessageBlock(
+                groupChatId: _groupChatId,
+                peer: _peer,
+                messageController: _messageController,
+              ),
       ),
     );
   }
 
-  _buildSendMessageBlcok() {
+  _buildCheckBlocked() {
+    if (_chatRoomViewModel.isBlockedPeer) {
+      return _UnblockButton(peer: _peer);
+    }
+    return const SizedBox();
+  }
+}
+
+class _SendMessageBlock extends StatelessWidget {
+  _SendMessageBlock(
+      {required this.groupChatId,
+      required this.peer,
+      required this.messageController});
+  final _chatRoomViewModel = Get.find<ChatRoomViewModel>();
+  final String groupChatId;
+  final ChatUser peer;
+  final TextEditingController messageController;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
-        // IconButton(
-        //   onPressed: () {},
-        //   icon: const Icon(
-        //     Icons.add,
-        //     color: AppColor.primary,
-        //     size: 30,
-        //   ),
-        // ),
-        const SizedBox(
-          width: 20,
+        IconButton(
+          onPressed: () async {
+            _chatRoomViewModel.browseImage();
+          },
+          icon: const Icon(
+            Icons.image_outlined,
+            color: AppColor.primary,
+            size: 30,
+          ),
         ),
+        // const SizedBox(
+        //   width: 20,
+        // ),
         Expanded(
           child: CustomTextField(
-            controller: _messageController,
+            controller: messageController,
             maxLines: 5,
             hintText: "Write your message",
           ),
@@ -241,16 +266,16 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           onPressed: () async {
             final res =
                 await _chatRoomViewModel.sendChatMessageWithPushNotification(
-                    content: _messageController.text,
+                    content: messageController.text,
                     type: ChatMessageType.text,
-                    groupChatId: _groupChatId,
+                    groupChatId: groupChatId,
                     currentUser: AppGlobal().firebaseUserToChatUser(
                         FirebaseAuth.instance.currentUser!),
-                    peer: _peer);
+                    peer: peer);
             if (!res) {
               AppUtil.showSnackBar("failed to send a message");
             }
-            _messageController.clear();
+            messageController.clear();
           },
           icon: Icon(
             Icons.send_rounded,
@@ -261,22 +286,23 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       ],
     );
   }
+}
 
-  _buildCheckBlocked() {
-    if (_chatRoomViewModel.isBlockedPeer) {
-      return _buildUnblockButton();
-    }
-    return const SizedBox();
-  }
+class _UnblockButton extends StatelessWidget {
+  _UnblockButton({required this.peer});
+  final ChatUser peer;
 
-  _buildUnblockButton() {
+  final _chatRoomViewModel = Get.find<ChatRoomViewModel>();
+
+  @override
+  Widget build(BuildContext context) {
     return Row(children: [
       Expanded(
         child: TextButton(
           onPressed: () {
             _chatRoomViewModel.toggleBlockPeer(
                 currentUserId: FirebaseAuth.instance.currentUser!.uid,
-                peerId: _peer.id);
+                peerId: peer.id);
           },
           child: const Text(
             "Unblock",

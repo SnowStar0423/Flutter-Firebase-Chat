@@ -11,14 +11,15 @@ class ChatMessage {
   late String timestamp;
   late String content;
   late String type;
+  String? imageUrl;
 
-  ChatMessage({
-    required this.idFrom,
-    required this.idTo,
-    required this.timestamp,
-    required this.content,
-    required this.type,
-  });
+  ChatMessage(
+      {required this.idFrom,
+      required this.idTo,
+      required this.timestamp,
+      required this.content,
+      required this.type,
+      this.imageUrl});
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -27,6 +28,7 @@ class ChatMessage {
       ChatMessageConstant.timestamp: timestamp,
       ChatMessageConstant.content: content,
       ChatMessageConstant.type: type,
+      ChatMessageConstant.imageUrl: imageUrl,
     };
   }
 
@@ -36,5 +38,8 @@ class ChatMessage {
         timestamp: map[ChatMessageConstant.timestamp],
         content: map[ChatMessageConstant.content],
         type: map[ChatMessageConstant.type],
+        imageUrl: map.containsKey(ChatMessageConstant.imageUrl)
+            ? map[ChatMessageConstant.type]
+            : null,
       );
 }
