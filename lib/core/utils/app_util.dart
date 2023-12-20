@@ -24,12 +24,14 @@ class AppUtil {
   /// shows snackbar with [message]
   static void showSnackBar(String message, {int duration = 2}) {
     BuildContext context = Get.context!;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: duration),
-      ),
-    );
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: duration),
+        ),
+      );
   }
 
   /// format DateTime [dt] to string time ago
