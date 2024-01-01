@@ -120,7 +120,7 @@ class ChatRoomViewModel extends GetxController {
 
   Future<bool> sendChatMessage(
       {required String content,
-      required String type,
+      required ChatMessageType type,
       required String groupChatId,
       required String currentUserId,
       required String peerId}) async {
@@ -147,7 +147,7 @@ class ChatRoomViewModel extends GetxController {
 
   Future<bool> sendChatMessageWithPushNotification(
       {required String content,
-      required String type,
+      required ChatMessageType type,
       required String groupChatId,
       required ChatUser currentUser,
       required ChatUser peer}) async {

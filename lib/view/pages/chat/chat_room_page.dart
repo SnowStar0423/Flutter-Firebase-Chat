@@ -14,11 +14,6 @@ import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/view/widgets/chat_room_item.dart';
 import 'package:chat_app/view/widgets/custom_textfield.dart';
 
-enum MessageType {
-  text,
-  image,
-}
-
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key});
 

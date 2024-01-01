@@ -10,7 +10,7 @@ class ChatService {
 
   sendChatMessage(
       {required String content,
-      required String type,
+      required ChatMessageType type,
       required String groupChatId,
       required String currentUserId,
       required String peerId}) async {

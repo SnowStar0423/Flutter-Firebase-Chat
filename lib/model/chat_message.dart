@@ -1,8 +1,18 @@
 import 'package:chat_app/core/utils/firebase_constant.dart';
 
-class ChatMessageType {
-  static const String text = "text";
-  static const String image = "image";
+// class ChatMessageType {
+//   static const String text = "text";
+//   static const String image = "image";
+// }
+
+enum ChatMessageType {
+  text('text'),
+  image('image');
+
+  final String value;
+  const ChatMessageType(this.value);
+  factory ChatMessageType.fromString(String s) =>
+      s == "image" ? ChatMessageType.image : ChatMessageType.text;
 }
 
 class ChatMessage {
@@ -10,7 +20,7 @@ class ChatMessage {
   late String idTo;
   late String timestamp;
   late String content;
-  late String type;
+  late ChatMessageType type;
   String? imageUrl;
 
   ChatMessage(
@@ -27,7 +37,7 @@ class ChatMessage {
       ChatMessageConstant.idTo: idTo,
       ChatMessageConstant.timestamp: timestamp,
       ChatMessageConstant.content: content,
-      ChatMessageConstant.type: type,
+      ChatMessageConstant.type: type.value,
       ChatMessageConstant.imageUrl: imageUrl,
     };
   }
@@ -37,7 +47,7 @@ class ChatMessage {
         idTo: map[ChatMessageConstant.idTo],
         timestamp: map[ChatMessageConstant.timestamp],
         content: map[ChatMessageConstant.content],
-        type: map[ChatMessageConstant.type],
+        type: ChatMessageType.fromString(map[ChatMessageConstant.type]),
         imageUrl: map.containsKey(ChatMessageConstant.imageUrl)
             ? map[ChatMessageConstant.type]
             : null,
