@@ -10,8 +10,8 @@ environment:
 
 dependencies:
   badges: ^3.0.3
-  cached_network_image: ^3.2.3
-  cloud_firestore: ^4.4.5
+  cached_network_image:
+  cloud_firestore: ^4.14.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   firebase_analytics: 
@@ -27,9 +27,9 @@ dependencies:
     sdk: flutter
   get: ^4.6.5
   get_storage: ^2.1.1
-  image_picker: ^0.8.7+1
+  image_picker: ^1.0.7
   # intl: any
-  lottie: ^2.3.2
+  lottie: ^3.0.0
   random_avatar: ^0.0.7
   rounded_loading_button: ^2.1.0
   share_plus: ^7.0.2
@@ -41,7 +41,7 @@ dependency_overrides:
 dev_dependencies:
   fake_cloud_firestore: any
   firebase_auth_mocks: any
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
   mockito: any
