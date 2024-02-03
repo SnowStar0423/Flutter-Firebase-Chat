@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class NotifyBox extends StatelessWidget {
   const NotifyBox(
-      {Key? key,
+      {super.key,
       required this.number,
       this.boxSize = 30,
-      this.color = Colors.red})
-      : super(key: key);
+      this.color = Colors.red});
   final int number;
   final double boxSize;
   final Color color;

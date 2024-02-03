@@ -81,7 +81,7 @@ class CustomImage extends StatelessWidget {
 }
 
 class BlankImageWidget extends StatelessWidget {
-  const BlankImageWidget({Key? key}) : super(key: key);
+  const BlankImageWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

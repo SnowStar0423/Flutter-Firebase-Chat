@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 
 class CustomBox extends StatelessWidget {
   const CustomBox(
-      {Key? key,
+      {super.key,
       required this.child,
       this.bgColor,
       this.borderColor = Colors.transparent,
       this.radius = 50,
       this.isShadow = true,
-      this.padding = 5})
-      : super(key: key);
+      this.padding = 5});
   final Widget child;
   final Color borderColor;
   final Color? bgColor;

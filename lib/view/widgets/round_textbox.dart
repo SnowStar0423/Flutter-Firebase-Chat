@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class RoundTextBox extends StatelessWidget {
   const RoundTextBox({
     this.controller,
-    Key? key,
+    super.key,
     this.keyboardType,
     this.onTap,
     this.onChanged,
     this.height = 45,
     this.readOnly = false,
     this.autofocus = false,
-  }) : super(key: key);
+  });
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final GestureTapCallback? onTap;

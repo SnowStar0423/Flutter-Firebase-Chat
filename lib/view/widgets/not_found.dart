@@ -4,8 +4,8 @@ import 'package:chat_app/core/utils/app_asset.dart';
 
 class NotFound extends StatelessWidget {
   const NotFound({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

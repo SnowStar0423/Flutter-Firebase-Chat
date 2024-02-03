@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/core/service/chat_service.dart';
@@ -284,7 +283,7 @@ class ChatRoomViewModel extends GetxController {
       final pickedFile =
           await _imagePicker.pickImage(source: ImageSource.gallery);
       if (!AppUtil.checkIsNull(pickedFile?.path)) {
-        var _selectedImage = File(pickedFile!.path);
+        // var selectedImage = File(pickedFile!.path);
         AppUtil.debugPrint(pickedFile!.path);
       }
     } catch (e) {

@@ -10,13 +10,12 @@ import 'package:chat_app/view/widgets/notify_box.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem(
-      {Key? key,
+      {super.key,
       required this.recentUserChat,
       this.onTap,
       this.isNotified = true,
       this.notifiedNumber = 0,
-      this.profileSize = 50})
-      : super(key: key);
+      this.profileSize = 50});
   final RecentUserChat recentUserChat;
   final bool isNotified;
   final GestureTapCallback? onTap;

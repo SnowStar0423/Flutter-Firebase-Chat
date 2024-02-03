@@ -9,12 +9,11 @@ class CustomDialogBox extends StatelessWidget {
   final String? img;
 
   const CustomDialogBox(
-      {Key? key,
+      {super.key,
       this.title = "Message",
       this.descriptions = "",
       this.text = "Ok",
-      this.img})
-      : super(key: key);
+      this.img});
 
   @override
   Widget build(BuildContext context) {

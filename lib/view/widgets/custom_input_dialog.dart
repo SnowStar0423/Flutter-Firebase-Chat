@@ -53,7 +53,7 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
             const Divider(),
             TextField(
               controller: _textEditingController,
-              maxLines: 7,
+              maxLines: 5,
               decoration: InputDecoration(hintText: widget.hint),
             ),
             const SizedBox(

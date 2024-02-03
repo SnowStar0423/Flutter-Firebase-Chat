@@ -7,8 +7,7 @@ import 'package:chat_app/view/widgets/custom_image.dart';
 
 class ChatUserItem extends StatelessWidget {
   const ChatUserItem(
-      {Key? key, required this.user, this.onTap, this.profileSize = 50})
-      : super(key: key);
+      {super.key, required this.user, this.onTap, this.profileSize = 50});
   final ChatUser user;
   final GestureTapCallback? onTap;
   final double profileSize;

@@ -13,10 +13,10 @@ class AppLifecycleTracker extends StatefulWidget {
   final void Function(AppState state) didChangeAppState;
 
   const AppLifecycleTracker({
-    Key? key,
+    super.key,
     required this.didChangeAppState,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<AppLifecycleTracker> createState() => _AppLifecycleTrackerState();

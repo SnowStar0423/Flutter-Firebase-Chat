@@ -9,13 +9,12 @@ class SettingItem extends StatelessWidget {
   final GestureTapCallback? onTap;
   final Widget? trailing;
   const SettingItem(
-      {Key? key,
+      {super.key,
       required this.title,
       this.onTap,
       this.leadingIcon,
       this.leadingIconColor = Colors.white,
-      this.trailing})
-      : super(key: key);
+      this.trailing});
 
   @override
   Widget build(BuildContext context) {

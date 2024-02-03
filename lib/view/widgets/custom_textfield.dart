@@ -16,7 +16,7 @@ class CustomTextField extends StatelessWidget {
   final GestureTapCallback? onTap;
   final ValueChanged<String>? onChanged;
   const CustomTextField({
-    Key? key,
+    super.key,
     this.onTap,
     this.onChanged,
     this.keyboardType,
@@ -31,7 +31,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.minLines = 1,
     this.maxLines = 1,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

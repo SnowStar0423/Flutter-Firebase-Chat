@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoomBox extends StatelessWidget {
-  ChatRoomBox({Key? key, required this.message}) : super(key: key);
+  ChatRoomBox({super.key, required this.message});
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final ChatMessage message;
 

@@ -3,7 +3,7 @@ import 'package:chat_app/view/theme/app_color.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton(
-      {Key? key,
+      {super.key,
       required this.onTap,
       this.title = "",
       this.fsize = 14,
@@ -14,8 +14,7 @@ class CustomButton extends StatelessWidget {
       this.disableButton = false,
       this.isLoading = false,
       this.radius = 10,
-      this.textColor = Colors.white})
-      : super(key: key);
+      this.textColor = Colors.white});
   final GestureTapCallback onTap;
   final String title;
   final double fsize;
