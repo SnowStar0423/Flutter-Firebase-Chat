@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum AppState {
-  opened, // <--
+  opened,
   resumed,
   paused,
   inactive,

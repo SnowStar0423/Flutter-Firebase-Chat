@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:chat_app/model/chat_user.dart';
-import 'package:chat_app/core/service/chat_service.dart';
-import 'package:chat_app/core/service/push_notification_service.dart';
-import 'package:chat_app/core/service/report_service.dart';
-import 'package:chat_app/core/service/user_service.dart';
+import 'package:chat_app/core/services/chat_service.dart';
+import 'package:chat_app/core/services/push_notification_service.dart';
+import 'package:chat_app/core/services/report_service.dart';
+import 'package:chat_app/core/services/user_service.dart';
 import 'package:chat_app/core/utils/app_message.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

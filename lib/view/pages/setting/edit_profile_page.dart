@@ -1,5 +1,5 @@
 import 'package:badges/badges.dart' as badges;
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

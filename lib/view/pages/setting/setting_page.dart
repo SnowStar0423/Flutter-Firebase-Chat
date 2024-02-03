@@ -1,4 +1,4 @@
-import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/router/app_route.dart';
 import 'package:chat_app/model/locale_model.dart';
 import 'package:chat_app/view/widgets/custom_box.dart';
 import 'package:chat_app/viewmodel/locale_view_model.dart';
@@ -12,7 +12,7 @@ import 'package:chat_app/core/utils/app_constant.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:chat_app/viewmodel/profile_view_model.dart';
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';
 import 'package:chat_app/view/widgets/custom_input_dialog.dart';
 import 'package:chat_app/view/widgets/settting_item.dart';
@@ -109,7 +109,7 @@ class SettingPage extends StatelessWidget {
           SettingItem(
             title: AppLocalizations.of(context)!.editProfile,
             leadingIcon: Icons.person,
-            leadingIconColor: AppColor.darker,
+            leadingIconColor: Theme.of(context).iconTheme.color,
             trailing: const Icon(
               Icons.arrow_forward_ios,
               size: 14,
@@ -141,18 +141,7 @@ class SettingPage extends StatelessWidget {
               size: 14,
             ),
             onTap: () {
-              List<LocaleModel> languages = [
-                LocaleModel(
-                    code: 'en', name: AppLocalizations.of(context)!.english),
-                LocaleModel(
-                    code: 'es', name: AppLocalizations.of(context)!.spanish)
-              ];
-              var selectedLocale = Localizations.localeOf(context).toString();
-              AppUtil.showCupertinoSelection(context, selectedLocale, languages)
-                  .then((value) {
-                _localeViewModel.set(Locale(value));
-                AppUtil.debugPrint(value);
-              });
+              _onChangeLanguage(context);
             },
           ),
           const SizedBox(height: 10),
@@ -165,7 +154,7 @@ class SettingPage extends StatelessWidget {
               size: 14,
             ),
             onTap: () {
-              _showDialog(context);
+              _onFeedback(context);
             },
           ),
           const SizedBox(height: 10),
@@ -216,7 +205,23 @@ class SettingPage extends StatelessWidget {
     );
   }
 
-  _showDialog(context) {
+  _onChangeLanguage(BuildContext context) {
+    List<LocaleModel> languages = [
+      LocaleModel(
+          languageCode: 'en', name: AppLocalizations.of(context)!.english),
+      LocaleModel(
+          languageCode: 'es', name: AppLocalizations.of(context)!.spanish)
+    ];
+    AppUtil.showCupertinoSelection(
+      context,
+      Localizations.localeOf(context).languageCode,
+      languages,
+    ).then((code) {
+      _localeViewModel.setLocale(Locale(code));
+    });
+  }
+
+  _onFeedback(context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

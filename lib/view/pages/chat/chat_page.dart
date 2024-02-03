@@ -1,6 +1,6 @@
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
-import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/router/app_route.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/view/widgets/custom_box.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';

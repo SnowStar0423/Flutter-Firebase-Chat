@@ -8,9 +8,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:chat_app/model/chat_user.dart';
-import 'package:chat_app/core/service/notification_service.dart';
+import 'package:chat_app/core/services/notification_service.dart';
 import 'package:chat_app/core/utils/app_global.dart';
-import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/router/app_route.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/core/utils/firebase_constant.dart';
 import 'package:chat_app/core/utils/app_lifecycle_tracker.dart';
@@ -45,7 +45,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    _checkAppState(AppGlobal().appState ?? AppState.opened);
+    _checkAppState(AppGlobal.instance.appState ?? AppState.opened);
   }
 
   _checkAppState(AppState state) {
@@ -91,7 +91,7 @@ class _RootPageState extends State<RootPage> with WidgetsBindingObserver {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: ((context, snapshot) {
         if (snapshot.hasData) {
-          _checkAppState(AppGlobal().appState ?? AppState.opened);
+          _checkAppState(AppGlobal.instance.appState ?? AppState.opened);
           return ChatPage();
         } else {
           return const LoginPage();

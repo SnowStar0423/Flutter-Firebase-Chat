@@ -1,12 +1,13 @@
-import 'package:chat_app/core/service/auth_service.dart';
-import 'package:chat_app/core/service/user_service.dart';
+import 'package:chat_app/core/services/auth_service.dart';
+import 'package:chat_app/core/services/user_service.dart';
 import 'package:chat_app/core/utils/app_global.dart';
 import 'package:chat_app/core/utils/firebase_constant.dart';
+import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:chat_app/core/service/analytics_service.dart';
+import 'package:chat_app/core/services/analytics_service.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 
 class AuthViewModel extends GetxController {
@@ -43,7 +44,9 @@ class AuthViewModel extends GetxController {
       final res = await authService.signInWithEmailPassword(
           email: email, password: password);
       AppUtil.debugPrint(res.user);
-      userService.addUser(AppGlobal().firebaseUserToChatUser(res.user!));
+      userService.addUser(
+        ChatUser.fromFirebaseUser(res.user!, AppGlobal.instance.deviceToken),
+      );
       message = _local.successfullyLoggedIn;
       _analyticsService.setUserProperties(userId: authService.currentUser!.uid);
       _analyticsService.logLogin();
@@ -70,7 +73,11 @@ class AuthViewModel extends GetxController {
       AppUtil.debugPrint(res.user);
       if (res.user != null) {
         userService.addUser(
-            AppGlobal().firebaseUserToChatUser(authService.currentUser!));
+          ChatUser.fromFirebaseUser(
+            authService.currentUser!,
+            AppGlobal.instance.deviceToken,
+          ),
+        );
       }
       message = _local.successfullyRegistered;
 

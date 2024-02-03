@@ -1,6 +1,6 @@
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/core/utils/app_util.dart';
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';

@@ -1,5 +1,5 @@
 import 'package:chat_app/core/utils/app_asset.dart';
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialogBox extends StatelessWidget {

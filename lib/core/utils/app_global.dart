@@ -1,30 +1,17 @@
-import 'package:chat_app/model/chat_user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:chat_app/core/utils/app_lifecycle_tracker.dart';
 
-/// singleton class accessible across the app
+/// singleton class which is accessible across the app and shares the same state
 class AppGlobal {
-  String? _deviceToken;
-  AppState? appState;
-  static final AppGlobal _instance = AppGlobal._internal();
-
+  static final AppGlobal instance = AppGlobal._internal();
   AppGlobal._internal();
 
-  factory AppGlobal() {
-    return _instance;
-  }
+  AppState? _appState;
+  // ignore: unnecessary_getters_setters
+  AppState? get appState => _appState;
+  set appState(AppState? state) => _appState = state;
+
+  String? _deviceToken;
   // ignore: unnecessary_getters_setters
   String? get deviceToken => _deviceToken;
   set deviceToken(String? token) => _deviceToken = token;
-
-  ChatUser firebaseUserToChatUser(User firebaseUser) {
-    return ChatUser(
-      id: firebaseUser.uid,
-      displayName: firebaseUser.displayName!,
-      photoUrl: firebaseUser.photoURL,
-      phoneNumber: firebaseUser.phoneNumber,
-      deviceToken: deviceToken,
-    );
-  }
 }

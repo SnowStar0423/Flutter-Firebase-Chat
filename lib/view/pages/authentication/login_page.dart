@@ -1,7 +1,7 @@
 import 'package:chat_app/core/utils/app_asset.dart';
-import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/router/app_route.dart';
 import 'package:chat_app/core/utils/app_util.dart';
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

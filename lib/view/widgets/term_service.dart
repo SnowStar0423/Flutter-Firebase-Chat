@@ -1,6 +1,6 @@
 import 'package:chat_app/core/utils/app_message.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 import 'package:chat_app/view/widgets/custom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

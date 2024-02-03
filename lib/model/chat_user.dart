@@ -1,5 +1,6 @@
 import 'package:chat_app/core/utils/firebase_constant.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // ignore: must_be_immutable
 class ChatUser extends Equatable {
@@ -41,6 +42,16 @@ class ChatUser extends Equatable {
       ChatUserConstant.deviceToken: deviceToken,
       ChatUserConstant.onlineStatus: onlineStatus,
     };
+  }
+
+  factory ChatUser.fromFirebaseUser(User firebaseUser, String? deviceToken) {
+    return ChatUser(
+      id: firebaseUser.uid,
+      displayName: firebaseUser.displayName!,
+      photoUrl: firebaseUser.photoURL,
+      phoneNumber: firebaseUser.phoneNumber,
+      deviceToken: deviceToken,
+    );
   }
 
   factory ChatUser.fromJson(Map<String, dynamic> map) {

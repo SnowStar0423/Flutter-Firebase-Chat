@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:chat_app/firebase_options.dart';
-import 'package:chat_app/core/service/notification_service.dart';
+import 'package:chat_app/core/services/notification_service.dart';
 import 'package:chat_app/core/utils/app_constant.dart';
 import 'package:chat_app/core/utils/app_controller.dart';
 import 'package:chat_app/core/utils/app_global.dart';
-import 'package:chat_app/core/utils/app_page.dart';
-import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/router/app_page.dart';
+import 'package:chat_app/core/router/app_route.dart';
 import 'package:chat_app/core/utils/app_util.dart';
-import 'package:chat_app/view/theme/app_theme.dart';
+import 'package:chat_app/core/style/app_theme.dart';
 import 'package:chat_app/view/widgets/custom_error.dart';
 import 'package:chat_app/viewmodel/locale_view_model.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
@@ -17,7 +17,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:chat_app/core/service/analytics_service.dart';
+import 'package:chat_app/core/services/analytics_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:chat_app/core/utils/app_lifecycle_tracker.dart';
@@ -30,14 +30,14 @@ void main() async {
     );
     await GetStorage.init();
     _initDeviceToken();
-    AppController.init();
+    await AppController.init();
     if (!kIsWeb) {
       FlutterError.onError =
           FirebaseCrashlytics.instance.recordFlutterFatalError;
     }
     runApp(AppLifecycleTracker(
       child: const MyApp(),
-      didChangeAppState: (state) => AppGlobal().appState = state,
+      didChangeAppState: (state) => AppGlobal.instance.appState = state,
     ));
   }, (error, stack) {
     AppUtil.debugPrint(error);
@@ -49,7 +49,7 @@ void main() async {
 
 _initDeviceToken() async {
   final token = await NotificationService.getDeviceToken();
-  AppGlobal().deviceToken = token;
+  AppGlobal.instance.deviceToken = token;
   AppUtil.debugPrint("=======Token========");
   AppUtil.debugPrint(token);
   AppUtil.debugPrint("====================");
@@ -60,24 +60,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LocaleViewModel>(
-      builder: (controller) => GetMaterialApp(
-        title: AppConstant.appName,
-        debugShowCheckedModeBanner: false,
-        themeMode: ThemeViewModel.theme,
-        theme: AppThemes.lightTheme,
-        darkTheme: AppThemes.darkTheme,
-        initialRoute: AppRoute.rootPage,
-        getPages: AppPage.pages,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: controller.locale,
-        builder: (BuildContext context, Widget? widget) {
-          _initCustomErrorWidget();
-          return widget!;
-        },
-        navigatorObservers: [AnalyticsService().getAnalyticsObserver()],
-      ),
+    return GetMaterialApp(
+      title: AppConstant.appName,
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeViewModel.theme,
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
+      initialRoute: AppRoute.rootPage,
+      getPages: AppPage.pages,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Get.find<LocaleViewModel>().locale,
+      builder: (BuildContext context, Widget? widget) {
+        _initCustomErrorWidget();
+        return widget!;
+      },
+      navigatorObservers: [AnalyticsService().getAnalyticsObserver()],
     );
   }
 

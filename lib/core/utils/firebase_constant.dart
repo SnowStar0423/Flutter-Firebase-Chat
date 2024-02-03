@@ -1,8 +1,9 @@
 // ignore_for_file: unused_field
 
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 
 class FireStoreConstant {
+  FireStoreConstant._();
   static const chatCollectionPath = 'chatroom';
   static const messageCollectionPath = 'message';
   static const recentChatCollectionPath = 'recentchat';
@@ -20,6 +21,7 @@ class FireStoreConstant {
 }
 
 class ChatUserConstant {
+  ChatUserConstant._();
   static const id = 'uid';
   static const photoUrl = 'photoUrl';
   static const displayName = 'displayName';
@@ -30,6 +32,7 @@ class ChatUserConstant {
 }
 
 class UserOnlineStatus {
+  UserOnlineStatus._();
   static const online = 'online';
   static const offline = 'offline';
   static const onlineColor = AppColor.green;
@@ -37,6 +40,7 @@ class UserOnlineStatus {
 }
 
 class ChatMessageConstant {
+  ChatMessageConstant._();
   static const idFrom = 'idFrom';
   static const idTo = 'idTo';
   static const timestamp = 'timestamp';
@@ -46,6 +50,7 @@ class ChatMessageConstant {
 }
 
 class FeedbackConstant {
+  FeedbackConstant._();
   static const uid = 'uid';
   static const feedback = 'feedback';
   static const appVersion = 'appVersion';
@@ -53,6 +58,7 @@ class FeedbackConstant {
 }
 
 class UserReportConstant {
+  UserReportConstant._();
   static const userId = 'userId';
   static const reportedUserId = 'reportedUserId';
   static const content = 'content';
@@ -60,6 +66,7 @@ class UserReportConstant {
 }
 
 class UserBlcokConstant {
+  UserBlcokConstant._();
   static const userId = 'userId';
   static const peerId = 'peerId';
   static const content = 'content';
@@ -67,6 +74,7 @@ class UserBlcokConstant {
 }
 
 class NotificationConstant {
+  NotificationConstant._();
   static const type = 'type';
   static const chat = 'chat';
   static const userFrom = 'userFrom';

@@ -4,8 +4,8 @@ import 'package:random_avatar/random_avatar.dart';
 
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
-import 'package:chat_app/view/theme/app_color.dart';
-import 'package:chat_app/view/theme/app_theme.dart';
+import 'package:chat_app/core/style/app_color.dart';
+import 'package:chat_app/core/style/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChangeThemePage extends StatelessWidget {

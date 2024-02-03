@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/model/recent_user_chat.dart';
-import 'package:chat_app/core/service/chat_service.dart';
+import 'package:chat_app/core/services/chat_service.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import 'package:chat_app/model/recent_chat.dart';
-import 'package:chat_app/core/service/user_service.dart';
+import 'package:chat_app/core/services/user_service.dart';
 
 class ChatViewModel extends GetxController {
   ChatViewModel(

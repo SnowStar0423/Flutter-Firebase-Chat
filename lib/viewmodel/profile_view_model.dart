@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:chat_app/core/service/report_service.dart';
-import 'package:chat_app/core/service/user_service.dart';
+import 'package:chat_app/core/services/report_service.dart';
+import 'package:chat_app/core/services/user_service.dart';
 import 'package:chat_app/core/utils/app_global.dart';
 import 'package:chat_app/core/utils/firebase_constant.dart';
+import 'package:chat_app/model/chat_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -77,8 +78,10 @@ class ProfileViewModel extends GetxController {
 
   _saveUserProfileToFirestore() async {
     if (firebaseAuth.currentUser == null) return;
-    userService
-        .addUser(AppGlobal().firebaseUserToChatUser(firebaseAuth.currentUser!));
+    userService.addUser(ChatUser.fromFirebaseUser(
+      firebaseAuth.currentUser!,
+      AppGlobal.instance.deviceToken,
+    ));
   }
 
   void removeUserPhotoUrl() {

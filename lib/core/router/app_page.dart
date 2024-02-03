@@ -10,9 +10,10 @@ import 'package:chat_app/view/pages/setting/edit_profile_page.dart';
 import 'package:chat_app/view/pages/setting/setting_page.dart';
 import 'package:get/get.dart';
 
-import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/core/router/app_route.dart';
 
 class AppPage {
+  AppPage._();
   static final List<GetPage> pages = [
     GetPage(name: AppRoute.rootPage, page: () => const RootPage()),
     GetPage(name: AppRoute.loginPage, page: () => const LoginPage()),

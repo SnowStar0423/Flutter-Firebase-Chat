@@ -1,4 +1,5 @@
 class AppRoute {
+  AppRoute._();
   static const rootPage = '/';
   static const homePage = '/home';
   static const loginPage = '/login';

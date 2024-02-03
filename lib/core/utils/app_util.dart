@@ -1,5 +1,5 @@
 import 'package:chat_app/model/locale_model.dart';
-import 'package:chat_app/view/theme/app_color.dart';
+import 'package:chat_app/core/style/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -142,6 +142,20 @@ class AppUtil {
       String initValue, List<LocaleModel> languages) async {
     bool isDone = false;
     String? tempValue;
+    int initSelectedIndex = 0;
+    List<Widget> languageWidgetList = List<Widget>.generate(
+      languages.length,
+      (int index) {
+        TextStyle? style;
+        if (initValue == languages[index].languageCode) {
+          initSelectedIndex = index;
+          style = TextStyle(color: Theme.of(context).primaryColor);
+        }
+        return Center(
+          child: Text(languages[index].name, style: style),
+        );
+      },
+    );
 
     await showCupertinoModalPopup(
       context: context,
@@ -175,7 +189,7 @@ class AppUtil {
                     onPressed: () {
                       isDone = true;
                       tempValue ??= initValue;
-                      Navigator.of(context).pop("Done");
+                      Navigator.of(context).pop("done");
                     },
                     child: Text(
                       AppLocalizations.of(context)!.done,
@@ -194,25 +208,13 @@ class AppUtil {
                   itemExtent: 32.0,
                   // This sets the initial item.
                   scrollController: FixedExtentScrollController(
-                    initialItem: 0,
+                    initialItem: initSelectedIndex,
                   ),
                   // This is called when selected item is changed.
                   onSelectedItemChanged: (int selectedIndex) {
-                    tempValue = languages[selectedIndex].code;
+                    tempValue = languages[selectedIndex].languageCode;
                   },
-                  children: List<Widget>.generate(
-                    languages.length,
-                    (int index) {
-                      return Center(
-                        child: Text(
-                          languages[index].name,
-                          style: initValue == languages[index].code
-                              ? TextStyle(color: Theme.of(context).primaryColor)
-                              : null,
-                        ),
-                      );
-                    },
-                  ),
+                  children: languageWidgetList,
                 ),
               ),
             ],

@@ -1,12 +1,12 @@
 class LocaleModel {
-  final String _code;
+  final String _languageCode;
   final String _name;
   LocaleModel({
-    required code,
+    required languageCode,
     required name,
-  })  : _code = code,
+  })  : _languageCode = languageCode,
         _name = name;
 
   String get name => _name;
-  String get code => _code;
+  String get languageCode => _languageCode;
 }

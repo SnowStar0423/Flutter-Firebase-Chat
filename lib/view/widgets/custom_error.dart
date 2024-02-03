@@ -41,7 +41,7 @@ class CustomError extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.weApologizeForTheInconvenience,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
               Text(
                 AppLocalizations.of(context)!
