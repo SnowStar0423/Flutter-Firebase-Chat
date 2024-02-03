@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
     this.labelText,
     this.readOnly = false,
     this.validatedField = true,
-    this.errorText = 'Cannot be empty',
+    this.errorText = 'Required',
     this.leadingIcon,
     this.suffixIcon,
     this.obscureText = false,

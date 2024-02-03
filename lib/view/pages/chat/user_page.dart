@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:chat_app/core/utils/app_route.dart';
 import 'package:chat_app/viewmodel/chat_user_view_model.dart';
 import 'package:chat_app/view/widgets/round_textbox.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -107,7 +108,7 @@ class _UserPageState extends State<UserPage> {
           onPressed: () {
             Get.back();
           },
-          child: const Text("Cancel"),
+          child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],
     );

@@ -10,6 +10,7 @@ import 'package:chat_app/viewmodel/profile_view_model.dart';
 import 'package:chat_app/view/widgets/custom_box.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';
 import 'package:chat_app/view/widgets/custom_textfield.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -46,20 +47,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
   _buildAppBar() {
     return AppBar(
       centerTitle: true,
-      title: const Text(
-        "Profile",
-      ),
+      title: Text(AppLocalizations.of(context)!.profile),
       actions: [
         TextButton(
           onPressed: () async {
             var res = await _profileViewModel.saveProfile(_nameController.text);
-            if (res) {
-              AppUtil.showSnackBar("Updated successfully.");
+            if (res && context.mounted) {
+              AppUtil.showSnackBar(
+                AppLocalizations.of(context)!.updatedSuccessfully,
+              );
             }
           },
           child: Obx(
             () => Text(
-              "Save",
+              AppLocalizations.of(context)!.save,
               style: TextStyle(
                 color:
                     _profileViewModel.saving ? AppColor.darker : AppColor.white,
@@ -127,7 +128,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       radius: 10,
       padding: 0,
       child: CustomTextField(
-        hintText: "name",
+        hintText: AppLocalizations.of(context)!.name,
         controller: _nameController,
         leadingIcon: const Icon(
           Icons.person_outline,
@@ -207,9 +208,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             onPressed: () {
               _profileViewModel.browseImage();
             },
-            child: const Text(
-              "set new photo",
-              style: TextStyle(fontSize: 15),
+            child: Text(
+              AppLocalizations.of(context)!.setNewPhoto,
+              style: const TextStyle(fontSize: 15),
             ),
           ),
           const SizedBox(

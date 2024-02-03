@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:chat_app/core/utils/app_asset.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomError extends StatelessWidget {
   final FlutterErrorDetails errorDetails;
@@ -31,21 +32,22 @@ class CustomError extends StatelessWidget {
               Text(
                 kDebugMode
                     ? errorDetails.summary.toString()
-                    : 'Oups! Something went wrong!',
+                    : AppLocalizations.of(context)!.somethingWentWrong,
                 textAlign: TextAlign.center,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
               ),
               const SizedBox(height: 20),
-              const Text(
-                "We apologize for the inconvenience.",
+              Text(
+                AppLocalizations.of(context)!.weApologizeForTheInconvenience,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15),
               ),
-              const Text(
-                "We are working to resolve the issue as quickly as possible.",
+              Text(
+                AppLocalizations.of(context)!
+                    .weAreWorkingToResolveTheIssueAsQuicklyAsPossible,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
             ],
           ),

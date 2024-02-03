@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:chat_app/model/chat_user.dart';
 import 'package:chat_app/view/widgets/chat_room_item.dart';
 import 'package:chat_app/view/widgets/custom_textfield.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key});
@@ -119,7 +120,9 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                           ),
                     const SizedBox(width: 3),
                     Text(
-                      peer.onlineStatus ?? UserOnlineStatus.offline,
+                      peer.onlineStatus == UserOnlineStatus.online
+                          ? AppLocalizations.of(context)!.online
+                          : AppLocalizations.of(context)!.offline,
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.normal,
@@ -151,8 +154,12 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   _onUserAction() async {
     await AppUtil.showUserActionsDialog(
       context,
+      cancel: AppLocalizations.of(context)!.cancel,
+      report: AppLocalizations.of(context)!.report,
+      block: _chatRoomViewModel.isBlockedPeer
+          ? AppLocalizations.of(context)!.unblock
+          : AppLocalizations.of(context)!.block,
       onRepot: _onReportUser,
-      block: _chatRoomViewModel.isBlockedPeer ? "Unblock" : "Block",
       onBlock: _onBlockUser,
       onCancel: () {
         Get.back();
@@ -254,7 +261,7 @@ class _SendMessageBlock extends StatelessWidget {
           child: CustomTextField(
             controller: messageController,
             maxLines: 5,
-            hintText: "Write your message",
+            hintText: AppLocalizations.of(context)!.writeYourMessage,
           ),
         ),
         IconButton(
@@ -267,8 +274,10 @@ class _SendMessageBlock extends StatelessWidget {
                     currentUser: AppGlobal().firebaseUserToChatUser(
                         FirebaseAuth.instance.currentUser!),
                     peer: peer);
-            if (!res) {
-              AppUtil.showSnackBar("failed to send a message");
+            if (!res && context.mounted) {
+              AppUtil.showSnackBar(
+                AppLocalizations.of(context)!.failedToSendAMessage,
+              );
             }
             messageController.clear();
           },
@@ -299,9 +308,9 @@ class _UnblockButton extends StatelessWidget {
                 currentUserId: FirebaseAuth.instance.currentUser!.uid,
                 peerId: peer.id);
           },
-          child: const Text(
-            "Unblock",
-            style: TextStyle(fontSize: 16),
+          child: Text(
+            AppLocalizations.of(context)!.unblock,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
       )

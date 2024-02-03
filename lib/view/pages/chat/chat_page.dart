@@ -13,6 +13,7 @@ import 'package:chat_app/viewmodel/profile_view_model.dart';
 import 'package:chat_app/view/widgets/chat_item.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';
 import 'package:chat_app/view/widgets/round_textbox.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatPage extends StatelessWidget {
   final ChatViewModel _chatViewModel = Get.find();
@@ -39,7 +40,7 @@ class ChatPage extends StatelessWidget {
             expandedTitleScale: 1,
             titlePadding: EdgeInsets.zero,
             title: _buildSearchBox(),
-            background: _buildTitile(),
+            background: _buildTitile(context),
           ),
         ),
         const SliverToBoxAdapter(
@@ -113,15 +114,15 @@ class ChatPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTitile() {
+  Widget _buildTitile(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            "Chats",
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+          Text(
+            AppLocalizations.of(context)!.chats,
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
           ),
           GestureDetector(
             onTap: () {

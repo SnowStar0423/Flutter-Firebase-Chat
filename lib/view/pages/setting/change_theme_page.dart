@@ -6,6 +6,7 @@ import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/theme/app_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChangeThemePage extends StatelessWidget {
   ChangeThemePage({super.key});
@@ -17,8 +18,8 @@ class ChangeThemePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Theme",
+        title: Text(
+          AppLocalizations.of(context)!.theme,
         ),
       ),
       body: buildBody(context),
@@ -36,7 +37,7 @@ class ChangeThemePage extends StatelessWidget {
           padding:
               const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
           child: Text(
-            "Please choose theme mode",
+            AppLocalizations.of(context)!.pleaseChooseThemeMode,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
@@ -89,9 +90,7 @@ class ChangeThemePage extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    const Text(
-                      "Light mode",
-                    ),
+                    Text(AppLocalizations.of(context)!.lightMode),
                   ],
                 ),
               ),
@@ -140,9 +139,7 @@ class ChangeThemePage extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    const Text(
-                      "Dark mode",
-                    ),
+                    Text(AppLocalizations.of(context)!.darkMode),
                   ],
                 ),
               ),
@@ -159,7 +156,7 @@ class ChangeThemePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Default system",
+                AppLocalizations.of(context)!.defaultSystem,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Obx(

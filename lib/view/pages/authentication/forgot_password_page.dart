@@ -8,6 +8,7 @@ import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/widgets/custom_dialog.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';
 import 'package:chat_app/view/widgets/custom_textfield.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -50,16 +51,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             const SizedBox(height: 100),
             _buildLogo(),
             const SizedBox(height: 20),
-            const Center(
+            Center(
               child: Text(
-                "Forgot Password",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                AppLocalizations.of(context)!.forgotPassword,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
             const SizedBox(height: 50),
-            const Text(
-              "Please enter your email to reset password",
-              style: TextStyle(fontSize: 16),
+            Text(
+              AppLocalizations.of(context)!.pleaseEnterYourEmailToResetPassword,
+              style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(
               height: 40,
@@ -102,15 +104,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     context: context,
                     builder: (context) {
                       return CustomDialogBox(
-                        title: "Forgot Password",
+                        title: AppLocalizations.of(context)!.forgotPassword,
                         descriptions: _authViewModel.message,
                       );
                     });
               }
             },
-            child: const Text(
-              "Submit",
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.submit,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -129,7 +131,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         Icons.email_outlined,
         color: Colors.grey,
       ),
-      hintText: "Email",
+      hintText: AppLocalizations.of(context)!.email,
     );
   }
 

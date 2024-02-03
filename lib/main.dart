@@ -9,6 +9,7 @@ import 'package:chat_app/core/utils/app_route.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:chat_app/view/theme/app_theme.dart';
 import 'package:chat_app/view/widgets/custom_error.dart';
+import 'package:chat_app/viewmodel/locale_view_model.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -59,22 +60,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: AppConstant.appName,
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeViewModel.theme,
-      theme: AppThemes.lightTheme,
-      darkTheme: AppThemes.darkTheme,
-      initialRoute: AppRoute.rootPage,
-      getPages: AppPage.pages,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('en'),
-      builder: (BuildContext context, Widget? widget) {
-        _initCustomErrorWidget();
-        return widget!;
-      },
-      navigatorObservers: [AnalyticsService().getAnalyticsObserver()],
+    return GetBuilder<LocaleViewModel>(
+      builder: (controller) => GetMaterialApp(
+        title: AppConstant.appName,
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeViewModel.theme,
+        theme: AppThemes.lightTheme,
+        darkTheme: AppThemes.darkTheme,
+        initialRoute: AppRoute.rootPage,
+        getPages: AppPage.pages,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: controller.locale,
+        builder: (BuildContext context, Widget? widget) {
+          _initCustomErrorWidget();
+          return widget!;
+        },
+        navigatorObservers: [AnalyticsService().getAnalyticsObserver()],
+      ),
     );
   }
 

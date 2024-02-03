@@ -2,6 +2,7 @@ import 'package:chat_app/core/utils/app_message.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/widgets/custom_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class TermService extends StatefulWidget {
@@ -25,21 +26,28 @@ class _TermServiceState extends State<TermService> {
         child: ListView(
           padding: const EdgeInsets.all(10),
           children: [
-            const Text(
-              "Terms of Service",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.termsOfService,
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             const Text(AppMessage.termData),
             FittedBox(
               child: Row(
                 children: [
-                  Checkbox(value: _checkedRead, onChanged: (value) {
-                    _onToggleChanged();
-                  }),
-                  TextButton(child: const Text("I've read and agree to the terms."), onPressed: () {
-                    _onToggleChanged();
-                  },),
+                  Checkbox(
+                      value: _checkedRead,
+                      onChanged: (value) {
+                        _onToggleChanged();
+                      }),
+                  TextButton(
+                    child: Text(
+                      AppLocalizations.of(context)!.iHaveReadAndAgreeToTheTerms,
+                    ),
+                    onPressed: () {
+                      _onToggleChanged();
+                    },
+                  ),
                 ],
               ),
             ),
@@ -58,7 +66,7 @@ class _TermServiceState extends State<TermService> {
       child: CustomButton(
         bgColor: _checkedRead ? AppColor.primary : AppColor.grey,
         height: 40,
-        title: "Accept",
+        title: AppLocalizations.of(context)!.accept,
         onTap: widget.onAccept,
       ),
     );

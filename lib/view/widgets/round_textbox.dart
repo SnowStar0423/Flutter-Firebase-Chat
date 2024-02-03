@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RoundTextBox extends StatelessWidget {
   const RoundTextBox({
@@ -35,11 +36,11 @@ class RoundTextBox extends StatelessWidget {
         onChanged: onChanged,
         keyboardType: keyboardType,
         // style: const TextStyle(color: Colors.black),
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.search, color: Colors.grey),
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
           border: InputBorder.none,
-          hintText: "Search",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+          hintText: AppLocalizations.of(context)!.search,
+          hintStyle: const TextStyle(color: Colors.grey, fontSize: 17),
         ),
       ),
     );

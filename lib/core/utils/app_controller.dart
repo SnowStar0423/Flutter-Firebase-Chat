@@ -5,6 +5,7 @@ import 'package:chat_app/core/service/user_service.dart';
 import 'package:chat_app/viewmodel/auth_view_model.dart';
 import 'package:chat_app/viewmodel/chat_room_view_model.dart';
 import 'package:chat_app/viewmodel/chat_view_model.dart';
+import 'package:chat_app/viewmodel/locale_view_model.dart';
 import 'package:chat_app/viewmodel/profile_view_model.dart';
 import 'package:chat_app/viewmodel/theme_view_model.dart';
 import 'package:chat_app/viewmodel/chat_user_view_model.dart';
@@ -13,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class AppController {
+  AppController._();
   static Future init() async {
     Get.lazyPut(
         () => AuthViewModel(
@@ -61,5 +63,6 @@ class AppController {
               ),
             ),
         fenix: true);
+    Get.lazyPut(() => LocaleViewModel(), fenix: true);
   }
 }

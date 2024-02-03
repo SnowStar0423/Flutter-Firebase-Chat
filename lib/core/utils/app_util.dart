@@ -1,3 +1,4 @@
+import 'package:chat_app/model/locale_model.dart';
 import 'package:chat_app/view/theme/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -8,9 +9,12 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:chat_app/view/widgets/term_service.dart';
 import 'package:chat_app/core/utils/app_constant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// AppUtil provides helper methods
 class AppUtil {
+  AppUtil._();
+
   /// prints only in debug mode
   static void debugPrint(var value) {
     if (kDebugMode) print(value);
@@ -132,5 +136,94 @@ class AppUtil {
         },
       );
     }
+  }
+
+  static Future<String> showCupertinoSelection(BuildContext context,
+      String initValue, List<LocaleModel> languages) async {
+    bool isDone = false;
+    String? tempValue;
+
+    await showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 200,
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop("cancel");
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.cancel,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  TextButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.zero),
+                    ),
+                    onPressed: () {
+                      isDone = true;
+                      tempValue ??= initValue;
+                      Navigator.of(context).pop("Done");
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.done,
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(),
+              Expanded(
+                child: CupertinoPicker(
+                  magnification: 1.22,
+                  squeeze: 1.2,
+                  useMagnifier: true,
+                  itemExtent: 32.0,
+                  // This sets the initial item.
+                  scrollController: FixedExtentScrollController(
+                    initialItem: 0,
+                  ),
+                  // This is called when selected item is changed.
+                  onSelectedItemChanged: (int selectedIndex) {
+                    tempValue = languages[selectedIndex].code;
+                  },
+                  children: List<Widget>.generate(
+                    languages.length,
+                    (int index) {
+                      return Center(
+                        child: Text(
+                          languages[index].name,
+                          style: initValue == languages[index].code
+                              ? TextStyle(color: Theme.of(context).primaryColor)
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (isDone && tempValue != null) {
+      return tempValue!;
+    }
+    return initValue;
   }
 }

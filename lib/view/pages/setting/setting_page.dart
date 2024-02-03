@@ -1,5 +1,7 @@
 import 'package:chat_app/core/utils/app_route.dart';
+import 'package:chat_app/model/locale_model.dart';
 import 'package:chat_app/view/widgets/custom_box.dart';
+import 'package:chat_app/viewmodel/locale_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,18 +16,20 @@ import 'package:chat_app/view/theme/app_color.dart';
 import 'package:chat_app/view/widgets/custom_image.dart';
 import 'package:chat_app/view/widgets/custom_input_dialog.dart';
 import 'package:chat_app/view/widgets/settting_item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
   final AuthViewModel _authViewModel = Get.find();
   final ProfileViewModel _profileViewModel = Get.find();
+  final LocaleViewModel _localeViewModel = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Setting"),
+        title: Text(AppLocalizations.of(context)!.setting),
       ),
       body: _buildBody(context),
     );
@@ -103,9 +107,9 @@ class SettingPage extends StatelessWidget {
       child: Column(
         children: [
           SettingItem(
-            title: "Edit Profile",
+            title: AppLocalizations.of(context)!.editProfile,
             leadingIcon: Icons.person,
-            leadingIconColor: AppColor.green,
+            leadingIconColor: AppColor.darker,
             trailing: const Icon(
               Icons.arrow_forward_ios,
               size: 14,
@@ -116,7 +120,7 @@ class SettingPage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SettingItem(
-            title: "Change Theme",
+            title: AppLocalizations.of(context)!.changeTheme,
             leadingIcon: Icons.dark_mode_rounded,
             leadingIconColor: AppColor.purple,
             trailing: const Icon(
@@ -129,7 +133,31 @@ class SettingPage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SettingItem(
-            title: "Feedback",
+            title: AppLocalizations.of(context)!.changeLanguage,
+            leadingIcon: Icons.language,
+            leadingIconColor: AppColor.green,
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            ),
+            onTap: () {
+              List<LocaleModel> languages = [
+                LocaleModel(
+                    code: 'en', name: AppLocalizations.of(context)!.english),
+                LocaleModel(
+                    code: 'es', name: AppLocalizations.of(context)!.spanish)
+              ];
+              var selectedLocale = Localizations.localeOf(context).toString();
+              AppUtil.showCupertinoSelection(context, selectedLocale, languages)
+                  .then((value) {
+                _localeViewModel.set(Locale(value));
+                AppUtil.debugPrint(value);
+              });
+            },
+          ),
+          const SizedBox(height: 10),
+          SettingItem(
+            title: AppLocalizations.of(context)!.feedback,
             leadingIcon: Icons.rate_review,
             leadingIconColor: AppColor.blue,
             trailing: const Icon(
@@ -142,7 +170,7 @@ class SettingPage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SettingItem(
-            title: "Share",
+            title: AppLocalizations.of(context)!.share,
             leadingIcon: Icons.share_outlined,
             leadingIconColor: AppColor.yellow,
             trailing: const Icon(
@@ -157,11 +185,11 @@ class SettingPage extends StatelessWidget {
             },
           ),
           const SizedBox(height: 10),
-          const SettingItem(
-            title: "Version",
+          SettingItem(
+            title: AppLocalizations.of(context)!.version,
             leadingIcon: Icons.system_update,
             leadingIconColor: AppColor.labelColor,
-            trailing: Text(
+            trailing: const Text(
               AppConstant.appVersion,
               style: TextStyle(
                 fontSize: 16,
@@ -171,7 +199,7 @@ class SettingPage extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SettingItem(
-            title: "Logout",
+            title: AppLocalizations.of(context)!.logout,
             leadingIcon: Icons.logout,
             leadingIconColor: AppColor.red,
             trailing: const Icon(
@@ -192,17 +220,19 @@ class SettingPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const CustomInputDialog(
-          title: 'Feedback',
-          hint: 'Please write your feedback',
-          ok: 'Submit',
+        return CustomInputDialog(
+          title: AppLocalizations.of(context)!.feedback,
+          hint: AppLocalizations.of(context)!.pleaseWriteYourFeedback,
+          ok: AppLocalizations.of(context)!.submit,
+          cancel: AppLocalizations.of(context)!.cancel,
         );
       },
     ).then((value) {
       if (value != null) {
         AppUtil.debugPrint(value);
         _profileViewModel.sendFeedback(value);
-        AppUtil.showSnackBar("Thank you for your feedback.");
+        AppUtil.showSnackBar(
+            AppLocalizations.of(context)!.thankYouForYourfeedback);
       }
     });
   }
