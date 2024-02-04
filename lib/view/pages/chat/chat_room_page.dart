@@ -94,54 +94,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     );
   }
 
-  _buildPeerOnlineStatus() {
-    return StreamBuilder(
-        stream: _chatRoomViewModel.loadPeerOnlineStatus(_peer.id),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var peer = ChatUser.fromJson(snapshot.data!.data()!);
-            return Column(
-              children: [
-                Text(_peer.displayName),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    peer.onlineStatus == null ||
-                            peer.onlineStatus == UserOnlineStatus.offline
-                        ? const Icon(
-                            Icons.cancel,
-                            size: 11,
-                            color: UserOnlineStatus.offlineColor,
-                          )
-                        : const Icon(
-                            Icons.check_circle,
-                            size: 11,
-                            color: UserOnlineStatus.onlineColor,
-                          ),
-                    const SizedBox(width: 3),
-                    Text(
-                      peer.onlineStatus == UserOnlineStatus.online
-                          ? AppLocalizations.of(context)!.online
-                          : AppLocalizations.of(context)!.offline,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          } else {
-            return const SizedBox();
-          }
-        });
-  }
-
   _buildAppBar() {
     return AppBar(
       centerTitle: true,
-      title: _buildPeerOnlineStatus(),
+      title: _OnlineStatusWidget(
+          chatRoomViewModel: _chatRoomViewModel, peer: _peer),
       actions: [
         IconButton(
           onPressed: _onUserAction,
@@ -183,7 +140,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     _chatRoomViewModel.toggleBlockPeer(
         currentUserId: FirebaseAuth.instance.currentUser!.uid,
         peerId: _peer.id);
-
     AppUtil.showSnackBar(
       _chatRoomViewModel.message,
       duration: 3,
@@ -191,19 +147,54 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   }
 
   _buildChats() {
-    return Obx(() => ListView.builder(
-          controller: _scrollController,
-          reverse: true,
-          itemBuilder: (context, index) {
-            var msg = _chatRoomViewModel.chatMessages[index];
-            return ChatRoomBox(message: msg);
-          },
-          shrinkWrap: true,
-          itemCount: _chatRoomViewModel.chatMessages.length,
-        ));
+    return Obx(
+      () => ListView.builder(
+        controller: _scrollController,
+        reverse: true,
+        itemBuilder: (context, index) {
+          var msg = _chatRoomViewModel.chatMessages[index];
+          return ChatRoomBox(message: msg);
+        },
+        shrinkWrap: true,
+        itemCount: _chatRoomViewModel.chatMessages.length,
+      ),
+    );
   }
 
   _buildFooter() {
+    return _FooterWidget(
+        chatRoomViewModel: _chatRoomViewModel,
+        groupChatId: _groupChatId,
+        peer: _peer,
+        messageController: _messageController);
+  }
+}
+
+class _FooterWidget extends StatelessWidget {
+  const _FooterWidget({
+    required ChatRoomViewModel chatRoomViewModel,
+    required String groupChatId,
+    required ChatUser peer,
+    required TextEditingController messageController,
+  })  : _chatRoomViewModel = chatRoomViewModel,
+        _groupChatId = groupChatId,
+        _peer = peer,
+        _messageController = messageController;
+
+  final ChatRoomViewModel _chatRoomViewModel;
+  final String _groupChatId;
+  final ChatUser _peer;
+  final TextEditingController _messageController;
+
+  _buildCheckBlocked() {
+    if (_chatRoomViewModel.isBlockedPeer) {
+      return _UnblockButton(peer: _peer);
+    }
+    return const SizedBox();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -221,12 +212,61 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       ),
     );
   }
+}
 
-  _buildCheckBlocked() {
-    if (_chatRoomViewModel.isBlockedPeer) {
-      return _UnblockButton(peer: _peer);
-    }
-    return const SizedBox();
+class _OnlineStatusWidget extends StatelessWidget {
+  const _OnlineStatusWidget({
+    required ChatRoomViewModel chatRoomViewModel,
+    required ChatUser peer,
+  })  : _chatRoomViewModel = chatRoomViewModel,
+        _peer = peer;
+
+  final ChatRoomViewModel _chatRoomViewModel;
+  final ChatUser _peer;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: _chatRoomViewModel.loadPeerOnlineStatus(_peer.id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var peer = ChatUser.fromJson(snapshot.data!.data()!);
+            return Column(
+              children: [
+                Text(_peer.displayName),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    peer.onlineStatus == null ||
+                            peer.onlineStatus == UserOnlineStatus.offline
+                        ? const Icon(
+                            Icons.cancel,
+                            size: 11,
+                            color: UserOnlineStatus.offlineColor,
+                          )
+                        : const Icon(
+                            Icons.check_circle,
+                            size: 11,
+                            color: UserOnlineStatus.onlineColor,
+                          ),
+                    const SizedBox(width: 3),
+                    Text(
+                      peer.onlineStatus == UserOnlineStatus.online
+                          ? AppLocalizations.of(context)!.online
+                          : AppLocalizations.of(context)!.offline,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          } else {
+            return const SizedBox();
+          }
+        });
   }
 }
 

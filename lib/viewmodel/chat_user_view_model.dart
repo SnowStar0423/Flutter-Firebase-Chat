@@ -23,7 +23,10 @@ class ChatUserViewModel extends GetxController {
   }
 
   updateUserOnlineStatus(String status) async {
-    if (AppUtil.checkIsNull(firebaseAuth.currentUser)) return;
+    if (AppUtil.checkIsNull(firebaseAuth.currentUser) ||
+        !await userService.checkUserExist(firebaseAuth.currentUser!.uid)) {
+      return;
+    }
     await userService.updateUserOnlineStatus(
         firebaseAuth.currentUser!.uid, status);
   }

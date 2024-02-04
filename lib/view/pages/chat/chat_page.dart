@@ -36,11 +36,11 @@ class ChatPage extends StatelessWidget {
           floating: false,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           expandedHeight: 110.0,
-          flexibleSpace: FlexibleSpaceBar(
+          flexibleSpace: const FlexibleSpaceBar(
             expandedTitleScale: 1,
             titlePadding: EdgeInsets.zero,
-            title: _buildSearchBox(),
-            background: _buildTitile(context),
+            title: _SearchBox(),
+            background: _TitleWidget(),
           ),
         ),
         const SliverToBoxAdapter(
@@ -101,8 +101,13 @@ class ChatPage extends StatelessWidget {
   //     ),
   //   );
   // }
+}
 
-  _buildSearchBox() {
+class _SearchBox extends StatelessWidget {
+  const _SearchBox();
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
       child: RoundTextBox(
@@ -113,8 +118,13 @@ class ChatPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildTitile(BuildContext context) {
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget();
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
       child: Row(

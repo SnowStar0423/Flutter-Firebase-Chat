@@ -52,8 +52,10 @@ class _LoginPageState extends State<LoginPage> {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       body: buildBody(),
-      floatingActionButton:
-          Visibility(visible: !keyboardIsOpen, child: getNavigationButton()),
+      floatingActionButton: Visibility(
+        visible: !keyboardIsOpen,
+        child: _RegisterButton(local: _local),
+      ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
     );
@@ -70,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            _buildLogo(),
+            const _LogoWidget(),
             const SizedBox(
               height: 10,
             ),
@@ -102,47 +104,12 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 18,
             ),
-            _buildForgotPasswordBlcok(),
+            _ForgotPasswordWidget(local: _local),
             const SizedBox(
               height: 25,
             ),
             _buildLoginButton()
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildForgotPasswordBlcok() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: GestureDetector(
-        onTap: () async {
-          Get.toNamed(AppRoute.forgotPasswordPage);
-        },
-        child: Text(
-          _local.forgotPassword,
-          style: const TextStyle(
-            color: AppColor.primary,
-            fontWeight: FontWeight.w400,
-            fontSize: 15,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLogo() {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: 150,
-        height: 150,
-        child: CustomImage(
-          AppAsset.logo,
-          padding: 10,
-          bgColor: Theme.of(context).scaffoldBackgroundColor,
-          radius: 5,
         ),
       ),
     );
@@ -185,49 +152,53 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLoginButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: RoundedLoadingButton(
-            width: MediaQuery.of(context).size.width,
-            color: AppColor.primary,
-            controller: btnController,
-            onPressed: () async {
-              FocusScope.of(context).unfocus();
-              var res = await _authViewModel.signInWithEmailPassword(
-                  email: _emailController.text,
-                  password: _passwordController.text);
-              if (res) {
-                btnController.success();
-              } else {
-                btnController.reset();
-                if (mounted) {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CustomDialogBox(
-                          title: _local.login,
-                          descriptions: _authViewModel.message,
-                        );
-                      });
-                }
-              }
-            },
-            child: Text(
-              _local.login,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      ],
+    return _LoginButton(
+      btnController: btnController,
+      authViewModel: _authViewModel,
+      emailController: _emailController,
+      passwordController: _passwordController,
+      local: _local,
     );
   }
+}
 
-  Widget getNavigationButton() {
+class _ForgotPasswordWidget extends StatelessWidget {
+  const _ForgotPasswordWidget({
+    required AppLocalizations local,
+  }) : _local = local;
+
+  final AppLocalizations _local;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () async {
+          Get.toNamed(AppRoute.forgotPasswordPage);
+        },
+        child: Text(
+          _local.forgotPassword,
+          style: const TextStyle(
+            color: AppColor.primary,
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _RegisterButton extends StatelessWidget {
+  const _RegisterButton({
+    required AppLocalizations local,
+  }) : _local = local;
+
+  final AppLocalizations _local;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -264,6 +235,90 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         )
+      ],
+    );
+  }
+}
+
+class _LogoWidget extends StatelessWidget {
+  const _LogoWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: 150,
+        height: 150,
+        child: CustomImage(
+          AppAsset.logo,
+          padding: 10,
+          bgColor: Theme.of(context).scaffoldBackgroundColor,
+          radius: 5,
+        ),
+      ),
+    );
+  }
+}
+
+class _LoginButton extends StatelessWidget {
+  const _LoginButton({
+    required this.btnController,
+    required AuthViewModel authViewModel,
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
+    required AppLocalizations local,
+  })  : _authViewModel = authViewModel,
+        _emailController = emailController,
+        _passwordController = passwordController,
+        _local = local;
+
+  final RoundedLoadingButtonController btnController;
+  final AuthViewModel _authViewModel;
+  final TextEditingController _emailController;
+  final TextEditingController _passwordController;
+  final AppLocalizations _local;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: RoundedLoadingButton(
+            width: MediaQuery.of(context).size.width,
+            color: AppColor.primary,
+            controller: btnController,
+            onPressed: () async {
+              FocusScope.of(context).unfocus();
+              var res = await _authViewModel.signInWithEmailPassword(
+                  email: _emailController.text,
+                  password: _passwordController.text);
+              if (res) {
+                btnController.success();
+              } else {
+                btnController.reset();
+                if (context.mounted) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomDialogBox(
+                          title: _local.login,
+                          descriptions: _authViewModel.message,
+                        );
+                      });
+                }
+              }
+            },
+            child: Text(
+              _local.login,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

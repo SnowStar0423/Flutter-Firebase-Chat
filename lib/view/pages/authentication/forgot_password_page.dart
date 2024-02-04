@@ -49,7 +49,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 100),
-            _buildLogo(),
+            const _LogoWidget(),
             const SizedBox(height: 20),
             Center(
               child: Text(
@@ -82,6 +82,40 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   Widget _buildLoginButton() {
+    return _SubmitButton(
+        btnSubmitController: _btnSubmitController,
+        authViewModel: _authViewModel,
+        emailController: _emailController);
+  }
+
+  Widget _buildEmailBlock() {
+    return CustomTextField(
+      controller: _emailController,
+      keyboardType: TextInputType.emailAddress,
+      leadingIcon: const Icon(
+        Icons.email_outlined,
+        color: Colors.grey,
+      ),
+      hintText: AppLocalizations.of(context)!.email,
+    );
+  }
+}
+
+class _SubmitButton extends StatelessWidget {
+  const _SubmitButton({
+    required RoundedLoadingButtonController btnSubmitController,
+    required AuthViewModel authViewModel,
+    required TextEditingController emailController,
+  })  : _btnSubmitController = btnSubmitController,
+        _authViewModel = authViewModel,
+        _emailController = emailController;
+
+  final RoundedLoadingButtonController _btnSubmitController;
+  final AuthViewModel _authViewModel;
+  final TextEditingController _emailController;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -99,7 +133,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               } else {
                 _btnSubmitController.reset();
               }
-              if (mounted) {
+              if (context.mounted) {
                 showDialog(
                     context: context,
                     builder: (context) {
@@ -122,20 +156,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ],
     );
   }
+}
 
-  Widget _buildEmailBlock() {
-    return CustomTextField(
-      controller: _emailController,
-      keyboardType: TextInputType.emailAddress,
-      leadingIcon: const Icon(
-        Icons.email_outlined,
-        color: Colors.grey,
-      ),
-      hintText: AppLocalizations.of(context)!.email,
-    );
-  }
+class _LogoWidget extends StatelessWidget {
+  const _LogoWidget();
 
-  Widget _buildLogo() {
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(10),

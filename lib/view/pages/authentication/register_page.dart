@@ -46,8 +46,10 @@ class _RegisterPageState extends State<RegisterPage> {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       body: _buildBody(),
-      floatingActionButton:
-          Visibility(visible: !keyboardIsOpen, child: getNavigationButton()),
+      floatingActionButton: Visibility(
+        visible: !keyboardIsOpen,
+        child: _LoginButton(local: _local),
+      ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
     );
@@ -64,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            _buildLogo(),
+            const _LogoWidet(),
             const SizedBox(
               height: 10,
             ),
@@ -110,7 +112,14 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 30,
             ),
-            _buildRegisterButton()
+            _RegisterButton(
+                btnController: btnController,
+                authViewModel: _authViewModel,
+                nameController: _nameController,
+                emailController: _emailController,
+                passwordController: _passwordController,
+                conPasswordController: _conPasswordController,
+                local: _local),
           ],
         ),
       ),
@@ -140,30 +149,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildConPassowrdBlock() {
-    return Obx(
-      () => CustomTextField(
-        controller: _conPasswordController,
-        leadingIcon: const Icon(
-          Icons.lock_outline,
-          color: Colors.grey,
-        ),
-        suffixIcon: GestureDetector(
-          onTap: () {
-            _authViewModel.hideShowConfirmPassword();
-          },
-          child: Icon(
-              _authViewModel.isObscureConPassword
-                  ? Icons.visibility_off_outlined
-                  : Icons.visibility_outlined,
-              color: Colors.grey),
-        ),
-        obscureText: _authViewModel.isObscureConPassword,
-        hintText: _local.confirmPassword,
-      ),
-    );
-  }
-
   Widget _buildPassowrdBlcok() {
     return Obx(
       () => CustomTextField(
@@ -188,23 +173,57 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildLogo() {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: 150,
-        height: 150,
-        child: CustomImage(
-          AppAsset.logo,
-          padding: 10,
-          bgColor: Theme.of(context).scaffoldBackgroundColor,
-          radius: 5,
+  Widget _buildConPassowrdBlock() {
+    return Obx(
+      () => CustomTextField(
+        controller: _conPasswordController,
+        leadingIcon: const Icon(
+          Icons.lock_outline,
+          color: Colors.grey,
         ),
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _authViewModel.hideShowConfirmPassword();
+          },
+          child: Icon(
+              _authViewModel.isObscureConPassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              color: Colors.grey),
+        ),
+        obscureText: _authViewModel.isObscureConPassword,
+        hintText: _local.confirmPassword,
       ),
     );
   }
+}
 
-  Widget _buildRegisterButton() {
+class _RegisterButton extends StatelessWidget {
+  const _RegisterButton({
+    required this.btnController,
+    required AuthViewModel authViewModel,
+    required TextEditingController nameController,
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
+    required TextEditingController conPasswordController,
+    required AppLocalizations local,
+  })  : _authViewModel = authViewModel,
+        _nameController = nameController,
+        _emailController = emailController,
+        _passwordController = passwordController,
+        _conPasswordController = conPasswordController,
+        _local = local;
+
+  final RoundedLoadingButtonController btnController;
+  final AuthViewModel _authViewModel;
+  final TextEditingController _nameController;
+  final TextEditingController _emailController;
+  final TextEditingController _passwordController;
+  final TextEditingController _conPasswordController;
+  final AppLocalizations _local;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -225,7 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Get.back();
               } else {
                 btnController.reset();
-                if (mounted) {
+                if (context.mounted) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -250,8 +269,17 @@ class _RegisterPageState extends State<RegisterPage> {
       ],
     );
   }
+}
 
-  Widget getNavigationButton() {
+class _LoginButton extends StatelessWidget {
+  const _LoginButton({
+    required AppLocalizations local,
+  }) : _local = local;
+
+  final AppLocalizations _local;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -289,6 +317,27 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         )
       ],
+    );
+  }
+}
+
+class _LogoWidet extends StatelessWidget {
+  const _LogoWidet();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: 150,
+        height: 150,
+        child: CustomImage(
+          AppAsset.logo,
+          padding: 10,
+          bgColor: Theme.of(context).scaffoldBackgroundColor,
+          radius: 5,
+        ),
+      ),
     );
   }
 }

@@ -72,12 +72,11 @@ class AuthViewModel extends GetxController {
           name: name.trim(), email: email.trim(), password: password.trim());
       AppUtil.debugPrint(res.user);
       if (res.user != null) {
-        userService.addUser(
-          ChatUser.fromFirebaseUser(
-            authService.currentUser!,
-            AppGlobal.instance.deviceToken,
-          ),
-        );
+        var user = ChatUser.fromFirebaseUser(
+          authService.currentUser!,
+          AppGlobal.instance.deviceToken,
+        )..onlineStatus = UserOnlineStatus.online;
+        await userService.addUser(user);
       }
       message = _local.successfullyRegistered;
 

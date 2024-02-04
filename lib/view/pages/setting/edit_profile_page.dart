@@ -39,12 +39,81 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: _AppBar(
+          profileViewModel: _profileViewModel, nameController: _nameController),
       body: _buildBody(),
     );
   }
 
-  _buildAppBar() {
+  _buildBody() {
+    return GetBuilder<ProfileViewModel>(builder: (controller) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              _ProfileWidget(profileViewModel: _profileViewModel),
+              const SizedBox(
+                height: 25,
+              ),
+              _NameWidget(context: context, nameController: _nameController),
+              const SizedBox(
+                height: 25,
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+// ignore: unused_element
+class _NameWidget extends StatelessWidget {
+  const _NameWidget({
+    required this.context,
+    required TextEditingController nameController,
+  }) : _nameController = nameController;
+
+  final BuildContext context;
+  final TextEditingController _nameController;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomBox(
+      radius: 10,
+      padding: 0,
+      child: CustomTextField(
+        hintText: AppLocalizations.of(context)!.name,
+        controller: _nameController,
+        leadingIcon: const Icon(
+          Icons.person_outline,
+          color: Colors.grey,
+        ),
+      ),
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBar({
+    required ProfileViewModel profileViewModel,
+    required TextEditingController nameController,
+  })  : _profileViewModel = profileViewModel,
+        _nameController = nameController;
+
+  final ProfileViewModel _profileViewModel;
+  final TextEditingController _nameController;
+
+  @override
+  Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
       title: Text(AppLocalizations.of(context)!.profile),
@@ -73,102 +142,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  _buildBody() {
-    return GetBuilder<ProfileViewModel>(builder: (controller) {
-      return SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              _buildProfileBlock(),
-              const SizedBox(
-                height: 25,
-              ),
-              // _buildEmailBlock(),
-              // const SizedBox(
-              //   height: 15,
-              // ),
-              _buildNameBlock(),
-              const SizedBox(
-                height: 25,
-              ),
-            ],
-          ),
-        ),
-      );
-    });
-  }
+  @override
+  Size get preferredSize => AppBar().preferredSize;
+}
 
-  // Widget _buildEmailBlock() {
-  //   return CustomBox(
-  //     radius: 10,
-  //     padding: 0,
-  //     child: CustomTextField(
-  //       hintText: "name",
-  //       controller: _emailController,
-  //       readOnly: true,
-  //       keyboardType: TextInputType.emailAddress,
-  //       leadingIcon: const Icon(
-  //         Icons.email_outlined,
-  //         color: Colors.grey,
-  //       ),
-  //     ),
-  //   );
-  // }
+class _ProfileWidget extends StatelessWidget {
+  const _ProfileWidget({
+    required ProfileViewModel profileViewModel,
+  }) : _profileViewModel = profileViewModel;
 
-  Widget _buildNameBlock() {
-    return CustomBox(
-      radius: 10,
-      padding: 0,
-      child: CustomTextField(
-        hintText: AppLocalizations.of(context)!.name,
-        controller: _nameController,
-        leadingIcon: const Icon(
-          Icons.person_outline,
-          color: Colors.grey,
-        ),
-      ),
-    );
-  }
-
-  Widget _checkProfileImage() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AppUtil.checkIsNull(_profileViewModel.getUserPhotoUrl())
-            ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                trBackground: true, width: 78, height: 78)
-            : badges.Badge(
-                onTap: () {
-                  _profileViewModel.removeUserPhotoUrl();
-                },
-                badgeContent: const Icon(
-                  Icons.close_outlined,
-                  color: Colors.white,
-                  size: 15,
-                ),
-                child: CustomImage(
-                  _profileViewModel.getUserPhotoUrl()!,
-                  imageType: ImageType.network,
-                  width: 70,
-                  height: 70,
-                  radius: 100,
-                ),
-              )
-      ],
-    );
-  }
+  final ProfileViewModel _profileViewModel;
 
   Widget _buildProfileImage() {
     return AppUtil.checkIsNull(_profileViewModel.selectedImage)
-        ? _checkProfileImage()
+        ? _ProfileImageChecker(profileViewModel: _profileViewModel)
         : ClipRRect(
             borderRadius: BorderRadius.circular(100),
             child: SizedBox(
@@ -189,14 +176,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
   }
 
-  Widget _buildProfileBlock() {
+  @override
+  Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return CustomBox(
       radius: 15,
       padding: 20,
       child: Column(
         children: <Widget>[
           SizedBox(
-            width: MediaQuery.of(context).size.width,
+            width: screenSize.width,
           ),
           GestureDetector(
             onTap: () {
@@ -221,7 +210,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             style: Theme.of(context).textTheme.displaySmall,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width,
+            width: screenSize.width,
           ),
           Text(
             _profileViewModel.getUserEmail(),
@@ -231,6 +220,43 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ProfileImageChecker extends StatelessWidget {
+  const _ProfileImageChecker({
+    required ProfileViewModel profileViewModel,
+  }) : _profileViewModel = profileViewModel;
+
+  final ProfileViewModel _profileViewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AppUtil.checkIsNull(_profileViewModel.getUserPhotoUrl())
+            ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                trBackground: true, width: 78, height: 78)
+            : badges.Badge(
+                onTap: () {
+                  _profileViewModel.removeUserPhotoUrl();
+                },
+                badgeContent: const Icon(
+                  Icons.close_outlined,
+                  color: Colors.white,
+                  size: 15,
+                ),
+                child: CustomImage(
+                  _profileViewModel.getUserPhotoUrl()!,
+                  imageType: ImageType.network,
+                  width: 70,
+                  height: 70,
+                  radius: 100,
+                ),
+              )
+      ],
     );
   }
 }

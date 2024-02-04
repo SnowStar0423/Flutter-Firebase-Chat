@@ -38,65 +38,8 @@ class SettingPage extends StatelessWidget {
   Widget _buildBody(context) {
     return ListView(
       children: [
-        _buildProfile(),
+        _ProfileWidget(profileViewModel: _profileViewModel),
         _buildSettingList(context),
-      ],
-    );
-  }
-
-  Widget _buildProfile() {
-    return GetBuilder<ProfileViewModel>(
-      builder: (controller) => Column(
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          _buildProfileImage(),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            _profileViewModel.getUserDisplayName(),
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            _profileViewModel.getUserEmail(),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 15,
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProfileImage() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomBox(
-          child:
-              AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
-                  ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
-                      trBackground: true, width: 70, height: 70)
-                  : CustomImage(
-                      FirebaseAuth.instance.currentUser!.photoURL!,
-                      imageType: ImageType.network,
-                      width: 70,
-                      height: 70,
-                      radius: 100,
-                    ),
-        )
       ],
     );
   }
@@ -240,5 +183,76 @@ class SettingPage extends StatelessWidget {
             AppLocalizations.of(context)!.thankYouForYourfeedback);
       }
     });
+  }
+}
+
+class _ProfileWidget extends StatelessWidget {
+  const _ProfileWidget({
+    required ProfileViewModel profileViewModel,
+  }) : _profileViewModel = profileViewModel;
+
+  final ProfileViewModel _profileViewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<ProfileViewModel>(
+      builder: (controller) => Column(
+        children: [
+          const SizedBox(
+            height: 30,
+          ),
+          const _ProfileImage(),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            _profileViewModel.getUserDisplayName(),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            _profileViewModel.getUserEmail(),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProfileImage extends StatelessWidget {
+  const _ProfileImage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomBox(
+          child:
+              AppUtil.checkIsNull(FirebaseAuth.instance.currentUser!.photoURL)
+                  ? RandomAvatar(FirebaseAuth.instance.currentUser!.uid,
+                      trBackground: true, width: 70, height: 70)
+                  : CustomImage(
+                      FirebaseAuth.instance.currentUser!.photoURL!,
+                      imageType: ImageType.network,
+                      width: 70,
+                      height: 70,
+                      radius: 100,
+                    ),
+        )
+      ],
+    );
   }
 }
