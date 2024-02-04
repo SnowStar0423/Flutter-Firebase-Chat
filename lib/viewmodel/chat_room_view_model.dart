@@ -5,7 +5,6 @@ import 'package:chat_app/core/services/chat_service.dart';
 import 'package:chat_app/core/services/push_notification_service.dart';
 import 'package:chat_app/core/services/report_service.dart';
 import 'package:chat_app/core/services/user_service.dart';
-import 'package:chat_app/core/utils/app_message.dart';
 import 'package:chat_app/core/utils/app_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -26,7 +25,6 @@ class ChatRoomViewModel extends GetxController {
   final RxBool _isBlockedPeer = false.obs;
   final RxBool _isBlocked = false.obs;
 
-  String _message = "";
   DocumentSnapshot? lastdocumentSnapshot;
   RxList<ChatMessage> chatMessages = <ChatMessage>[].obs;
   bool _moreMessagesAvailable = true;
@@ -36,9 +34,6 @@ class ChatRoomViewModel extends GetxController {
   set isBlockedPeer(value) => _isBlockedPeer.value = value;
   bool get isBlocked => _isBlocked.value;
   set isBlocked(value) => _isBlocked.value = value;
-
-  String get message => _message;
-  set message(ms) => _message = ms;
 
   set sending(bool value) => _sending.value = value;
   bool get sending => _sending.value;
@@ -186,7 +181,7 @@ class ChatRoomViewModel extends GetxController {
       reportedUserId: peerId,
       content: content,
     );
-    message = AppMessage.messageAfterReport;
+    // message = AppMessage.messageAfterReport;
   }
 
   toggleBlockPeer(
@@ -195,10 +190,10 @@ class ChatRoomViewModel extends GetxController {
       String content = ""}) async {
     if (isBlockedPeer) {
       unBlockPeer(currentUserId: currentUserId, peerId: peerId);
-      message = AppMessage.messageAfterUnblock;
+      // message = AppMessage.messageAfterUnblock;
     } else {
       blockPeer(currentUserId: currentUserId, peerId: peerId, content: content);
-      message = AppMessage.messageAfterBlock;
+      // message = AppMessage.messageAfterBlock;
     }
   }
 

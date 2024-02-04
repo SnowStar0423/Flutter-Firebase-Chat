@@ -130,7 +130,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         currentUserId: FirebaseAuth.instance.currentUser!.uid,
         peerId: _peer.id);
     AppUtil.showSnackBar(
-      _chatRoomViewModel.message,
+      AppLocalizations.of(context)!.messageAfterReport,
       duration: 3,
     );
   }
@@ -140,8 +140,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     _chatRoomViewModel.toggleBlockPeer(
         currentUserId: FirebaseAuth.instance.currentUser!.uid,
         peerId: _peer.id);
+    var message = _chatRoomViewModel.isBlockedPeer
+        ? AppLocalizations.of(context)!.messageAfterBlock
+        : AppLocalizations.of(context)!.messageAfterUnblock;
     AppUtil.showSnackBar(
-      _chatRoomViewModel.message,
+      message,
       duration: 3,
     );
   }
@@ -284,19 +287,19 @@ class _SendMessageBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          onPressed: () async {
-            _chatRoomViewModel.browseImage();
-          },
-          icon: const Icon(
-            Icons.image_outlined,
-            color: AppColor.primary,
-            size: 30,
-          ),
-        ),
-        // const SizedBox(
-        //   width: 20,
+        // IconButton(
+        //   onPressed: () async {
+        //     _chatRoomViewModel.browseImage();
+        //   },
+        //   icon: const Icon(
+        //     Icons.image_outlined,
+        //     color: AppColor.primary,
+        //     size: 30,
+        //   ),
         // ),
+        const SizedBox(
+          width: 20,
+        ),
         Expanded(
           child: CustomTextField(
             controller: messageController,

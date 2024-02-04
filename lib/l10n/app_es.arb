@@ -56,5 +56,8 @@
     "somethingWentWrong": "¡Algo salió mal!",
     "weAreWorkingToResolveTheIssueAsQuicklyAsPossible": "Estamos trabajando para resolver el problema lo más rápido posible.",
     "online": "en línea",
-    "offline": "desconectada"
+    "offline": "desconectada",
+    "messageAfterReport" : "Gracias por tu informe. Investigaremos este caso a fondo en un plazo de 24 horas.",
+    "messageAfterBlock" : "Esta usuario está bloqueada y ya no podrá molestarte.",
+    "messageAfterUnblock" : "Esta usuario está desbloqueada."
 }
