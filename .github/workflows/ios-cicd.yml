@@ -5,7 +5,7 @@ on:
 
 env:
   FLUTTER_CHANNEL: 'stable'
-  FLUTTER_VERSION: '3.13.0'
+  FLUTTER_VERSION: '3.16.8'
   APP_BUNDLE_ID: 'com.sangvaleap.chatapp'
   PATH_TO_IPA: 'build/ios/ipa/com.sangvaleap.chatapp.ipa'
 
