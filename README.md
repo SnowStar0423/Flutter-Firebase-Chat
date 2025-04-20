@@ -34,11 +34,4 @@ By version 1.5, features include:
 # Technology Stack
 Dart, Flutter, Firebase Auth, Firestore, Firebase Storage, Firebase Cloud Messaging (Push Notification), Getx, MVVM, GitHub, CI/CD (GitHub Actions), Mockito, Unit Test
 
-
-# Links
-- [Apple App store and Google Play store](https://urlgeni.us/Ct47)
-- [Video](https://youtu.be/rI9i-BvXrBw)
-- [LinkedIn](https://www.linkedin.com/in/sangvaleap-v/)
-- [Twitter](https://twitter.com/sangvaleap)
-
   
